@@ -60,20 +60,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             let sphere = SCNSphere(radius: 0.01)
             sphere.firstMaterial?.diffuse.contents = UIColor.red
             let sphereNode = SCNNode(geometry: sphere)
-            print("Sphere position before: \(sphereNode.position.x), \(sphereNode.position.y), \(sphereNode.position.z)")
             sphereNode.position = point1 + (vectorBANormalized * (Float(i) * distanceBetweenEachSphere))
-            print("Sphere position after: \(sphereNode.position.x), \(sphereNode.position.y), \(sphereNode.position.z)")
-
-            // Move the spheres 20 cm in front of the camera
-            var translation = matrix_identity_float4x4
-            translation.columns.3.x = 0
-            translation.columns.3.y = 0
-            translation.columns.3.z = -0.2
-            let currentSphereTransform = sphereNode.worldTransform
-            let newSimd = simd_float4x4(currentSphereTransform)
-            sphereNode.simdTransform = matrix_multiply(newSimd, translation)
             self.sceneView.scene.rootNode.addChildNode(sphereNode)
-
             redBallCount += 1
         }
     }
@@ -114,9 +102,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             scene.rootNode.addChildNode(sphereNode)
             whiteBallCount += 1
             
-            let currentPoint = SCNVector3Make(cameraTransform.columns.3.x,
-                                              cameraTransform.columns.3.y,
-                                              cameraTransform.columns.3.z)
+            let currentPoint = sphereNode.position
             if let previousPoint = previousPoint {
                 let distance = abs(previousPoint.distance(vector: currentPoint))
                 if distance > 0.01 {
