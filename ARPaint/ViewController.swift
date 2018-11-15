@@ -20,6 +20,16 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     var redBallCount = 0
     var whiteBallCount = 0
+    let circle: SKScene = {
+        let circle = SKShapeNode(circleOfRadius: 0.1 ) // Create circle
+//        circle.position = CGPoint(x: 1, y: 1)  // Center (given scene anchor point is 0.5 for x&y)
+        circle.strokeColor = SKColor.black
+//        circle.glowWidth = 1.0
+        circle.fillColor = SKColor.orange
+        let skScene = SKScene()
+        skScene.addChild(circle)
+        return skScene
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +56,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func drawSpheresBetween(point1: SCNVector3, andPoint2 point2: SCNVector3){
         // Calculate the distance between previous point and current point
         let distance = point1.distance(vector: point2)
-        let distanceBetweenEachSphere: Float = 0.005
+        let distanceBetweenEachSphere: Float = 0.0025
         let numberOfSpheresToCreate = Int(distance / distanceBetweenEachSphere)
         
         // https://math.stackexchange.com/a/83419
@@ -56,9 +66,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let vectorBANormalized = vectorBA.normalized()
         // This new vector can now be scaled and added to A to find the point at the specified distance
         
-        for i in 0...numberOfSpheresToCreate {
+        
+        for i in 0...((numberOfSpheresToCreate > 1) ? (numberOfSpheresToCreate - 1) : numberOfSpheresToCreate) {
             let sphere = SCNSphere(radius: 0.01)
-            sphere.firstMaterial?.diffuse.contents = UIColor.red
+            sphere.firstMaterial?.diffuse.contents = UIColor.white
             let sphereNode = SCNNode(geometry: sphere)
             sphereNode.position = point1 + (vectorBANormalized * (Float(i) * distanceBetweenEachSphere))
             self.sceneView.scene.rootNode.addChildNode(sphereNode)
@@ -85,10 +96,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, willRenderScene scene: SCNScene, atTime time: TimeInterval) {
         if screenTouched {
             
-            let sphere = SCNSphere(radius: 0.01)
-            sphere.firstMaterial?.diffuse.contents = UIColor.white
-            let sphereNode = SCNNode(geometry: sphere)
-            sphereNode.opacity = 0.4
+//            let sphere = SCNSphere(radius: 0.01)
+//            sphere.segmentCount = 12
+            let plane = SCNPlane(width: 2, height: 2)
+            plane.firstMaterial?.diffuse.contents = circle
+            let planeNode = SCNNode(geometry: plane)
             
             // Move the node in front of the camera
             guard let cameraTransform = sceneView.session.currentFrame?.camera.transform else { return }
@@ -96,21 +108,20 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             translation.columns.3.x = 0
             translation.columns.3.y = 0
             translation.columns.3.z = -0.2
-            sphereNode.simdTransform = matrix_multiply(cameraTransform, translation)
+            planeNode.simdTransform = matrix_multiply(cameraTransform, translation)
             
             // Place the sphere in front of the camera
-            scene.rootNode.addChildNode(sphereNode)
+            scene.rootNode.addChildNode(planeNode)
             whiteBallCount += 1
             
-            let currentPoint = sphereNode.position
+            let currentPoint = planeNode.position
             if let previousPoint = previousPoint {
                 let distance = abs(previousPoint.distance(vector: currentPoint))
-                if distance > 0.01 {
+                if distance > 0.0055 {
                     drawSpheresBetween(point1: previousPoint, andPoint2: currentPoint)
                 }
             }
             self.previousPoint = currentPoint
         }
     }
-    
 }
