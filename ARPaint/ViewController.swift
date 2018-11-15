@@ -21,18 +21,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var redBallCount = 0
     var whiteBallCount = 0
     var label: UILabel!
-    let circle: SKScene! = {
-        let circle = SKShapeNode(circleOfRadius: 30) // Create circle
-        circle.position = CGPoint(x: 50, y: 50)  // Center (given scene anchor point is 0.5 for x&y)
-        circle.glowWidth = 30
-        circle.lineCap = .round
-        circle.strokeColor = SKColor.clear
-        circle.fillColor = SKColor.orange
-        let skScene = SKScene(size: CGSize(width: 100, height: 100))
-        skScene.backgroundColor = .clear
-        skScene.addChild(circle)
-        return skScene
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,12 +64,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         
         for i in 0...((numberOfCirclesToCreate > 1) ? (numberOfCirclesToCreate - 1) : numberOfCirclesToCreate) {
-            let plane = SCNPlane(width: 0.02, height: 0.02)
-            plane.firstMaterial?.diffuse.contents = circle
-            let planeNode = SCNNode(geometry: plane)
-            planeNode.constraints = [SCNBillboardConstraint()]
-            planeNode.position = point1 + (vectorBANormalized * (Float(i) * distanceBetweenEachCircle))
-            self.sceneView.scene.rootNode.addChildNode(planeNode)
+            let sphere = SCNSphere(radius: 0.01)
+            sphere.firstMaterial?.diffuse.contents = UIColor.red
+            let sphereNode = SCNNode(geometry: sphere)
+            
+            sphereNode.position = point1 + (vectorBANormalized * (Float(i) * distanceBetweenEachCircle))
+            self.sceneView.scene.rootNode.addChildNode(sphereNode)
             redBallCount += 1
         }
     }
@@ -104,11 +92,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     // MARK: SCNSceneRendererDelegate methods
     func renderer(_ renderer: SCNSceneRenderer, willRenderScene scene: SCNScene, atTime time: TimeInterval) {
         if screenTouched {
-            
-            let plane = SCNPlane(width: 0.02, height: 0.02)
-            plane.firstMaterial?.diffuse.contents = circle
-            let planeNode = SCNNode(geometry: plane)
-            planeNode.constraints = [SCNBillboardConstraint()]
+
+            let sphere = SCNSphere(radius: 0.01)
+            sphere.firstMaterial?.diffuse.contents = UIColor.red
+            let sphereNode = SCNNode(geometry: sphere)
             
             // Move the node in front of the camera
             guard let cameraTransform = sceneView.session.currentFrame?.camera.transform else { return }
@@ -116,13 +103,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             translation.columns.3.x = 0
             translation.columns.3.y = 0
             translation.columns.3.z = -0.2
-            planeNode.simdTransform = matrix_multiply(cameraTransform, translation)
+            sphereNode.simdTransform = matrix_multiply(cameraTransform, translation)
             
             // Place the sphere in front of the camera
-            scene.rootNode.addChildNode(planeNode)
+            scene.rootNode.addChildNode(sphereNode)
             whiteBallCount += 1
             
-            let currentPoint = planeNode.position
+            let currentPoint = sphereNode.position
             if let previousPoint = previousPoint {
                 let distance = abs(previousPoint.distance(vector: currentPoint))
                 if distance > 0.0055 {
