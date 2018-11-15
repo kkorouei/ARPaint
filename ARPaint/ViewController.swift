@@ -22,11 +22,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var whiteBallCount = 0
     var label: UILabel!
     let circle: SKScene! = {
-        let circle = SKShapeNode(circleOfRadius: 5) // Create circle
-        circle.position = CGPoint(x: 5, y: 5)  // Center (given scene anchor point is 0.5 for x&y)
+        let circle = SKShapeNode(circleOfRadius: 30) // Create circle
+        circle.position = CGPoint(x: 50, y: 50)  // Center (given scene anchor point is 0.5 for x&y)
+        circle.glowWidth = 30
+        circle.lineCap = .round
         circle.strokeColor = SKColor.clear
         circle.fillColor = SKColor.orange
-        let skScene = SKScene(size: CGSize(width: 10, height: 10))
+        let skScene = SKScene(size: CGSize(width: 100, height: 100))
         skScene.backgroundColor = .clear
         skScene.addChild(circle)
         return skScene
@@ -131,7 +133,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             
             DispatchQueue.main.async {
                 self.label.text = "\(self.redBallCount + self.whiteBallCount)"
-            }            
+            }
         }
     }
     
