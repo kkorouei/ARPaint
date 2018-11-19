@@ -8,22 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		728496CA2193FB4200FD2C26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728496C92193FB4200FD2C26 /* AppDelegate.swift */; };
-		728496CC2193FB4200FD2C26 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 728496CB2193FB4200FD2C26 /* art.scnassets */; };
 		728496CE2193FB4200FD2C26 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728496CD2193FB4200FD2C26 /* ViewController.swift */; };
 		728496D12193FB4200FD2C26 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 728496CF2193FB4200FD2C26 /* Main.storyboard */; };
 		728496D32193FB4400FD2C26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 728496D22193FB4400FD2C26 /* Assets.xcassets */; };
 		728496D62193FB4400FD2C26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 728496D42193FB4400FD2C26 /* LaunchScreen.storyboard */; };
+		728630012199477900922B63 /* SCNVector3+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728630002199477900922B63 /* SCNVector3+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		728496C62193FB4200FD2C26 /* ARPaint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARPaint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		728496C92193FB4200FD2C26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		728496CB2193FB4200FD2C26 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		728496CD2193FB4200FD2C26 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		728496D02193FB4200FD2C26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		728496D22193FB4400FD2C26 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		728496D52193FB4400FD2C26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		728496D72193FB4400FD2C26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		728630002199477900922B63 /* SCNVector3+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,8 +57,8 @@
 			isa = PBXGroup;
 			children = (
 				728496C92193FB4200FD2C26 /* AppDelegate.swift */,
-				728496CB2193FB4200FD2C26 /* art.scnassets */,
 				728496CD2193FB4200FD2C26 /* ViewController.swift */,
+				728630002199477900922B63 /* SCNVector3+Extensions.swift */,
 				728496CF2193FB4200FD2C26 /* Main.storyboard */,
 				728496D22193FB4400FD2C26 /* Assets.xcassets */,
 				728496D42193FB4400FD2C26 /* LaunchScreen.storyboard */,
@@ -125,7 +125,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				728496CC2193FB4200FD2C26 /* art.scnassets in Resources */,
 				728496D62193FB4400FD2C26 /* LaunchScreen.storyboard in Resources */,
 				728496D32193FB4400FD2C26 /* Assets.xcassets in Resources */,
 				728496D12193FB4200FD2C26 /* Main.storyboard in Resources */,
@@ -140,6 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				728496CE2193FB4200FD2C26 /* ViewController.swift in Sources */,
+				728630012199477900922B63 /* SCNVector3+Extensions.swift in Sources */,
 				728496CA2193FB4200FD2C26 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,6 +289,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R7ZVS3ML7R;
 				INFOPLIST_FILE = ARPaint/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -307,6 +308,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R7ZVS3ML7R;
 				INFOPLIST_FILE = ARPaint/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
