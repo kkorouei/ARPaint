@@ -20,6 +20,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     var whiteBallCount = 0
     var label: UILabel!
+    lazy var sphereNode: SCNNode = {
+        let sphere = SCNSphere(radius: 0.005)
+        sphere.firstMaterial?.diffuse.contents = UIColor.white
+        return SCNNode(geometry: sphere)
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,11 +102,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func createSphereAndInsert(atPosition position: SCNVector3) {
-        let sphere = SCNSphere(radius: 0.005)
-        sphere.firstMaterial?.diffuse.contents = UIColor.white
-        let sphereNode = SCNNode(geometry: sphere)
-        sphereNode.position = position
-        sceneView.scene.rootNode.addChildNode(sphereNode)
+        let newSphereNode = sphereNode.clone()
+        newSphereNode.position = position
+        sceneView.scene.rootNode.addChildNode(newSphereNode)
         whiteBallCount += 1
     }
     
