@@ -31,7 +31,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
         // Add label
         label = UILabel(frame: CGRect(x: 20, y: 20, width: 100, height: 40))
-        label.text = "hello"
         sceneView.addSubview(label)
     }
     
@@ -82,27 +81,44 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         previousPoint = nil
     }
     
-    // MARK: SCNSceneRendererDelegate methods
+    
+    // Gets the position of the point in front of the camera
+    func getPositionInFrontOfCamera(byAmount amount: Float) -> SCNVector3? {
+        guard let cameraTransform = sceneView.session.currentFrame?.camera.transform else { return nil }
+        var translation = matrix_identity_float4x4
+        translation.columns.3.x = 0
+        translation.columns.3.y = 0
+        translation.columns.3.z = amount
+        let currentPointTransform = matrix_multiply(cameraTransform, translation)
+        // Convert to SCNVector3
+        return SCNVector3Make(currentPointTransform.columns.3.x,
+                              currentPointTransform.columns.3.y,
+                              currentPointTransform.columns.3.z)
+    }
+    
+    func createSphereAndInsert(atPosition position: SCNVector3) {
+        let sphere = SCNSphere(radius: 0.005)
+        sphere.firstMaterial?.diffuse.contents = UIColor.white
+        let sphereNode = SCNNode(geometry: sphere)
+        sphereNode.position = position
+        sceneView.scene.rootNode.addChildNode(sphereNode)
+        whiteBallCount += 1
+    }
+    
+}
+
+// MARK: SCNSceneRendererDelegate methods
+extension ViewController {
     func renderer(_ renderer: SCNSceneRenderer, willRenderScene scene: SCNScene, atTime time: TimeInterval) {
         if screenTouched {
             
-            guard let cameraTransform = sceneView.session.currentFrame?.camera.transform else { return }
-            var translation = matrix_identity_float4x4
-            translation.columns.3.x = 0
-            translation.columns.3.y = 0
-            translation.columns.3.z = -0.2
-            let currentPointTransform = matrix_multiply(cameraTransform, translation)
-            // Convert to SCNVector3
-            let currentPointPosition = SCNVector3Make(currentPointTransform.columns.3.x,
-                                                      currentPointTransform.columns.3.y,
-                                                      currentPointTransform.columns.3.z)
+            guard let currentPointPosition = getPositionInFrontOfCamera(byAmount: -0.2) else { return }
             
             if let previousPoint = previousPoint {
                 // Do not create any new spheres if the distance hasn't changed much
                 let distance = abs(previousPoint.distance(vector: currentPointPosition))
                 if distance > 0.0026 {
                     createSphereAndInsert(atPosition: currentPointPosition)
-                    
                     drawCirclesBetween(point1: previousPoint, andPoint2: currentPointPosition)
                     self.previousPoint = currentPointPosition
                 }
@@ -116,14 +132,4 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             }
         }
     }
-    
-    func createSphereAndInsert(atPosition position: SCNVector3) {
-        let sphere = SCNSphere(radius: 0.005)
-        sphere.firstMaterial?.diffuse.contents = UIColor.white
-        let sphereNode = SCNNode(geometry: sphere)
-        sphereNode.position = position
-        sceneView.scene.rootNode.addChildNode(sphereNode)
-        whiteBallCount += 1
-    }
-    
 }
