@@ -25,7 +25,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sphere.firstMaterial?.diffuse.contents = UIColor.white
         return SCNNode(geometry: sphere)
     }()
-    var parentNode: SCNNode?
+    
+    var strokes: [SCNNode] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,9 +76,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     // MARK: Touches
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // create a new empty node and use that as the parent node to add to the view
-        let node = SCNNode()
-        sceneView.scene.rootNode.addChildNode(node)
-        parentNode = node
+        let currentStrokeNode = SCNNode()
+        sceneView.scene.rootNode.addChildNode(currentStrokeNode)
+        strokes.append(currentStrokeNode)
         screenTouched = true
     }
 
@@ -110,11 +111,24 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let newSphereNode = sphereNode.clone()
         newSphereNode.position = position
         sceneView.scene.rootNode.addChildNode(newSphereNode)
-        guard let lastParentNode = parentNode else {return }
-        lastParentNode.addChildNode(newSphereNode)
+        guard let currentStrokeNode = strokes.last else {return }
+        currentStrokeNode.addChildNode(newSphereNode)
         whiteBallCount += 1
     }
     
+    // MARK:- IBActions
+    @IBAction func deleteAllButtonPressed(_ sender: UIButton) {
+        for stroke in strokes {
+            stroke.removeFromParentNode()
+            self.strokes.removeLast(1)
+        }
+    }
+    
+    @IBAction func undoButtonPressed(_ sender: UIButton) {
+        guard let lastStroke = strokes.last else { return }
+        lastStroke.removeFromParentNode()
+        self.strokes.removeLast(1)
+    }
 }
 
 // MARK: SCNSceneRendererDelegate methods
