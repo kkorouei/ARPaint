@@ -25,6 +25,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sphere.firstMaterial?.diffuse.contents = UIColor.white
         return SCNNode(geometry: sphere)
     }()
+    var parentNode: SCNNode?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,7 +57,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func drawCirclesBetween(point1: SCNVector3, andPoint2 point2: SCNVector3){
         // Calculate the distance between previous point and current point
         let distance = point1.distance(vector: point2)
-        let distanceBetweenEachCircle: Float = 0.0025
+        let distanceBetweenEachCircle: Float = 0.00025
         let numberOfCirclesToCreate = Int(distance / distanceBetweenEachCircle)
         
         // https://math.stackexchange.com/a/83419
@@ -73,6 +74,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     // MARK: Touches
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // create a new empty node and use that as the parent node to add to the view
+        let node = SCNNode()
+        sceneView.scene.rootNode.addChildNode(node)
+        parentNode = node
         screenTouched = true
     }
 
@@ -105,6 +110,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let newSphereNode = sphereNode.clone()
         newSphereNode.position = position
         sceneView.scene.rootNode.addChildNode(newSphereNode)
+        guard let lastParentNode = parentNode else {return }
+        lastParentNode.addChildNode(newSphereNode)
         whiteBallCount += 1
     }
     
@@ -120,7 +127,7 @@ extension ViewController {
             if let previousPoint = previousPoint {
                 // Do not create any new spheres if the distance hasn't changed much
                 let distance = abs(previousPoint.distance(vector: currentPointPosition))
-                if distance > 0.0026 {
+                if distance > 0.00026 {
                     createSphereAndInsert(atPosition: currentPointPosition)
                     drawCirclesBetween(point1: previousPoint, andPoint2: currentPointPosition)
                     self.previousPoint = currentPointPosition
