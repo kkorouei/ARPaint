@@ -129,6 +129,60 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         lastStroke.removeFromParentNode()
         self.strokes.removeLast(1)
     }
+    
+    @IBAction func playButtonPressed(_ sender: UIButton) {
+        print("Play button pressed")
+        // remove the previous stroke from the rootNode
+        guard let stroke = strokes.last else { return }
+        stroke.removeFromParentNode()
+        strokes.removeLast(1)
+        // create a new empty stroke node and add it to the scene
+//        let newStroke = SCNNode()
+//        sceneView.scene.rootNode.addChildNode(newStroke)
+        // take the balls, one by one, from the previous stroke and add it to the new stroke
+        makeActionWithIndex(node: stroke, index: 0)
+//        var count = 0
+//        for sphere in stroke.childNodes {
+//            print("1")
+//                print("2")
+//                if count == 100 {
+//                    self.sceneView.scene.rootNode.addChildNode(sphere)
+//                    print("3")
+//                    count = 0
+//                } else {
+//                    count += 1
+//                }
+//        }
+        // add the new stroke to our array of strokes
+//        strokes.append(newStroke)
+    }
+
+    func actionForObjectWithIndex(index: Int, andNode node: SCNNode, completion block: (_ nextIndex: Int) -> Void) {
+        print("index: \(index) childCount: \(node.childNodes.count)")
+        guard index >= 0 && index != (node.childNodes.count - 1) else {
+            return
+        }
+        
+        // do what you need with object in array like enemyNodeArray[index]...
+            // Then call completion
+        // Get the sphere and add it to the scene
+        if index % 100 == 0 {
+                let sphereNode = node.childNodes[index]
+                self.sceneView.scene.rootNode.addChildNode(sphereNode)
+        }
+        block(index + 1)
+    }
+    // TODO:- Make sure you check memory usage after animation is complete
+    
+    func makeActionWithIndex(node: SCNNode, index: Int) {
+        actionForObjectWithIndex(index: index, andNode: node, completion: {(nextIndex: Int) -> Void in
+            self.makeActionWithIndex(node: node, index: nextIndex)
+        })
+    }
+    
+//    if !enemyNodeArray.isEmpty {
+//    makeActionWithIndex(0)
+//    }
 }
 
 // MARK: SCNSceneRendererDelegate methods

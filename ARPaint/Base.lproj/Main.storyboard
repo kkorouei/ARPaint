@@ -36,9 +36,17 @@
                                     <action selector="undoButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="ZLA-6q-Uaz"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2cM-3f-A9x">
+                                <rect key="frame" x="172.5" y="617" width="30" height="30"/>
+                                <state key="normal" title="Play"/>
+                                <connections>
+                                    <action selector="playButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="rHR-dM-Cvo"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="fQZ-KI-GVf" firstAttribute="bottom" secondItem="2cM-3f-A9x" secondAttribute="bottom" constant="20" id="4GF-bJ-cFE"/>
                             <constraint firstItem="Y43-5Y-xum" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="40" id="BaV-rf-jH7"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="GsS-dJ-CKf"/>
                             <constraint firstItem="oJU-TB-26W" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="40" id="MCI-8l-stM"/>
@@ -47,6 +55,7 @@
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="trailing" secondItem="fQZ-KI-GVf" secondAttribute="trailing" id="XyZ-9z-H8e"/>
                             <constraint firstItem="oJU-TB-26W" firstAttribute="leading" secondItem="Y43-5Y-xum" secondAttribute="trailing" constant="20" id="iFu-Gh-by0"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="top" secondItem="U0K-SW-4ec" secondAttribute="top" id="rJc-2c-zQA"/>
+                            <constraint firstItem="2cM-3f-A9x" firstAttribute="centerX" secondItem="U0K-SW-4ec" secondAttribute="centerX" id="vW2-52-psf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fQZ-KI-GVf"/>
                     </view>
