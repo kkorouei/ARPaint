@@ -13,6 +13,7 @@ import ARKit
 class ViewController: UIViewController, ARSCNViewDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var mappingStatusLabel: UILabel!
     
     var screenTouched = false
     var previousPoint: SCNVector3?
@@ -38,6 +39,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
         // Add label
         label = UILabel(frame: CGRect(x: 20, y: 20, width: 100, height: 40))
+        label.textColor = UIColor.orange
         sceneView.addSubview(label)
     }
     
@@ -129,6 +131,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         lastStroke.removeFromParentNode()
         self.strokes.removeLast(1)
     }
+    
+    @IBAction func saveButtonPressed(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction func loadButtonPressed(_ sender: UIButton) {
+        
+    }
+    
 }
 
 // MARK: SCNSceneRendererDelegate methods

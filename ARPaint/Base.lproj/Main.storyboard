@@ -21,36 +21,82 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </arscnView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y43-5Y-xum">
-                                <rect key="frame" x="20" y="60" width="66" height="30"/>
+                                <rect key="frame" x="20" y="60" width="66" height="50"/>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="66" id="HYY-Ac-mEG"/>
+                                    <constraint firstAttribute="height" constant="50" id="rV4-jI-Giw"/>
+                                </constraints>
                                 <state key="normal" title="Delete All"/>
                                 <connections>
                                     <action selector="deleteAllButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Jdd-vZ-LUv"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oJU-TB-26W">
-                                <rect key="frame" x="106" y="60" width="37" height="30"/>
+                                <rect key="frame" x="106" y="60" width="60" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="Lm6-OH-zGC"/>
+                                    <constraint firstAttribute="height" constant="50" id="ZuC-fx-6Ds"/>
+                                </constraints>
                                 <state key="normal" title="Undo"/>
                                 <connections>
                                     <action selector="undoButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="ZLA-6q-Uaz"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9P4-8G-agT">
+                                <rect key="frame" x="16" y="597" width="60" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="iHd-8S-ayE"/>
+                                    <constraint firstAttribute="height" constant="50" id="ria-Fd-SLm"/>
+                                </constraints>
+                                <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="saveButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="vpH-5W-bn1"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tg2-6H-rVr">
+                                <rect key="frame" x="96" y="597" width="60" height="50"/>
+                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="E5m-db-Rw2"/>
+                                    <constraint firstAttribute="width" constant="60" id="lhm-tX-AQW"/>
+                                </constraints>
+                                <state key="normal" title="Load"/>
+                                <connections>
+                                    <action selector="loadButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="5Yb-BD-udW"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZX3-Xu-q8s">
+                                <rect key="frame" x="16" y="568" width="49.5" height="21"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.11451736543814517" green="1" blue="0.03968375480556241" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="fQZ-KI-GVf" firstAttribute="bottom" secondItem="9P4-8G-agT" secondAttribute="bottom" constant="20" id="1d7-x9-Ctw"/>
+                            <constraint firstItem="fQZ-KI-GVf" firstAttribute="bottom" secondItem="tg2-6H-rVr" secondAttribute="bottom" constant="20" id="9oL-LO-30I"/>
                             <constraint firstItem="Y43-5Y-xum" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="40" id="BaV-rf-jH7"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="GsS-dJ-CKf"/>
                             <constraint firstItem="oJU-TB-26W" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="40" id="MCI-8l-stM"/>
+                            <constraint firstItem="9P4-8G-agT" firstAttribute="top" secondItem="ZX3-Xu-q8s" secondAttribute="bottom" constant="8" id="ULu-0d-qJD"/>
                             <constraint firstItem="Y43-5Y-xum" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="20" id="V7b-T5-DSJ"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="bottom" secondItem="fQZ-KI-GVf" secondAttribute="bottom" id="VpT-BR-CcM"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="trailing" secondItem="fQZ-KI-GVf" secondAttribute="trailing" id="XyZ-9z-H8e"/>
+                            <constraint firstItem="ZX3-Xu-q8s" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="16" id="bnB-Qh-Eb8"/>
+                            <constraint firstItem="9P4-8G-agT" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="16" id="dql-RW-LtF"/>
                             <constraint firstItem="oJU-TB-26W" firstAttribute="leading" secondItem="Y43-5Y-xum" secondAttribute="trailing" constant="20" id="iFu-Gh-by0"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="top" secondItem="U0K-SW-4ec" secondAttribute="top" id="rJc-2c-zQA"/>
+                            <constraint firstItem="tg2-6H-rVr" firstAttribute="leading" secondItem="9P4-8G-agT" secondAttribute="trailing" constant="20" id="ry6-oI-o4a"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fQZ-KI-GVf"/>
                     </view>
                     <connections>
+                        <outlet property="mappingStatusLabel" destination="ZX3-Xu-q8s" id="XGd-uZ-gyx"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
                     </connections>
                 </viewController>
