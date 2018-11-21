@@ -10,10 +10,12 @@ import UIKit
 import SceneKit
 import ARKit
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
     @IBOutlet weak var mappingStatusLabel: UILabel!
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var loadButton: UIButton!
     
     var screenTouched = false
     var previousPoint: SCNVector3?
@@ -33,6 +35,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         super.viewDidLoad()
         
         sceneView.delegate = self
+        sceneView.session.delegate = self
         sceneView.showsStatistics = true
         let scene = SCNScene()
         sceneView.scene = scene
@@ -118,6 +121,25 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         whiteBallCount += 1
     }
     
+    func writeWorldMap(_ worldMap: ARWorldMap, to url: URL) throws {
+        let data = try NSKeyedArchiver.archivedData(withRootObject: worldMap, requiringSecureCoding: true)
+        try data.write(to: url)
+    }
+    
+    func loadWorldMap(from url: URL) throws -> ARWorldMap {
+        let mapData = try Data(contentsOf: url)
+        guard let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: mapData)
+            else { throw ARError(.invalidWorldMap) }
+        return worldMap
+    }
+    
+    func getDocumentsDirectory() -> URL {
+        var paths = NSSearchPathForDirectoriesInDomains(.documentDirectory,
+                                                        .userDomainMask,
+                                                        true) as [String]
+        return URL(fileURLWithPath: paths.first!)
+    }
+    
     // MARK:- IBActions
     @IBAction func deleteAllButtonPressed(_ sender: UIButton) {
         for stroke in strokes {
@@ -133,13 +155,59 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
-        
+        sceneView.session.getCurrentWorldMap { (worldMap, error) in
+            guard let map = worldMap else {
+                // Show error
+                print("Can't get world map: \(error!.localizedDescription)")
+                return
+            }
+            // Save the map
+            let pathToSave = self.getDocumentsDirectory().appendingPathComponent("test")
+            do {
+                try self.writeWorldMap(map, to: pathToSave)
+                print("Map saved succesfully")
+                self.loadButton.isHidden = false
+            } catch {
+                print("Could not save the map. \(error.localizedDescription)")
+            }
+        }
     }
     
     @IBAction func loadButtonPressed(_ sender: UIButton) {
+        do {
+            let map = try loadWorldMap(from: getDocumentsDirectory().appendingPathComponent("test"))
+            // run a new session
+            let configuration = ARWorldTrackingConfiguration()
+            configuration.initialWorldMap = map
+            sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+            print("Map successfuly loaded")
+        } catch {
+            print("Could not load the map. \(error.localizedDescription)")
+        }
+    }
+    
+    
+    // MARK:- ARSessionDelegate
+    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
         
     }
     
+    func session(_ session: ARSession, didUpdate frame: ARFrame) {
+        switch frame.worldMappingStatus {
+        case .notAvailable:
+            mappingStatusLabel.text = "not available"
+            saveButton.isHidden = true
+        case .limited:
+            mappingStatusLabel.text = "limited"
+            saveButton.isHidden = true
+        case .extending:
+            mappingStatusLabel.text = "extending"
+            saveButton.isHidden = false
+        case .mapped:
+            mappingStatusLabel.text = "mapped"
+            saveButton.isHidden = false
+        }
+    }
 }
 
 // MARK: SCNSceneRendererDelegate methods
@@ -167,4 +235,6 @@ extension ViewController {
             }
         }
     }
+    
+    
 }

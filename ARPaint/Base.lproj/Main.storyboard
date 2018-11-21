@@ -44,7 +44,7 @@
                                     <action selector="undoButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="ZLA-6q-Uaz"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9P4-8G-agT">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9P4-8G-agT">
                                 <rect key="frame" x="16" y="597" width="60" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -56,7 +56,7 @@
                                     <action selector="saveButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="vpH-5W-bn1"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tg2-6H-rVr">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tg2-6H-rVr">
                                 <rect key="frame" x="96" y="597" width="60" height="50"/>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -96,7 +96,9 @@
                         <viewLayoutGuide key="safeArea" id="fQZ-KI-GVf"/>
                     </view>
                     <connections>
+                        <outlet property="loadButton" destination="tg2-6H-rVr" id="MEv-yv-bBy"/>
                         <outlet property="mappingStatusLabel" destination="ZX3-Xu-q8s" id="XGd-uZ-gyx"/>
+                        <outlet property="saveButton" destination="9P4-8G-agT" id="yN1-42-6SY"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
                     </connections>
                 </viewController>
