@@ -166,6 +166,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                 print("Can't get world map: \(error!.localizedDescription)")
                 return
             }
+            // Create a StrokeARAnchor and add it to the map
+            guard let strokeARAnchor = StrokeARAnchor(capturing: self.sceneView) else {
+                return
+            }
+            // Get all the sphere nodes position and add them to the strokeAnchor
+            guard let currentStroke = self.strokes.last else {
+                print("No strokes available")
+                return
+            }
+            for sphere in currentStroke.childNodes {
+                strokeARAnchor.someArray.append([sphere.position.x, sphere.position.y, sphere.position.z])
+            }
+            map.anchors.append(strokeARAnchor)
             // Save the map
             let pathToSave = self.getDocumentsDirectory().appendingPathComponent("test")
             do {
@@ -197,6 +210,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        if let strokeAnchor = anchor as? StrokeARAnchor {
+            print("This is a stroke anchor")
+            for node in strokeAnchor.someArray {
+                createSphereAndInsert(atPosition: SCNVector3Make(node[0], node[1], node[2]))
+                print("x:\(node[0]) y:\(node[1]) z:\(node[2])")
+            }
+        }
         let cube = SCNBox(width: 0.02, height: 0.02, length: 0.02, chamferRadius: 0)
         cube.firstMaterial?.diffuse.contents = UIColor.green
         let cubeNode = SCNNode(geometry: cube)
