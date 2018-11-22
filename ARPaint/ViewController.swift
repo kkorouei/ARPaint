@@ -85,6 +85,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         sceneView.scene.rootNode.addChildNode(currentStrokeNode)
         strokes.append(currentStrokeNode)
         screenTouched = true
+        // Create an anchor
+        let myAnchor = ARAnchor(name: "anchor1", transform: sceneView.pointOfView!.simdWorldTransform)
+        sceneView.session.add(anchor: myAnchor)
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -129,12 +132,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     func loadWorldMap(from url: URL) throws -> ARWorldMap {
         let mapData = try Data(contentsOf: url)
         guard let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: mapData)
-            else { throw ARError(.invalidWorldMap) }
+            else {
+                throw ARError(.invalidWorldMap)
+        }
         return worldMap
     }
     
     func getDocumentsDirectory() -> URL {
-        var paths = NSSearchPathForDirectoriesInDomains(.documentDirectory,
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory,
                                                         .userDomainMask,
                                                         true) as [String]
         return URL(fileURLWithPath: paths.first!)
@@ -179,11 +184,23 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             // run a new session
             let configuration = ARWorldTrackingConfiguration()
             configuration.initialWorldMap = map
+            // temp
+            for stroke in strokes {
+                stroke.removeFromParentNode()
+                self.strokes.removeLast(1)
+            }
             sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
             print("Map successfuly loaded")
         } catch {
             print("Could not load the map. \(error.localizedDescription)")
         }
+    }
+    
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        let cube = SCNBox(width: 0.02, height: 0.02, length: 0.02, chamferRadius: 0)
+        cube.firstMaterial?.diffuse.contents = UIColor.green
+        let cubeNode = SCNNode(geometry: cube)
+        node.addChildNode(cubeNode)
     }
     
     
