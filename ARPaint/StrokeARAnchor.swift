@@ -13,10 +13,9 @@ import ARKit
 class StrokeARAnchor: ARAnchor {
     
     let imageData: Data
-    var someRandomString: String = ""
-    var someArray: [[Float]] = []
+    var sphereLocations: [[Float]] = []
     
-    convenience init?(capturing view: ARSCNView) {
+    convenience init?(name: String, capturing view: ARSCNView) {
         guard let frame = view.session.currentFrame
             else { return nil }
         
@@ -28,19 +27,21 @@ class StrokeARAnchor: ARAnchor {
                                                     colorSpace: CGColorSpaceCreateDeviceRGB(),
                                                     options: [kCGImageDestinationLossyCompressionQuality as CIImageRepresentationOption: 0.7])
             else { return nil }
-        
-        self.init(imageData: data, transform: frame.camera.transform)
+        // This anchor position should be zero (For now)
+        let zeroPosition = SCNVector3Make(0, 0, 0)
+        let x = SCNNode()
+        x.position = zeroPosition
+        self.init(name: name, imageData: data, transform: x.simdTransform)//frame.camera.transform)
     }
     
-    init(imageData: Data, transform: float4x4) {
+    init(name: String, imageData: Data, transform: float4x4) {
         self.imageData = imageData
-        self.someRandomString = "heyho"
-        self.someArray = [[1,2,3], [1,1,1]]
-        super.init(name: "snapshot", transform: transform)
+        super.init(name: name, transform: transform)
     }
     
     required init(anchor: ARAnchor) {
         self.imageData = (anchor as! StrokeARAnchor).imageData
+        self.sphereLocations = (anchor as! StrokeARAnchor).sphereLocations
         super.init(anchor: anchor)
     }
     
@@ -50,15 +51,12 @@ class StrokeARAnchor: ARAnchor {
     
     required init?(coder aDecoder: NSCoder) {
         if let snapshot = aDecoder.decodeObject(forKey: "snapshot") as? Data,
-            let randomText = aDecoder.decodeObject(forKey: "randomString") as? String,
-            let someArray = aDecoder.decodeObject(forKey: "array") as? [[Float]]{
+            let sphereLocations = aDecoder.decodeObject(forKey: "array") as? [[Float]]{
             self.imageData = snapshot
-            self.someRandomString = randomText
-            self.someArray = someArray
+            self.sphereLocations = sphereLocations
         } else {
             return nil
         }
-        
         
         super.init(coder: aDecoder)
     }
@@ -66,12 +64,10 @@ class StrokeARAnchor: ARAnchor {
     override func encode(with aCoder: NSCoder) {
         super.encode(with: aCoder)
         aCoder.encode(imageData, forKey: "snapshot")
-        aCoder.encode(someRandomString, forKey: "randomString")
-        aCoder.encode(someArray, forKey: "array")
+        aCoder.encode(sphereLocations, forKey: "array")
     }
     
 }
-
 
 extension CGImagePropertyOrientation {
     /// Preferred image presentation orientation respecting the native sensor orientation of iOS device camera.
