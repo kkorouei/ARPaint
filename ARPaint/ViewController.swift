@@ -44,6 +44,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         label = UILabel(frame: CGRect(x: 20, y: 20, width: 100, height: 40))
         label.textColor = UIColor.orange
         sceneView.addSubview(label)
+        
+        // Check to see if any previous maps have been saved
+        do {
+            let _ = try loadWorldMap(from: getDocumentsDirectory().appendingPathComponent("test"))
+            loadButton.isHidden = false
+        } catch {
+            print("No previous map exists")
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,11 +97,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         screenTouched = false
         previousPoint = nil
+        currentStrokeAnchorNode = nil
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         screenTouched = false
         previousPoint = nil
+        currentStrokeAnchorNode = nil
     }
     
     
@@ -252,7 +262,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 // MARK: SCNSceneRendererDelegate methods
 extension ViewController {
     func renderer(_ renderer: SCNSceneRenderer, willRenderScene scene: SCNScene, atTime time: TimeInterval) {
-//        guard let currentStrokeAnchorID = currentStrokeAnchorID else { return }
         guard let currentStrokeAnchorID = strokeIDs.last else { return }
         let currentStrokeAnchor = anchorForID(currentStrokeAnchorID)
         if screenTouched && currentStrokeAnchor != nil {
