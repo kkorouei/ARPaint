@@ -13,7 +13,7 @@
 		728496D32193FB4400FD2C26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 728496D22193FB4400FD2C26 /* Assets.xcassets */; };
 		728496D62193FB4400FD2C26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 728496D42193FB4400FD2C26 /* LaunchScreen.storyboard */; };
 		728630012199477900922B63 /* SCNVector3+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728630002199477900922B63 /* SCNVector3+Extensions.swift */; };
-		72B8A60421A69AEF00B6F814 /* StrokeARAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B8A60321A69AEF00B6F814 /* StrokeARAnchor.swift */; };
+		72B8A60421A69AEF00B6F814 /* StrokeAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B8A60321A69AEF00B6F814 /* StrokeAnchor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +25,7 @@
 		728496D52193FB4400FD2C26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		728496D72193FB4400FD2C26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		728630002199477900922B63 /* SCNVector3+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extensions.swift"; sourceTree = "<group>"; };
-		72B8A60321A69AEF00B6F814 /* StrokeARAnchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeARAnchor.swift; sourceTree = "<group>"; };
+		72B8A60321A69AEF00B6F814 /* StrokeAnchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeAnchor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +60,7 @@
 			children = (
 				728496C92193FB4200FD2C26 /* AppDelegate.swift */,
 				728496CD2193FB4200FD2C26 /* ViewController.swift */,
-				72B8A60321A69AEF00B6F814 /* StrokeARAnchor.swift */,
+				72B8A60321A69AEF00B6F814 /* StrokeAnchor.swift */,
 				72AF7BE021A8158700F11B68 /* Extensions */,
 				728496CF2193FB4200FD2C26 /* Main.storyboard */,
 				728496D22193FB4400FD2C26 /* Assets.xcassets */,
@@ -150,7 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				728496CE2193FB4200FD2C26 /* ViewController.swift in Sources */,
-				72B8A60421A69AEF00B6F814 /* StrokeARAnchor.swift in Sources */,
+				72B8A60421A69AEF00B6F814 /* StrokeAnchor.swift in Sources */,
 				728630012199477900922B63 /* SCNVector3+Extensions.swift in Sources */,
 				728496CA2193FB4200FD2C26 /* AppDelegate.swift in Sources */,
 			);

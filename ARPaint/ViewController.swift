@@ -28,8 +28,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         return SCNNode(geometry: sphere)
     }()
     
-    var currentStrokeNode: SCNNode?
-    var currentStrokeAnchorID: UUID?
+    var strokeIDs: [UUID] = []
+    var currentStrokeAnchorNode: SCNNode?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,18 +72,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         // Normalize vector BA by dividng it by it's length
         let vectorBANormalized = vectorBA.normalized()
         // This new vector can now be scaled and added to A to find the point at the specified distance
+        guard let currentStrokeAnchorID = strokeIDs.last, let currentStrokeAnchor = anchorForID(currentStrokeAnchorID) else { return }
         for i in 0...((numberOfCirclesToCreate > 1) ? (numberOfCirclesToCreate - 1) : numberOfCirclesToCreate) {
             let position = point1 + (vectorBANormalized * (Float(i) * distanceBetweenEachCircle))
-            let currentStrokeAnchor = anchorForID(currentStrokeAnchorID!)
-            createSphereAndInsert(atPosition: position, andAddToStrokeAnchor: currentStrokeAnchor!)
+            createSphereAndInsert(atPosition: position, andAddToStrokeAnchor: currentStrokeAnchor)
         }
     }
     
     // MARK: Touches
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         screenTouched = true
-        let strokeAnchor = StrokeARAnchor(name: "heyheyhey", capturing: sceneView)
-        currentStrokeAnchorID = strokeAnchor?.identifier
+        let strokeAnchor = StrokeAnchor(name: "heyheyhey", capturing: sceneView)
         sceneView.session.add(anchor: strokeAnchor!)
     }
 
@@ -112,11 +111,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                               currentPointTransform.columns.3.z)
     }
     
-    func createSphereAndInsert(atPosition position: SCNVector3, andAddToStrokeAnchor strokeAnchor: StrokeARAnchor) {
+    func createSphereAndInsert(atPosition position: SCNVector3, andAddToStrokeAnchor strokeAnchor: StrokeAnchor) {
         let newSphereNode = sphereNode.clone()
         newSphereNode.position = position
         // Add the node to the default node of the anchor
-        guard let currentStrokeNode = currentStrokeNode else { return }
+        guard let currentStrokeNode = currentStrokeAnchorNode else { return }
         currentStrokeNode.addChildNode(newSphereNode)
         // Add the position of the node to the stroke anchors sphereLocations array (Used for saving/loading the world map)
         strokeAnchor.sphereLocations.append([newSphereNode.position.x, newSphereNode.position.y, newSphereNode.position.z])
@@ -144,24 +143,35 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         return URL(fileURLWithPath: paths.first!)
     }
     
-    func anchorForID(_ anchorID: UUID) -> StrokeARAnchor? {
+    func anchorForID(_ anchorID: UUID) -> StrokeAnchor? {
         
-        return sceneView.session.currentFrame?.anchors.first(where: { $0.identifier == anchorID }) as? StrokeARAnchor
+        return sceneView.session.currentFrame?.anchors.first(where: { $0.identifier == anchorID }) as? StrokeAnchor
         
     }
     
     // MARK:- IBActions
     @IBAction func deleteAllButtonPressed(_ sender: UIButton) {
-//        for stroke in strokes {
-//            stroke.removeFromParentNode()
-//            self.strokes.removeLast(1)
-//        }
+        for strokeAnchorID in strokeIDs {
+            if let strokeAnchor = anchorForID(strokeAnchorID) {
+                sceneView.session.remove(anchor: strokeAnchor)
+            }
+        }
+        strokeIDs = []
+        currentStrokeAnchorNode = nil
     }
     
     @IBAction func undoButtonPressed(_ sender: UIButton) {
-//        guard let lastStroke = strokes.last else { return }
-//        lastStroke.removeFromParentNode()
-//        self.strokes.removeLast(1)
+        
+        guard let currentStrokeAnchorID = strokeIDs.last, let curentStrokeAnchor = anchorForID(currentStrokeAnchorID) else {
+            print("No stroke to remove")
+            return
+        }
+        sceneView.session.remove(anchor: curentStrokeAnchor)
+        strokeIDs.removeLast(1)
+
+        // add this?
+        currentStrokeAnchorNode = nil
+
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
@@ -189,8 +199,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             // run a new session
             let configuration = ARWorldTrackingConfiguration()
             configuration.initialWorldMap = map
-            currentStrokeNode?.removeFromParentNode()
-            currentStrokeNode = nil
             sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
             print("Map successfuly loaded")
         } catch {
@@ -201,9 +209,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         print("Anchor ADDED *****")
         // This should only be called when loading a worldMap
-        if let strokeAnchor = anchor as? StrokeARAnchor {
+        if let strokeAnchor = anchor as? StrokeAnchor {
             print("This is a stroke anchor")
-            currentStrokeNode = node
+            currentStrokeAnchorNode = node
+            strokeIDs.append(strokeAnchor.identifier)
             for node in strokeAnchor.sphereLocations {
                 createSphereAndInsert(atPosition: SCNVector3Make(node[0], node[1], node[2]), andAddToStrokeAnchor: strokeAnchor)
             }
@@ -218,7 +227,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
         
         print("The current number of anchors in the scene: \(frame.anchors.count)")
-        if let firstStroke = frame.anchors.first as? StrokeARAnchor {
+        if let firstStroke = frame.anchors.first as? StrokeAnchor {
             print("The count of spheres in the first anchor is: \(firstStroke.sphereLocations.count)")
             print("The name of the anchor is: \(firstStroke.name!)")
         }
@@ -243,7 +252,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 // MARK: SCNSceneRendererDelegate methods
 extension ViewController {
     func renderer(_ renderer: SCNSceneRenderer, willRenderScene scene: SCNScene, atTime time: TimeInterval) {
-        guard let currentStrokeAnchorID = currentStrokeAnchorID else { return }
+//        guard let currentStrokeAnchorID = currentStrokeAnchorID else { return }
+        guard let currentStrokeAnchorID = strokeIDs.last else { return }
         let currentStrokeAnchor = anchorForID(currentStrokeAnchorID)
         if screenTouched && currentStrokeAnchor != nil {
             guard let currentPointPosition = getPositionInFrontOfCamera(byAmount: -0.2) else { return }

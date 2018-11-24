@@ -10,7 +10,7 @@
 import UIKit
 import ARKit
 
-class StrokeARAnchor: ARAnchor {
+class StrokeAnchor: ARAnchor {
     
     let imageData: Data
     var sphereLocations: [[Float]] = []
@@ -40,8 +40,8 @@ class StrokeARAnchor: ARAnchor {
     }
     
     required init(anchor: ARAnchor) {
-        self.imageData = (anchor as! StrokeARAnchor).imageData
-        self.sphereLocations = (anchor as! StrokeARAnchor).sphereLocations
+        self.imageData = (anchor as! StrokeAnchor).imageData
+        self.sphereLocations = (anchor as! StrokeAnchor).sphereLocations
         super.init(anchor: anchor)
     }
     
@@ -88,7 +88,7 @@ extension CGImagePropertyOrientation {
 }
 
 extension ARWorldMap {
-    var snapshotAnchor: StrokeARAnchor? {
-        return anchors.compactMap { $0 as? StrokeARAnchor }.first
+    var snapshotAnchor: StrokeAnchor? {
+        return anchors.compactMap { $0 as? StrokeAnchor }.first
     }
 }
