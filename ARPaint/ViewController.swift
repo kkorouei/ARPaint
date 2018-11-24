@@ -71,7 +71,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     func drawCirclesBetween(point1: SCNVector3, andPoint2 point2: SCNVector3){
         // Calculate the distance between previous point and current point
         let distance = point1.distance(vector: point2)
-        let distanceBetweenEachCircle: Float = 0.00025
+        let distanceBetweenEachCircle: Float = 0.0025
         let numberOfCirclesToCreate = Int(distance / distanceBetweenEachCircle)
         
         // https://math.stackexchange.com/a/83419
@@ -154,9 +154,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     func anchorForID(_ anchorID: UUID) -> StrokeAnchor? {
-        
         return sceneView.session.currentFrame?.anchors.first(where: { $0.identifier == anchorID }) as? StrokeAnchor
-        
     }
     
     // MARK:- IBActions
@@ -166,7 +164,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                 sceneView.session.remove(anchor: strokeAnchor)
             }
         }
-        strokeIDs = []
         currentStrokeAnchorNode = nil
     }
     
@@ -177,7 +174,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             return
         }
         sceneView.session.remove(anchor: curentStrokeAnchor)
-        strokeIDs.removeLast(1)
 
         // add this?
         currentStrokeAnchorNode = nil
@@ -210,6 +206,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             let configuration = ARWorldTrackingConfiguration()
             configuration.initialWorldMap = map
             sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+            currentStrokeAnchorNode = nil
             print("Map successfuly loaded")
         } catch {
             print("Could not load the map. \(error.localizedDescription)")
@@ -229,6 +226,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         }
     }
     
+    func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor) {
+        // Remove the anchorID from the strokes array
+        print("Anchor removed")
+        strokeIDs.removeAll(where: { $0 == anchor.identifier })
+    }
+    
     // MARK:- ARSessionDelegate
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
         
@@ -236,11 +239,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
         
-        print("The current number of anchors in the scene: \(frame.anchors.count)")
-        if let firstStroke = frame.anchors.first as? StrokeAnchor {
-            print("The count of spheres in the first anchor is: \(firstStroke.sphereLocations.count)")
-            print("The name of the anchor is: \(firstStroke.name!)")
-        }
+//        print("The current number of anchors in the scene: \(frame.anchors.count)")
+//        if let firstStroke = frame.anchors.first as? StrokeAnchor {
+//            print("The count of spheres in the first anchor is: \(firstStroke.sphereLocations.count)")
+//            print("The name of the anchor is: \(firstStroke.name!)")
+//        }
         
         switch frame.worldMappingStatus {
         case .notAvailable:
@@ -270,7 +273,7 @@ extension ViewController {
             if let previousPoint = previousPoint {
                 // Do not create any new spheres if the distance hasn't changed much
                 let distance = abs(previousPoint.distance(vector: currentPointPosition))
-                if distance > 0.00026 {
+                if distance > 0.0026 {
                     createSphereAndInsert(atPosition: currentPointPosition, andAddToStrokeAnchor: currentStrokeAnchor!)
                     drawCirclesBetween(point1: previousPoint, andPoint2: currentPointPosition)
                     self.previousPoint = currentPointPosition
