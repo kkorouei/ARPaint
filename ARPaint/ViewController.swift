@@ -67,6 +67,15 @@ class ViewController: UIViewController, ARSessionDelegate {
         sceneView.session.pause()
     }
     
+    
+    func reStartSession(withWorldMap worldMap: ARWorldMap) {
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.initialWorldMap = worldMap
+        sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+        currentStrokeAnchorNode = nil
+    }
+    
+    // MARK:- Drawing
     // Draws circles between points of the distance between them is greater than x
     func drawCirclesBetween(point1: SCNVector3, andPoint2 point2: SCNVector3){
         // Calculate the distance between previous point and current point
@@ -85,6 +94,17 @@ class ViewController: UIViewController, ARSessionDelegate {
             let position = point1 + (vectorBANormalized * (Float(i) * distanceBetweenEachCircle))
             createSphereAndInsert(atPosition: position, andAddToStrokeAnchor: currentStrokeAnchor)
         }
+    }
+    
+    func createSphereAndInsert(atPosition position: SCNVector3, andAddToStrokeAnchor strokeAnchor: StrokeAnchor) {
+        let newSphereNode = sphereNode.clone()
+        newSphereNode.position = position
+        // Add the node to the default node of the anchor
+        guard let currentStrokeNode = currentStrokeAnchorNode else { return }
+        currentStrokeNode.addChildNode(newSphereNode)
+        // Add the position of the node to the stroke anchors sphereLocations array (Used for saving/loading the world map)
+        strokeAnchor.sphereLocations.append([newSphereNode.position.x, newSphereNode.position.y, newSphereNode.position.z])
+        whiteBallCount += 1
     }
     
     // MARK: Touches
@@ -119,17 +139,6 @@ class ViewController: UIViewController, ARSessionDelegate {
         return SCNVector3Make(currentPointTransform.columns.3.x,
                               currentPointTransform.columns.3.y,
                               currentPointTransform.columns.3.z)
-    }
-    
-    func createSphereAndInsert(atPosition position: SCNVector3, andAddToStrokeAnchor strokeAnchor: StrokeAnchor) {
-        let newSphereNode = sphereNode.clone()
-        newSphereNode.position = position
-        // Add the node to the default node of the anchor
-        guard let currentStrokeNode = currentStrokeAnchorNode else { return }
-        currentStrokeNode.addChildNode(newSphereNode)
-        // Add the position of the node to the stroke anchors sphereLocations array (Used for saving/loading the world map)
-        strokeAnchor.sphereLocations.append([newSphereNode.position.x, newSphereNode.position.y, newSphereNode.position.z])
-        whiteBallCount += 1
     }
     
     func anchorForID(_ anchorID: UUID) -> StrokeAnchor? {
@@ -190,11 +199,7 @@ class ViewController: UIViewController, ARSessionDelegate {
     @IBAction func loadButtonPressed(_ sender: UIButton) {
         do {
             let map = try loadWorldMap(from: getDocumentsDirectory().appendingPathComponent("test"))
-            // run a new session
-            let configuration = ARWorldTrackingConfiguration()
-            configuration.initialWorldMap = map
-            sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
-            currentStrokeAnchorNode = nil
+            reStartSession(withWorldMap: map)
             print("Map successfuly loaded")
         } catch {
             print("Could not load the map. \(error.localizedDescription)")
