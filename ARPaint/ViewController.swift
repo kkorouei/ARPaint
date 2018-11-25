@@ -10,7 +10,7 @@ import UIKit
 import SceneKit
 import ARKit
 
-class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
+class ViewController: UIViewController, ARSessionDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
     @IBOutlet weak var mappingStatusLabel: UILabel!
@@ -132,27 +132,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         whiteBallCount += 1
     }
     
-    func writeWorldMap(_ worldMap: ARWorldMap, to url: URL) throws {
-        let data = try NSKeyedArchiver.archivedData(withRootObject: worldMap, requiringSecureCoding: true)
-        try data.write(to: url)
-    }
-    
-    func loadWorldMap(from url: URL) throws -> ARWorldMap {
-        let mapData = try Data(contentsOf: url)
-        guard let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: mapData)
-            else {
-                throw ARError(.invalidWorldMap)
-        }
-        return worldMap
-    }
-    
-    func getDocumentsDirectory() -> URL {
-        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory,
-                                                        .userDomainMask,
-                                                        true) as [String]
-        return URL(fileURLWithPath: paths.first!)
-    }
-    
     func anchorForID(_ anchorID: UUID) -> StrokeAnchor? {
         return sceneView.session.currentFrame?.anchors.first(where: { $0.identifier == anchorID }) as? StrokeAnchor
     }
@@ -198,21 +177,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
-        sceneView.session.getCurrentWorldMap { (worldMap, error) in
-            guard let map = worldMap else {
-                // Show error
-                print("Can't get world map: \(error!.localizedDescription)")
-                return
-            }
-            // Save the map
-            let pathToSave = self.getDocumentsDirectory().appendingPathComponent("test")
-            do {
-                try self.writeWorldMap(map, to: pathToSave)
-                print("Map saved succesfully")
+        saveCurrentWorldMap(forSceneView: sceneView) { (success, message) in
+            if success {
                 self.loadButton.isHidden = false
-            } catch {
-                print("Could not save the map. \(error.localizedDescription)")
+            } else {
+                // TODO:- Show alert
             }
+            print(message)
         }
     }
     
@@ -228,25 +199,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         } catch {
             print("Could not load the map. \(error.localizedDescription)")
         }
-    }
-    
-    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        print("Anchor ADDED *****")
-        // This should only be called when loading a worldMap
-        if let strokeAnchor = anchor as? StrokeAnchor {
-            print("This is a stroke anchor")
-            currentStrokeAnchorNode = node
-            strokeAnchorIDs.append(strokeAnchor.identifier)
-            for node in strokeAnchor.sphereLocations {
-                createSphereAndInsert(atPosition: SCNVector3Make(node[0], node[1], node[2]), andAddToStrokeAnchor: strokeAnchor)
-            }
-        }
-    }
-    
-    func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor) {
-        // Remove the anchorID from the strokes array
-        print("Anchor removed")
-        strokeAnchorIDs.removeAll(where: { $0 == anchor.identifier })
     }
     
     // MARK:- ARSessionDelegate
@@ -298,5 +250,27 @@ extension ViewController {
                 self.label.text = "\(self.whiteBallCount)"
             }
         }
+    }
+}
+
+// MARK:- ARSCNViewDelegate
+extension ViewController: ARSCNViewDelegate {
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        print("Anchor ADDED *****")
+        // This should only be called when loading a worldMap
+        if let strokeAnchor = anchor as? StrokeAnchor {
+            print("This is a stroke anchor")
+            currentStrokeAnchorNode = node
+            strokeAnchorIDs.append(strokeAnchor.identifier)
+            for node in strokeAnchor.sphereLocations {
+                createSphereAndInsert(atPosition: SCNVector3Make(node[0], node[1], node[2]), andAddToStrokeAnchor: strokeAnchor)
+            }
+        }
+    }
+    
+    func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor) {
+        // Remove the anchorID from the strokes array
+        print("Anchor removed")
+        strokeAnchorIDs.removeAll(where: { $0 == anchor.identifier })
     }
 }
