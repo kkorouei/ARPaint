@@ -14,6 +14,7 @@ class StrokeAnchor: ARAnchor {
     
     let imageData: Data
     var sphereLocations: [[Float]] = []
+    let dateCreated: TimeInterval
     
     convenience init?(name: String, capturing view: ARSCNView) {
         guard let frame = view.session.currentFrame
@@ -31,17 +32,19 @@ class StrokeAnchor: ARAnchor {
         let zeroPosition = SCNVector3Make(0, 0, 0)
         let x = SCNNode()
         x.position = zeroPosition
-        self.init(name: name, imageData: data, transform: x.simdTransform)//frame.camera.transform)
+        self.init(name: name, imageData: data, transform: x.simdTransform)
     }
     
     init(name: String, imageData: Data, transform: float4x4) {
         self.imageData = imageData
+        self.dateCreated = NSDate().timeIntervalSince1970
         super.init(name: name, transform: transform)
     }
     
     required init(anchor: ARAnchor) {
         self.imageData = (anchor as! StrokeAnchor).imageData
         self.sphereLocations = (anchor as! StrokeAnchor).sphereLocations
+        self.dateCreated = (anchor as! StrokeAnchor).dateCreated
         super.init(anchor: anchor)
     }
     
@@ -51,9 +54,11 @@ class StrokeAnchor: ARAnchor {
     
     required init?(coder aDecoder: NSCoder) {
         if let snapshot = aDecoder.decodeObject(forKey: "snapshot") as? Data,
-            let sphereLocations = aDecoder.decodeObject(forKey: "array") as? [[Float]]{
+            let sphereLocations = aDecoder.decodeObject(forKey: "array") as? [[Float]],
+            let dateCreated = aDecoder.decodeObject(forKey: "dateCreated") as? NSNumber{
             self.imageData = snapshot
             self.sphereLocations = sphereLocations
+            self.dateCreated = dateCreated.doubleValue
         } else {
             return nil
         }
@@ -65,6 +70,7 @@ class StrokeAnchor: ARAnchor {
         super.encode(with: aCoder)
         aCoder.encode(imageData, forKey: "snapshot")
         aCoder.encode(sphereLocations, forKey: "array")
+        aCoder.encode(NSNumber(value: dateCreated), forKey: "dateCreated")
     }
     
 }
@@ -84,11 +90,5 @@ extension CGImagePropertyOrientation {
         default:
             self = .right
         }
-    }
-}
-
-extension ARWorldMap {
-    var snapshotAnchor: StrokeAnchor? {
-        return anchors.compactMap { $0 as? StrokeAnchor }.first
     }
 }

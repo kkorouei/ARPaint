@@ -28,7 +28,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         return SCNNode(geometry: sphere)
     }()
     
-    var strokeIDs: [UUID] = []
+    var strokeAnchorIDs: [UUID] = []
     var currentStrokeAnchorNode: SCNNode?
     
     override func viewDidLoad() {
@@ -71,7 +71,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     func drawCirclesBetween(point1: SCNVector3, andPoint2 point2: SCNVector3){
         // Calculate the distance between previous point and current point
         let distance = point1.distance(vector: point2)
-        let distanceBetweenEachCircle: Float = 0.0025
+        let distanceBetweenEachCircle: Float = 0.00025
         let numberOfCirclesToCreate = Int(distance / distanceBetweenEachCircle)
         
         // https://math.stackexchange.com/a/83419
@@ -80,7 +80,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         // Normalize vector BA by dividng it by it's length
         let vectorBANormalized = vectorBA.normalized()
         // This new vector can now be scaled and added to A to find the point at the specified distance
-        guard let currentStrokeAnchorID = strokeIDs.last, let currentStrokeAnchor = anchorForID(currentStrokeAnchorID) else { return }
+        guard let currentStrokeAnchorID = strokeAnchorIDs.last, let currentStrokeAnchor = anchorForID(currentStrokeAnchorID) else { return }
         for i in 0...((numberOfCirclesToCreate > 1) ? (numberOfCirclesToCreate - 1) : numberOfCirclesToCreate) {
             let position = point1 + (vectorBANormalized * (Float(i) * distanceBetweenEachCircle))
             createSphereAndInsert(atPosition: position, andAddToStrokeAnchor: currentStrokeAnchor)
@@ -157,9 +157,24 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         return sceneView.session.currentFrame?.anchors.first(where: { $0.identifier == anchorID }) as? StrokeAnchor
     }
     
+    func sortStrokeAnchorIDsInOrderOfDateCreated() {
+        var strokeAnchorsArray: [StrokeAnchor] = []
+        for anchorID in strokeAnchorIDs {
+            if let strokeAnchor = anchorForID(anchorID) {
+                strokeAnchorsArray.append(strokeAnchor)
+            }
+        }
+        strokeAnchorsArray.sort(by: { $0.dateCreated < $1.dateCreated })
+        
+        strokeAnchorIDs = []
+        for anchor in strokeAnchorsArray {
+            strokeAnchorIDs.append(anchor.identifier)
+        }
+    }
+    
     // MARK:- IBActions
     @IBAction func deleteAllButtonPressed(_ sender: UIButton) {
-        for strokeAnchorID in strokeIDs {
+        for strokeAnchorID in strokeAnchorIDs {
             if let strokeAnchor = anchorForID(strokeAnchorID) {
                 sceneView.session.remove(anchor: strokeAnchor)
             }
@@ -169,7 +184,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     @IBAction func undoButtonPressed(_ sender: UIButton) {
         
-        guard let currentStrokeAnchorID = strokeIDs.last, let curentStrokeAnchor = anchorForID(currentStrokeAnchorID) else {
+        sortStrokeAnchorIDsInOrderOfDateCreated()
+        
+        guard let currentStrokeAnchorID = strokeAnchorIDs.last, let curentStrokeAnchor = anchorForID(currentStrokeAnchorID) else {
             print("No stroke to remove")
             return
         }
@@ -219,7 +236,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         if let strokeAnchor = anchor as? StrokeAnchor {
             print("This is a stroke anchor")
             currentStrokeAnchorNode = node
-            strokeIDs.append(strokeAnchor.identifier)
+            strokeAnchorIDs.append(strokeAnchor.identifier)
             for node in strokeAnchor.sphereLocations {
                 createSphereAndInsert(atPosition: SCNVector3Make(node[0], node[1], node[2]), andAddToStrokeAnchor: strokeAnchor)
             }
@@ -229,7 +246,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor) {
         // Remove the anchorID from the strokes array
         print("Anchor removed")
-        strokeIDs.removeAll(where: { $0 == anchor.identifier })
+        strokeAnchorIDs.removeAll(where: { $0 == anchor.identifier })
     }
     
     // MARK:- ARSessionDelegate
@@ -238,13 +255,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
-        
-//        print("The current number of anchors in the scene: \(frame.anchors.count)")
-//        if let firstStroke = frame.anchors.first as? StrokeAnchor {
-//            print("The count of spheres in the first anchor is: \(firstStroke.sphereLocations.count)")
-//            print("The name of the anchor is: \(firstStroke.name!)")
-//        }
-        
+
         switch frame.worldMappingStatus {
         case .notAvailable:
             mappingStatusLabel.text = "not available"
@@ -265,7 +276,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 // MARK: SCNSceneRendererDelegate methods
 extension ViewController {
     func renderer(_ renderer: SCNSceneRenderer, willRenderScene scene: SCNScene, atTime time: TimeInterval) {
-        guard let currentStrokeAnchorID = strokeIDs.last else { return }
+        guard let currentStrokeAnchorID = strokeAnchorIDs.last else { return }
         let currentStrokeAnchor = anchorForID(currentStrokeAnchorID)
         if screenTouched && currentStrokeAnchor != nil {
             guard let currentPointPosition = getPositionInFrontOfCamera(byAmount: -0.2) else { return }
@@ -273,7 +284,7 @@ extension ViewController {
             if let previousPoint = previousPoint {
                 // Do not create any new spheres if the distance hasn't changed much
                 let distance = abs(previousPoint.distance(vector: currentPointPosition))
-                if distance > 0.0026 {
+                if distance > 0.00026 {
                     createSphereAndInsert(atPosition: currentPointPosition, andAddToStrokeAnchor: currentStrokeAnchor!)
                     drawCirclesBetween(point1: previousPoint, andPoint2: currentPointPosition)
                     self.previousPoint = currentPointPosition
