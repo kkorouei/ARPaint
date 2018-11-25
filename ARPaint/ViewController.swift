@@ -90,7 +90,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     // MARK: Touches
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         screenTouched = true
-        let strokeAnchor = StrokeAnchor(name: "heyheyhey", capturing: sceneView)
+        let strokeAnchor = StrokeAnchor(name: "strokeAnchor")
         sceneView.session.add(anchor: strokeAnchor!)
     }
 
