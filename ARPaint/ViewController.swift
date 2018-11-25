@@ -212,27 +212,7 @@ class ViewController: UIViewController, ARSessionDelegate {
     }
     
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
-
-        switch frame.worldMappingStatus {
-        case .notAvailable:
-            mappingStatusLabel.text = "not available"
-            saveButton.isHidden = true
-        case .limited:
-            mappingStatusLabel.text = "limited"
-            saveButton.isHidden = true
-        case .extending:
-            mappingStatusLabel.text = "extending"
-            saveButton.isHidden = false
-        case .mapped:
-            mappingStatusLabel.text = "mapped"
-            saveButton.isHidden = false
-        }
-    }
-}
-
-// MARK: SCNSceneRendererDelegate methods
-extension ViewController {
-    func renderer(_ renderer: SCNSceneRenderer, willRenderScene scene: SCNScene, atTime time: TimeInterval) {
+        
         guard let currentStrokeAnchorID = strokeAnchorIDs.last else { return }
         let currentStrokeAnchor = anchorForID(currentStrokeAnchorID)
         if screenTouched && currentStrokeAnchor != nil {
@@ -254,6 +234,22 @@ extension ViewController {
             DispatchQueue.main.async {
                 self.label.text = "\(self.whiteBallCount)"
             }
+        }
+        
+
+        switch frame.worldMappingStatus {
+        case .notAvailable:
+            mappingStatusLabel.text = "not available"
+            saveButton.isHidden = true
+        case .limited:
+            mappingStatusLabel.text = "limited"
+            saveButton.isHidden = true
+        case .extending:
+            mappingStatusLabel.text = "extending"
+            saveButton.isHidden = false
+        case .mapped:
+            mappingStatusLabel.text = "mapped"
+            saveButton.isHidden = false
         }
     }
 }
