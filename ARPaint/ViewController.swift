@@ -10,7 +10,7 @@ import UIKit
 import SceneKit
 import ARKit
 
-class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
+class ViewController: UIViewController {
     
     @IBOutlet var sceneView: ARSCNView!
     @IBOutlet weak var mappingStatusLabel: UILabel!
@@ -31,6 +31,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     var strokeAnchorIDs: [UUID] = []
     var currentStrokeAnchorNode: SCNNode?
     
+    // MARK:- View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -67,58 +68,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         sceneView.session.pause()
     }
     
-    // Draws circles between points of the distance between them is greater than x
-    func drawCirclesBetween(point1: SCNVector3, andPoint2 point2: SCNVector3){
-        // Calculate the distance between previous point and current point
-        let distance = point1.distance(vector: point2)
-        let distanceBetweenEachCircle: Float = 0.00025
-        let numberOfCirclesToCreate = Int(distance / distanceBetweenEachCircle)
-        
-        // https://math.stackexchange.com/a/83419
-        // Begin by creating a vector BA by subtracting A from B (A = previousPoint, B = currentPoint)
-        let vectorBA = point2 - point1
-        // Normalize vector BA by dividng it by it's length
-        let vectorBANormalized = vectorBA.normalized()
-        // This new vector can now be scaled and added to A to find the point at the specified distance
-        guard let currentStrokeAnchorID = strokeAnchorIDs.last, let currentStrokeAnchor = anchorForID(currentStrokeAnchorID) else { return }
-        for i in 0...((numberOfCirclesToCreate > 1) ? (numberOfCirclesToCreate - 1) : numberOfCirclesToCreate) {
-            let position = point1 + (vectorBANormalized * (Float(i) * distanceBetweenEachCircle))
-            createSphereAndInsert(atPosition: position, andAddToStrokeAnchor: currentStrokeAnchor)
+    
+    func reStartSession(withWorldMap worldMap: ARWorldMap) {
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.initialWorldMap = worldMap
+        sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+        currentStrokeAnchorNode = nil
+    }
+    
+    // MARK:- Drawing
+    func createSphereAndInsert(atPositions positions: [SCNVector3], andAddToStrokeAnchor strokeAnchor: StrokeAnchor) {
+        for position in positions {
+            createSphereAndInsert(atPosition: position, andAddToStrokeAnchor: strokeAnchor)
         }
-    }
-    
-    // MARK: Touches
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        screenTouched = true
-        let strokeAnchor = StrokeAnchor(name: "heyheyhey", capturing: sceneView)
-        sceneView.session.add(anchor: strokeAnchor!)
-    }
-
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        screenTouched = false
-        previousPoint = nil
-        currentStrokeAnchorNode = nil
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        screenTouched = false
-        previousPoint = nil
-        currentStrokeAnchorNode = nil
-    }
-    
-    
-    // Gets the position of the point in front of the camera
-    func getPositionInFrontOfCamera(byAmount amount: Float) -> SCNVector3? {
-        guard let cameraTransform = sceneView.session.currentFrame?.camera.transform else { return nil }
-        var translation = matrix_identity_float4x4
-        translation.columns.3.x = 0
-        translation.columns.3.y = 0
-        translation.columns.3.z = amount
-        let currentPointTransform = matrix_multiply(cameraTransform, translation)
-        // Convert to SCNVector3
-        return SCNVector3Make(currentPointTransform.columns.3.x,
-                              currentPointTransform.columns.3.y,
-                              currentPointTransform.columns.3.z)
     }
     
     func createSphereAndInsert(atPosition position: SCNVector3, andAddToStrokeAnchor strokeAnchor: StrokeAnchor) {
@@ -132,25 +94,23 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         whiteBallCount += 1
     }
     
-    func writeWorldMap(_ worldMap: ARWorldMap, to url: URL) throws {
-        let data = try NSKeyedArchiver.archivedData(withRootObject: worldMap, requiringSecureCoding: true)
-        try data.write(to: url)
+    // MARK: Touches
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        screenTouched = true
+        let strokeAnchor = StrokeAnchor(name: "strokeAnchor")
+        sceneView.session.add(anchor: strokeAnchor!)
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        screenTouched = false
+        previousPoint = nil
+        currentStrokeAnchorNode = nil
     }
     
-    func loadWorldMap(from url: URL) throws -> ARWorldMap {
-        let mapData = try Data(contentsOf: url)
-        guard let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: mapData)
-            else {
-                throw ARError(.invalidWorldMap)
-        }
-        return worldMap
-    }
-    
-    func getDocumentsDirectory() -> URL {
-        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory,
-                                                        .userDomainMask,
-                                                        true) as [String]
-        return URL(fileURLWithPath: paths.first!)
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        screenTouched = false
+        previousPoint = nil
+        currentStrokeAnchorNode = nil
     }
     
     func anchorForID(_ anchorID: UUID) -> StrokeAnchor? {
@@ -198,37 +158,85 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
-        sceneView.session.getCurrentWorldMap { (worldMap, error) in
-            guard let map = worldMap else {
-                // Show error
-                print("Can't get world map: \(error!.localizedDescription)")
-                return
-            }
-            // Save the map
-            let pathToSave = self.getDocumentsDirectory().appendingPathComponent("test")
-            do {
-                try self.writeWorldMap(map, to: pathToSave)
-                print("Map saved succesfully")
+        saveCurrentWorldMap(forSceneView: sceneView) { (success, message) in
+            if success {
                 self.loadButton.isHidden = false
-            } catch {
-                print("Could not save the map. \(error.localizedDescription)")
+            } else {
+                // TODO:- Show alert
             }
+            print(message)
         }
     }
     
     @IBAction func loadButtonPressed(_ sender: UIButton) {
         do {
             let map = try loadWorldMap(from: getDocumentsDirectory().appendingPathComponent("test"))
-            // run a new session
-            let configuration = ARWorldTrackingConfiguration()
-            configuration.initialWorldMap = map
-            sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
-            currentStrokeAnchorNode = nil
+            reStartSession(withWorldMap: map)
             print("Map successfuly loaded")
         } catch {
             print("Could not load the map. \(error.localizedDescription)")
         }
     }
+    
+    private func updateWorldMappingStatusInfoLabel(for frame: ARFrame) {
+        
+        switch frame.worldMappingStatus {
+        case .notAvailable:
+            mappingStatusLabel.text = "not available"
+            saveButton.isHidden = true
+        case .limited:
+            mappingStatusLabel.text = "limited"
+            saveButton.isHidden = true
+        case .extending:
+            mappingStatusLabel.text = "extending"
+            saveButton.isHidden = false
+        case .mapped:
+            mappingStatusLabel.text = "mapped"
+            saveButton.isHidden = false
+        }
+    }
+}
+
+// MARK:- ARSessionDelegate
+extension ViewController: ARSessionDelegate {
+    
+    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
+        guard let currentFrame = session.currentFrame else { return }
+        updateWorldMappingStatusInfoLabel(for: currentFrame)
+    }
+    
+    func session(_ session: ARSession, didUpdate frame: ARFrame) {
+        updateWorldMappingStatusInfoLabel(for: frame)
+        // Draw the spheres
+        guard let currentStrokeAnchorID = strokeAnchorIDs.last else { return }
+        let currentStrokeAnchor = anchorForID(currentStrokeAnchorID)
+        if screenTouched && currentStrokeAnchor != nil {
+            guard let currentPointPosition = getPositionInFront(OfCamera: session.currentFrame?.camera, byAmount: -0.2) else { return }
+            
+            if let previousPoint = previousPoint {
+                // Do not create any new spheres if the distance hasn't changed much
+                let distance = abs(previousPoint.distance(vector: currentPointPosition))
+                if distance > 0.00026 {
+                    createSphereAndInsert(atPosition: currentPointPosition, andAddToStrokeAnchor: currentStrokeAnchor!)
+                    // Draw spheres between the currentPoint and previous point if they are further than the specified distance (Otherwise fast movement will make the line blocky)
+                    let positions = getPositionsOnLineBetween(point1: previousPoint, andPoint2: currentPointPosition, withSpacing: 0.00025)
+                    createSphereAndInsert(atPositions: positions, andAddToStrokeAnchor: currentStrokeAnchor!)
+                    self.previousPoint = currentPointPosition
+                }
+            } else {
+                createSphereAndInsert(atPosition: currentPointPosition, andAddToStrokeAnchor: currentStrokeAnchor!)
+                self.previousPoint = currentPointPosition
+            }
+            
+            DispatchQueue.main.async {
+                self.label.text = "\(self.whiteBallCount)"
+            }
+        }
+    }
+}
+
+// MARK:- ARSCNViewDelegate
+extension ViewController: ARSCNViewDelegate {
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         print("Anchor ADDED *****")
@@ -247,56 +255,5 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         // Remove the anchorID from the strokes array
         print("Anchor removed")
         strokeAnchorIDs.removeAll(where: { $0 == anchor.identifier })
-    }
-    
-    // MARK:- ARSessionDelegate
-    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
-        
-    }
-    
-    func session(_ session: ARSession, didUpdate frame: ARFrame) {
-
-        switch frame.worldMappingStatus {
-        case .notAvailable:
-            mappingStatusLabel.text = "not available"
-            saveButton.isHidden = true
-        case .limited:
-            mappingStatusLabel.text = "limited"
-            saveButton.isHidden = true
-        case .extending:
-            mappingStatusLabel.text = "extending"
-            saveButton.isHidden = false
-        case .mapped:
-            mappingStatusLabel.text = "mapped"
-            saveButton.isHidden = false
-        }
-    }
-}
-
-// MARK: SCNSceneRendererDelegate methods
-extension ViewController {
-    func renderer(_ renderer: SCNSceneRenderer, willRenderScene scene: SCNScene, atTime time: TimeInterval) {
-        guard let currentStrokeAnchorID = strokeAnchorIDs.last else { return }
-        let currentStrokeAnchor = anchorForID(currentStrokeAnchorID)
-        if screenTouched && currentStrokeAnchor != nil {
-            guard let currentPointPosition = getPositionInFrontOfCamera(byAmount: -0.2) else { return }
-
-            if let previousPoint = previousPoint {
-                // Do not create any new spheres if the distance hasn't changed much
-                let distance = abs(previousPoint.distance(vector: currentPointPosition))
-                if distance > 0.00026 {
-                    createSphereAndInsert(atPosition: currentPointPosition, andAddToStrokeAnchor: currentStrokeAnchor!)
-                    drawCirclesBetween(point1: previousPoint, andPoint2: currentPointPosition)
-                    self.previousPoint = currentPointPosition
-                }
-            } else {
-                createSphereAndInsert(atPosition: currentPointPosition, andAddToStrokeAnchor: currentStrokeAnchor!)
-                self.previousPoint = currentPointPosition
-            }
-            
-            DispatchQueue.main.async {
-                self.label.text = "\(self.whiteBallCount)"
-            }
-        }
     }
 }
