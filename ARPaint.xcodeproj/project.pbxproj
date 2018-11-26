@@ -15,6 +15,8 @@
 		728496D62193FB4400FD2C26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 728496D42193FB4400FD2C26 /* LaunchScreen.storyboard */; };
 		728630012199477900922B63 /* SCNVector3+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728630002199477900922B63 /* SCNVector3+Extensions.swift */; };
 		728E699721AABACF0085B045 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728E699621AABACF0085B045 /* PersistenceManager.swift */; };
+		72B3017021AC130C003D0FD4 /* Drawing+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B3016E21AC130B003D0FD4 /* Drawing+CoreDataClass.swift */; };
+		72B3017121AC130C003D0FD4 /* Drawing+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B3016F21AC130C003D0FD4 /* Drawing+CoreDataProperties.swift */; };
 		72B8A60421A69AEF00B6F814 /* StrokeAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B8A60321A69AEF00B6F814 /* StrokeAnchor.swift */; };
 		72E20F7721ABE42C0080A854 /* Float4x4+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E20F7621ABE42C0080A854 /* Float4x4+Extensions.swift */; };
 		72E4FF9D21AA909500DEA2C6 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E4FF9C21AA909500DEA2C6 /* Utilities.swift */; };
@@ -31,6 +33,8 @@
 		728496D72193FB4400FD2C26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		728630002199477900922B63 /* SCNVector3+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extensions.swift"; sourceTree = "<group>"; };
 		728E699621AABACF0085B045 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
+		72B3016E21AC130B003D0FD4 /* Drawing+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Drawing+CoreDataClass.swift"; sourceTree = "<group>"; };
+		72B3016F21AC130C003D0FD4 /* Drawing+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Drawing+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		72B8A60321A69AEF00B6F814 /* StrokeAnchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeAnchor.swift; sourceTree = "<group>"; };
 		72E20F7621ABE42C0080A854 /* Float4x4+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Float4x4+Extensions.swift"; sourceTree = "<group>"; };
 		72E4FF9C21AA909500DEA2C6 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
@@ -50,6 +54,8 @@
 		728496BD2193FB4200FD2C26 = {
 			isa = PBXGroup;
 			children = (
+				72B3016E21AC130B003D0FD4 /* Drawing+CoreDataClass.swift */,
+				72B3016F21AC130C003D0FD4 /* Drawing+CoreDataProperties.swift */,
 				728496C82193FB4200FD2C26 /* ARPaint */,
 				728496C72193FB4200FD2C26 /* Products */,
 			);
@@ -164,8 +170,10 @@
 				728496CE2193FB4200FD2C26 /* ViewController.swift in Sources */,
 				72B8A60421A69AEF00B6F814 /* StrokeAnchor.swift in Sources */,
 				728630012199477900922B63 /* SCNVector3+Extensions.swift in Sources */,
+				72B3017021AC130C003D0FD4 /* Drawing+CoreDataClass.swift in Sources */,
 				72E20F7721ABE42C0080A854 /* Float4x4+Extensions.swift in Sources */,
 				728E699721AABACF0085B045 /* PersistenceManager.swift in Sources */,
+				72B3017121AC130C003D0FD4 /* Drawing+CoreDataProperties.swift in Sources */,
 				72E4FF9D21AA909500DEA2C6 /* Utilities.swift in Sources */,
 				7228C15921AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodeld in Sources */,
 				728496CA2193FB4200FD2C26 /* AppDelegate.swift in Sources */,
