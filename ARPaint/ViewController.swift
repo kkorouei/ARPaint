@@ -10,7 +10,7 @@ import UIKit
 import SceneKit
 import ARKit
 
-class ViewController: UIViewController, ARSessionDelegate {
+class ViewController: UIViewController {
     
     @IBOutlet var sceneView: ARSCNView!
     @IBOutlet weak var mappingStatusLabel: UILabel!
@@ -195,8 +195,11 @@ class ViewController: UIViewController, ARSessionDelegate {
             saveButton.isHidden = false
         }
     }
+}
+
+// MARK:- ARSessionDelegate
+extension ViewController: ARSessionDelegate {
     
-    // MARK:- ARSessionDelegate
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
         guard let currentFrame = session.currentFrame else { return }
         updateWorldMappingStatusInfoLabel(for: currentFrame)
@@ -209,7 +212,7 @@ class ViewController: UIViewController, ARSessionDelegate {
         let currentStrokeAnchor = anchorForID(currentStrokeAnchorID)
         if screenTouched && currentStrokeAnchor != nil {
             guard let currentPointPosition = getPositionInFront(OfCamera: session.currentFrame?.camera, byAmount: -0.2) else { return }
-
+            
             if let previousPoint = previousPoint {
                 // Do not create any new spheres if the distance hasn't changed much
                 let distance = abs(previousPoint.distance(vector: currentPointPosition))
@@ -234,6 +237,7 @@ class ViewController: UIViewController, ARSessionDelegate {
 
 // MARK:- ARSCNViewDelegate
 extension ViewController: ARSCNViewDelegate {
+    
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         print("Anchor ADDED *****")
         // This should only be called when loading a worldMap
