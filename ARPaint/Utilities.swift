@@ -17,17 +17,14 @@ func getDocumentsDirectory() -> URL {
 }
 
 // Gets the position of the point x units in front of the camera
-func getPositionInFront(OfCamera camera: ARCamera?, byAmount amount: Float) -> SCNVector3? {
+func getPositionInFront(OfCamera camera: ARCamera?, byAmount amount: Float) -> float4x4? {
     guard let cameraTransform = camera?.transform else { return nil }
     var translation = matrix_identity_float4x4
     translation.columns.3.x = 0
     translation.columns.3.y = 0
     translation.columns.3.z = amount
     let currentPointTransform = matrix_multiply(cameraTransform, translation)
-    // Convert to SCNVector3
-    return SCNVector3Make(currentPointTransform.columns.3.x,
-                          currentPointTransform.columns.3.y,
-                          currentPointTransform.columns.3.z)
+    return currentPointTransform
 }
 
 // MARK:- Drawing

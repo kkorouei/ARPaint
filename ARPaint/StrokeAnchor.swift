@@ -14,14 +14,6 @@ class StrokeAnchor: ARAnchor {
     var sphereLocations: [[Float]] = []
     let dateCreated: TimeInterval
     
-    convenience init?(name: String) {
-        // This anchor position should be zero (For now)
-        let zeroPosition = SCNVector3Make(0, 0, 0)
-        let x = SCNNode()
-        x.position = zeroPosition
-        self.init(name: name, transform: x.simdTransform)
-    }
-    
     override init(name: String, transform: float4x4) {
         self.dateCreated = NSDate().timeIntervalSince1970
         super.init(name: name, transform: transform)
