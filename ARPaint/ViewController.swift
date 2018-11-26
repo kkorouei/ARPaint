@@ -31,6 +31,7 @@ class ViewController: UIViewController, ARSessionDelegate {
     var strokeAnchorIDs: [UUID] = []
     var currentStrokeAnchorNode: SCNNode?
     
+    // MARK:- View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -76,23 +77,9 @@ class ViewController: UIViewController, ARSessionDelegate {
     }
     
     // MARK:- Drawing
-    // Draws circles between points of the distance between them is greater than x
-    func drawCirclesBetween(point1: SCNVector3, andPoint2 point2: SCNVector3){
-        // Calculate the distance between previous point and current point
-        let distance = point1.distance(vector: point2)
-        let distanceBetweenEachCircle: Float = 0.00025
-        let numberOfCirclesToCreate = Int(distance / distanceBetweenEachCircle)
-        
-        // https://math.stackexchange.com/a/83419
-        // Begin by creating a vector BA by subtracting A from B (A = previousPoint, B = currentPoint)
-        let vectorBA = point2 - point1
-        // Normalize vector BA by dividng it by it's length
-        let vectorBANormalized = vectorBA.normalized()
-        // This new vector can now be scaled and added to A to find the point at the specified distance
-        guard let currentStrokeAnchorID = strokeAnchorIDs.last, let currentStrokeAnchor = anchorForID(currentStrokeAnchorID) else { return }
-        for i in 0...((numberOfCirclesToCreate > 1) ? (numberOfCirclesToCreate - 1) : numberOfCirclesToCreate) {
-            let position = point1 + (vectorBANormalized * (Float(i) * distanceBetweenEachCircle))
-            createSphereAndInsert(atPosition: position, andAddToStrokeAnchor: currentStrokeAnchor)
+    func createSphereAndInsert(atPositions positions: [SCNVector3], andAddToStrokeAnchor strokeAnchor: StrokeAnchor) {
+        for position in positions {
+            createSphereAndInsert(atPosition: position, andAddToStrokeAnchor: strokeAnchor)
         }
     }
     
@@ -124,21 +111,6 @@ class ViewController: UIViewController, ARSessionDelegate {
         screenTouched = false
         previousPoint = nil
         currentStrokeAnchorNode = nil
-    }
-    
-    
-    // Gets the position of the point in front of the camera
-    func getPositionInFrontOfCamera(byAmount amount: Float) -> SCNVector3? {
-        guard let cameraTransform = sceneView.session.currentFrame?.camera.transform else { return nil }
-        var translation = matrix_identity_float4x4
-        translation.columns.3.x = 0
-        translation.columns.3.y = 0
-        translation.columns.3.z = amount
-        let currentPointTransform = matrix_multiply(cameraTransform, translation)
-        // Convert to SCNVector3
-        return SCNVector3Make(currentPointTransform.columns.3.x,
-                              currentPointTransform.columns.3.y,
-                              currentPointTransform.columns.3.z)
     }
     
     func anchorForID(_ anchorID: UUID) -> StrokeAnchor? {
@@ -236,14 +208,16 @@ class ViewController: UIViewController, ARSessionDelegate {
         guard let currentStrokeAnchorID = strokeAnchorIDs.last else { return }
         let currentStrokeAnchor = anchorForID(currentStrokeAnchorID)
         if screenTouched && currentStrokeAnchor != nil {
-            guard let currentPointPosition = getPositionInFrontOfCamera(byAmount: -0.2) else { return }
+            guard let currentPointPosition = getPositionInFront(OfCamera: session.currentFrame?.camera, byAmount: -0.2) else { return }
 
             if let previousPoint = previousPoint {
                 // Do not create any new spheres if the distance hasn't changed much
                 let distance = abs(previousPoint.distance(vector: currentPointPosition))
                 if distance > 0.00026 {
                     createSphereAndInsert(atPosition: currentPointPosition, andAddToStrokeAnchor: currentStrokeAnchor!)
-                    drawCirclesBetween(point1: previousPoint, andPoint2: currentPointPosition)
+                    // Draw spheres between the currentPoint and previous point if they are further than the specified distance (Otherwise fast movement will make the line blocky)
+                    let positions = getPositionsOnLineBetween(point1: previousPoint, andPoint2: currentPointPosition, withSpacing: 0.00025)
+                    createSphereAndInsert(atPositions: positions, andAddToStrokeAnchor: currentStrokeAnchor!)
                     self.previousPoint = currentPointPosition
                 }
             } else {
