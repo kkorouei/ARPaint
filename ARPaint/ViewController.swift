@@ -206,13 +206,33 @@ class ViewController: UIViewController, ARSessionDelegate {
         }
     }
     
+    private func updateWorldMappingStatusInfoLabel(for frame: ARFrame) {
+        
+        switch frame.worldMappingStatus {
+        case .notAvailable:
+            mappingStatusLabel.text = "not available"
+            saveButton.isHidden = true
+        case .limited:
+            mappingStatusLabel.text = "limited"
+            saveButton.isHidden = true
+        case .extending:
+            mappingStatusLabel.text = "extending"
+            saveButton.isHidden = false
+        case .mapped:
+            mappingStatusLabel.text = "mapped"
+            saveButton.isHidden = false
+        }
+    }
+    
     // MARK:- ARSessionDelegate
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
-        
+        guard let currentFrame = session.currentFrame else { return }
+        updateWorldMappingStatusInfoLabel(for: currentFrame)
     }
     
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
-        
+        updateWorldMappingStatusInfoLabel(for: frame)
+        // Draw the spheres
         guard let currentStrokeAnchorID = strokeAnchorIDs.last else { return }
         let currentStrokeAnchor = anchorForID(currentStrokeAnchorID)
         if screenTouched && currentStrokeAnchor != nil {
@@ -234,22 +254,6 @@ class ViewController: UIViewController, ARSessionDelegate {
             DispatchQueue.main.async {
                 self.label.text = "\(self.whiteBallCount)"
             }
-        }
-        
-
-        switch frame.worldMappingStatus {
-        case .notAvailable:
-            mappingStatusLabel.text = "not available"
-            saveButton.isHidden = true
-        case .limited:
-            mappingStatusLabel.text = "limited"
-            saveButton.isHidden = true
-        case .extending:
-            mappingStatusLabel.text = "extending"
-            saveButton.isHidden = false
-        case .mapped:
-            mappingStatusLabel.text = "mapped"
-            saveButton.isHidden = false
         }
     }
 }
