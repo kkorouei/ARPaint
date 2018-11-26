@@ -84,10 +84,12 @@ class ViewController: UIViewController {
     }
     
     func createSphereAndInsert(atPosition position: SCNVector3, andAddToStrokeAnchor strokeAnchor: StrokeAnchor) {
-        let newSphereNode = sphereNode.clone()
-        newSphereNode.position = position
-        // Add the node to the default node of the anchor
         guard let currentStrokeNode = currentStrokeAnchorNode else { return }
+        let newSphereNode = sphereNode.clone()
+        // Convert the position from world transform to local transform (relative to the anchors default node)
+        let localPosition = currentStrokeNode.convertPosition(position, from: nil)
+        newSphereNode.position = localPosition
+        // Add the node to the default node of the anchor
         currentStrokeNode.addChildNode(newSphereNode)
         // Add the position of the node to the stroke anchors sphereLocations array (Used for saving/loading the world map)
         strokeAnchor.sphereLocations.append([newSphereNode.position.x, newSphereNode.position.y, newSphereNode.position.z])
@@ -97,8 +99,9 @@ class ViewController: UIViewController {
     // MARK: Touches
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         screenTouched = true
-        let strokeAnchor = StrokeAnchor(name: "strokeAnchor")
-        sceneView.session.add(anchor: strokeAnchor!)
+        guard let positionInFrontOfCamera = getPositionInFront(OfCamera: sceneView.session.currentFrame?.camera, byAmount: -0.2) else { return }
+        let strokeAnchor = StrokeAnchor(name: "strokeAnchor", transform: positionInFrontOfCamera)
+        sceneView.session.add(anchor: strokeAnchor)
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -211,7 +214,7 @@ extension ViewController: ARSessionDelegate {
         guard let currentStrokeAnchorID = strokeAnchorIDs.last else { return }
         let currentStrokeAnchor = anchorForID(currentStrokeAnchorID)
         if screenTouched && currentStrokeAnchor != nil {
-            guard let currentPointPosition = getPositionInFront(OfCamera: session.currentFrame?.camera, byAmount: -0.2) else { return }
+            guard let currentPointPosition = getPositionInFront(OfCamera: session.currentFrame?.camera, byAmount: -0.2)?.convertToSCNVector3() else { return }
             
             if let previousPoint = previousPoint {
                 // Do not create any new spheres if the distance hasn't changed much
@@ -240,14 +243,20 @@ extension ViewController: ARSCNViewDelegate {
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         print("Anchor ADDED *****")
-        // This should only be called when loading a worldMap
+        // This is only used when loading a worldMap
         if let strokeAnchor = anchor as? StrokeAnchor {
             print("This is a stroke anchor")
             currentStrokeAnchorNode = node
             strokeAnchorIDs.append(strokeAnchor.identifier)
-            for node in strokeAnchor.sphereLocations {
-                createSphereAndInsert(atPosition: SCNVector3Make(node[0], node[1], node[2]), andAddToStrokeAnchor: strokeAnchor)
+            for sphereLocation in strokeAnchor.sphereLocations {
+                createSphereAndInsert(atPosition: SCNVector3Make(sphereLocation[0], sphereLocation[1], sphereLocation[2]), andAddToStrokeAnchor: strokeAnchor)
             }
+            
+            // add a fucking blue cube to the anchor
+            let cube = SCNBox(width: 0.01, height: 0.01, length: 0.01, chamferRadius: 0)
+            cube.firstMaterial?.diffuse.contents = UIColor.blue
+            let cubeNode = SCNNode(geometry: cube)
+            node.addChildNode(cubeNode)
         }
     }
     

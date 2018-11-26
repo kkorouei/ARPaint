@@ -15,6 +15,7 @@
 		728630012199477900922B63 /* SCNVector3+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728630002199477900922B63 /* SCNVector3+Extensions.swift */; };
 		728E699721AABACF0085B045 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728E699621AABACF0085B045 /* PersistenceManager.swift */; };
 		72B8A60421A69AEF00B6F814 /* StrokeAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B8A60321A69AEF00B6F814 /* StrokeAnchor.swift */; };
+		72E20F7721ABE42C0080A854 /* Float4x4+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E20F7621ABE42C0080A854 /* Float4x4+Extensions.swift */; };
 		72E4FF9D21AA909500DEA2C6 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E4FF9C21AA909500DEA2C6 /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		728630002199477900922B63 /* SCNVector3+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extensions.swift"; sourceTree = "<group>"; };
 		728E699621AABACF0085B045 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		72B8A60321A69AEF00B6F814 /* StrokeAnchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeAnchor.swift; sourceTree = "<group>"; };
+		72E20F7621ABE42C0080A854 /* Float4x4+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Float4x4+Extensions.swift"; sourceTree = "<group>"; };
 		72E4FF9C21AA909500DEA2C6 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				728630002199477900922B63 /* SCNVector3+Extensions.swift */,
+				72E20F7621ABE42C0080A854 /* Float4x4+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -158,6 +161,7 @@
 				728496CE2193FB4200FD2C26 /* ViewController.swift in Sources */,
 				72B8A60421A69AEF00B6F814 /* StrokeAnchor.swift in Sources */,
 				728630012199477900922B63 /* SCNVector3+Extensions.swift in Sources */,
+				72E20F7721ABE42C0080A854 /* Float4x4+Extensions.swift in Sources */,
 				728E699721AABACF0085B045 /* PersistenceManager.swift in Sources */,
 				72E4FF9D21AA909500DEA2C6 /* Utilities.swift in Sources */,
 				728496CA2193FB4200FD2C26 /* AppDelegate.swift in Sources */,
