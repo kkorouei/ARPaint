@@ -10,12 +10,17 @@ import UIKit
 
 protocol AllDrawingsViewControllerDelegate: class {
     func allDrawingsViewController(_ controller: AllDrawingsViewController, didSelectDrawing drawing: Drawing)
+    func allDrawingsViewControllerDidPressCancel(_ controller: AllDrawingsViewController)
 }
 
 class AllDrawingsViewController: UIViewController {
-    var drawings: [Drawing]!
     
+    var drawings: [Drawing]!
     weak var delegate: AllDrawingsViewControllerDelegate!
+    
+    @IBAction func didPressCancelButton(_ sender: UIBarButtonItem) {
+        delegate.allDrawingsViewControllerDidPressCancel(self)
+    }
 }
 
 extension AllDrawingsViewController: UITableViewDelegate, UITableViewDataSource {

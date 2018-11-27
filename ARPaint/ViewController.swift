@@ -284,4 +284,9 @@ extension ViewController: AllDrawingsViewControllerDelegate {
             print("Could not load worldMap. Error: \(error)")
         }
     }
+    
+    func allDrawingsViewControllerDidPressCancel(_ controller: AllDrawingsViewController) {
+        dismiss(animated: true, completion: nil)
+        sceneView.session.run(sceneView.session.configuration!)
+    }
 }

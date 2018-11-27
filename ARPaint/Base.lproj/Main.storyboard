@@ -151,7 +151,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vNG-ZE-CsG"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Drawings" id="hW8-j8-rf1"/>
+                    <navigationItem key="navigationItem" title="Drawings" id="hW8-j8-rf1">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="083-Qy-3cO">
+                            <connections>
+                                <action selector="didPressCancelButton:" destination="hmn-ga-WXT" id="y1s-Zp-ek7"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dyZ-RV-iH6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
