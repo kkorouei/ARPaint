@@ -46,26 +46,36 @@ class ViewController: UIViewController {
         label.textColor = UIColor.orange
         sceneView.addSubview(label)
         
+        
+        let configuration = ARWorldTrackingConfiguration()
+        sceneView.session.run(configuration)
+        
         // Check to see if any previous maps have been saved
-        do {
-            let _ = try loadWorldMap(from: getDocumentsDirectory().appendingPathComponent("test"))
+        if fetchAllDrawingsFromCoreData().count > 0 {
             loadButton.isHidden = false
-        } catch {
-            print("No previous map exists")
+        } else {
+            print("No previous drawings exists")
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        let configuration = ARWorldTrackingConfiguration()
-        sceneView.session.run(configuration)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         sceneView.session.pause()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showAllDrawingsVC" {
+            let navigationController = segue.destination as! UINavigationController
+            let drawingsViewController = navigationController.viewControllers[0] as! AllDrawingsViewController
+            drawingsViewController.delegate = self
+            let fetchedDrawings =  fetchAllDrawingsFromCoreData()
+            drawingsViewController.drawings = fetchedDrawings
+        }
     }
     
     
@@ -161,23 +171,13 @@ class ViewController: UIViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
-        saveCurrentWorldMap(forSceneView: sceneView) { (success, message) in
+        saveCurrentWorldMapToCoreData(forSceneView: sceneView) { (success, message) in
             if success {
                 self.loadButton.isHidden = false
             } else {
                 // TODO:- Show alert
             }
             print(message)
-        }
-    }
-    
-    @IBAction func loadButtonPressed(_ sender: UIButton) {
-        do {
-            let map = try loadWorldMap(from: getDocumentsDirectory().appendingPathComponent("test"))
-            reStartSession(withWorldMap: map)
-            print("Map successfuly loaded")
-        } catch {
-            print("Could not load the map. \(error.localizedDescription)")
         }
     }
     
@@ -264,5 +264,29 @@ extension ViewController: ARSCNViewDelegate {
         // Remove the anchorID from the strokes array
         print("Anchor removed")
         strokeAnchorIDs.removeAll(where: { $0 == anchor.identifier })
+    }
+}
+
+extension ViewController: AllDrawingsViewControllerDelegate {
+    func allDrawingsViewController(_ controller: AllDrawingsViewController, didSelectDrawing drawing: Drawing) {
+        let screenShot = UIImage(data: drawing.screenShot as Data)
+        dismiss(animated: true, completion: nil)
+        do {
+            let worldMap = try loadWorldMap(from: drawing)
+            reStartSession(withWorldMap: worldMap)
+            print("Map successfuly loaded")
+            // Create an imageView and overlay it onto the screen
+//            let screenShotOverlay = UIImageView(frame: UIScreen.main.bounds)
+//            screenShotOverlay.layer.opacity = 0.8
+//            screenShotOverlay.image = screenShot
+//            sceneView.addSubview(screenShotOverlay)
+        } catch {
+            print("Could not load worldMap. Error: \(error)")
+        }
+    }
+    
+    func allDrawingsViewControllerDidPressCancel(_ controller: AllDrawingsViewController) {
+        dismiss(animated: true, completion: nil)
+        sceneView.session.run(sceneView.session.configuration!)
     }
 }
