@@ -291,12 +291,9 @@ extension ViewController: AllDrawingsViewControllerDelegate {
             let worldMap = try loadWorldMap(from: drawing)
             reStartSession(withWorldMap: worldMap)
             print("Map successfuly loaded")
-            // Create an imageView and overlay it onto the screen
-            screenShotOverlayImageView = UIImageView(frame: UIScreen.main.bounds)
-            screenShotOverlayImageView!.contentMode = .scaleAspectFit
-            screenShotOverlayImageView!.layer.opacity = 0.5
-            screenShotOverlayImageView!.image = screenShot
-            sceneView.addSubview(screenShotOverlayImageView!)
+
+            addScreenShotToView(screenShot: screenShot, fullSize: false)
+            
         } catch {
             print("Could not load worldMap. Error: \(error)")
         }
@@ -305,5 +302,23 @@ extension ViewController: AllDrawingsViewControllerDelegate {
     func allDrawingsViewControllerDidPressCancel(_ controller: AllDrawingsViewController) {
         dismiss(animated: true, completion: nil)
         sceneView.session.run(sceneView.session.configuration!)
+    }
+    
+    func addScreenShotToView(screenShot: UIImage?, fullSize: Bool) {
+        if fullSize {
+            // Create an imageView and overlay it onto the screen
+            screenShotOverlayImageView = UIImageView(frame: UIScreen.main.bounds)
+            screenShotOverlayImageView!.contentMode = .scaleAspectFit
+            screenShotOverlayImageView!.layer.opacity = 0.5
+        } else {
+            // Create a small thumbNail imageView and add it to the top left corner
+            screenShotOverlayImageView = UIImageView(frame: CGRect(x: 20,
+                                                                   y: 130,
+                                                                   width: UIScreen.main.bounds.width / CGFloat(3),
+                                                                   height: UIScreen.main.bounds.height / CGFloat(3)))
+            screenShotOverlayImageView!.contentMode = .scaleAspectFit
+        }
+        screenShotOverlayImageView!.image = screenShot
+        sceneView.addSubview(screenShotOverlayImageView!)
     }
 }
