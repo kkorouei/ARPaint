@@ -51,12 +51,11 @@ class ViewController: UIViewController {
         sceneView.session.run(configuration)
         
         // Check to see if any previous maps have been saved
-//        do {
-//            let _ = try loadWorldMap(from: getDocumentsDirectory().appendingPathComponent("test"))
-//            loadButton.isHidden = false
-//        } catch {
-//            print("No previous map exists")
-//        }
+        if fetchAllDrawingsFromCoreData().count > 0 {
+            loadButton.isHidden = false
+        } else {
+            print("No previous drawings exists")
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -172,14 +171,6 @@ class ViewController: UIViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
-//        saveCurrentWorldMap(forSceneView: sceneView) { (success, message) in
-//            if success {
-//                self.loadButton.isHidden = false
-//            } else {
-//                // TODO:- Show alert
-//            }
-//            print(message)
-//        }
         saveCurrentWorldMapToCoreData(forSceneView: sceneView) { (success, message) in
             if success {
                 self.loadButton.isHidden = false
@@ -189,16 +180,6 @@ class ViewController: UIViewController {
             print(message)
         }
     }
-    
-//    @IBAction func loadButtonPressed(_ sender: UIButton) {
-//        do {
-//            let map = try loadWorldMap(from: getDocumentsDirectory().appendingPathComponent("test"))
-//            reStartSession(withWorldMap: map)
-//            print("Map successfuly loaded")
-//        } catch {
-//            print("Could not load the map. \(error.localizedDescription)")
-//        }
-//    }
     
     private func updateWorldMappingStatusInfoLabel(for frame: ARFrame) {
         
@@ -293,6 +274,7 @@ extension ViewController: AllDrawingsViewControllerDelegate {
         do {
             let worldMap = try loadWorldMap(from: drawing)
             reStartSession(withWorldMap: worldMap)
+            print("Map successfuly loaded")
             // Create an imageView and overlay it onto the screen
 //            let screenShotOverlay = UIImageView(frame: UIScreen.main.bounds)
 //            screenShotOverlay.layer.opacity = 0.8
