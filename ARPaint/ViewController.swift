@@ -20,6 +20,8 @@ class ViewController: UIViewController {
     var screenTouched = false
     var previousPoint: SCNVector3?
     
+    var screenShotOverlayImageView: UIImageView?
+    
     var whiteBallCount = 0
     var label: UILabel!
     lazy var sphereNode: SCNNode = {
@@ -75,6 +77,11 @@ class ViewController: UIViewController {
             drawingsViewController.delegate = self
             let fetchedDrawings =  fetchAllDrawingsFromCoreData()
             drawingsViewController.drawings = fetchedDrawings
+            
+            if screenShotOverlayImageView != nil {
+                screenShotOverlayImageView!.removeFromSuperview()
+                screenShotOverlayImageView = nil
+            }
         }
     }
     
@@ -245,6 +252,15 @@ extension ViewController: ARSCNViewDelegate {
         print("Anchor ADDED *****")
         // This is only used when loading a worldMap
         if let strokeAnchor = anchor as? StrokeAnchor {
+            if screenShotOverlayImageView != nil {
+                DispatchQueue.main.async {
+                    self.screenShotOverlayImageView?.removeFromSuperview()
+                    self.screenShotOverlayImageView = nil
+                    // Haptick feedback
+                    let generator = UIImpactFeedbackGenerator(style: .medium)
+                    generator.impactOccurred()
+                }
+            }
             print("This is a stroke anchor")
             currentStrokeAnchorNode = node
             strokeAnchorIDs.append(strokeAnchor.identifier)
@@ -276,10 +292,11 @@ extension ViewController: AllDrawingsViewControllerDelegate {
             reStartSession(withWorldMap: worldMap)
             print("Map successfuly loaded")
             // Create an imageView and overlay it onto the screen
-//            let screenShotOverlay = UIImageView(frame: UIScreen.main.bounds)
-//            screenShotOverlay.layer.opacity = 0.8
-//            screenShotOverlay.image = screenShot
-//            sceneView.addSubview(screenShotOverlay)
+            screenShotOverlayImageView = UIImageView(frame: UIScreen.main.bounds)
+            screenShotOverlayImageView!.contentMode = .scaleAspectFit
+            screenShotOverlayImageView!.layer.opacity = 0.5
+            screenShotOverlayImageView!.image = screenShot
+            sceneView.addSubview(screenShotOverlayImageView!)
         } catch {
             print("Could not load worldMap. Error: \(error)")
         }

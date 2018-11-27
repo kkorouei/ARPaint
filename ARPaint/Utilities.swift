@@ -64,6 +64,20 @@ func takeSnapShot(ofFrame frame: ARFrame?) -> Data?{
     return data
 }
 
+func takeSnapShot(ofSceneview sceneView: ARSCNView?) -> Data?{
+    guard let sceneView = sceneView else {
+        return nil
+    }
+    let image = CIImage(image: sceneView.snapshot())!
+    
+    let context = CIContext(options: [.useSoftwareRenderer: false])
+    guard let data = context.jpegRepresentation(of: image,
+                                                colorSpace: CGColorSpaceCreateDeviceRGB(),
+                                                options: [kCGImageDestinationLossyCompressionQuality as CIImageRepresentationOption: 0.7])
+        else { return nil}
+    return data
+}
+
 extension CGImagePropertyOrientation {
     /// Preferred image presentation orientation respecting the native sensor orientation of iOS device camera.
     init(cameraOrientation: UIDeviceOrientation) {
