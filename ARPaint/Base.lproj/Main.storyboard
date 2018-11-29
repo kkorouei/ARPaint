@@ -75,6 +75,13 @@
                                 <color key="textColor" red="0.11451736543814517" green="1" blue="0.03968375480556241" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GFZ-Qz-sR2">
+                                <rect key="frame" x="16" y="539" width="49.5" height="21"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.16884363859885576" blue="0.18614286856481599" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -89,7 +96,9 @@
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="trailing" secondItem="fQZ-KI-GVf" secondAttribute="trailing" id="XyZ-9z-H8e"/>
                             <constraint firstItem="ZX3-Xu-q8s" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="16" id="bnB-Qh-Eb8"/>
                             <constraint firstItem="9P4-8G-agT" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="16" id="dql-RW-LtF"/>
+                            <constraint firstItem="GFZ-Qz-sR2" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="16" id="hiy-zX-ebB"/>
                             <constraint firstItem="oJU-TB-26W" firstAttribute="leading" secondItem="Y43-5Y-xum" secondAttribute="trailing" constant="20" id="iFu-Gh-by0"/>
+                            <constraint firstItem="ZX3-Xu-q8s" firstAttribute="top" secondItem="GFZ-Qz-sR2" secondAttribute="bottom" constant="8" id="qGj-am-iQJ"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="top" secondItem="U0K-SW-4ec" secondAttribute="top" id="rJc-2c-zQA"/>
                             <constraint firstItem="tg2-6H-rVr" firstAttribute="leading" secondItem="9P4-8G-agT" secondAttribute="trailing" constant="20" id="ry6-oI-o4a"/>
                         </constraints>
@@ -97,9 +106,10 @@
                     </view>
                     <connections>
                         <outlet property="loadButton" destination="tg2-6H-rVr" id="MEv-yv-bBy"/>
-                        <outlet property="mappingStatusLabel" destination="ZX3-Xu-q8s" id="XGd-uZ-gyx"/>
                         <outlet property="saveButton" destination="9P4-8G-agT" id="yN1-42-6SY"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
+                        <outlet property="trackingStateLabel" destination="GFZ-Qz-sR2" id="aeE-dc-1NZ"/>
+                        <outlet property="worldMappingStateLabel" destination="ZX3-Xu-q8s" id="XGd-uZ-gyx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>

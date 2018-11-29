@@ -18,6 +18,7 @@
 		728E699721AABACF0085B045 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728E699621AABACF0085B045 /* PersistenceManager.swift */; };
 		72B3017021AC130C003D0FD4 /* Drawing+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B3016E21AC130B003D0FD4 /* Drawing+CoreDataClass.swift */; };
 		72B3017121AC130C003D0FD4 /* Drawing+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B3016F21AC130C003D0FD4 /* Drawing+CoreDataProperties.swift */; };
+		72B5213C21AFCACC0025CF4A /* ViewController+AllDrawingsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B5213B21AFCACC0025CF4A /* ViewController+AllDrawingsViewControllerDelegate.swift */; };
 		72B8A60421A69AEF00B6F814 /* StrokeAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B8A60321A69AEF00B6F814 /* StrokeAnchor.swift */; };
 		72B8A81021AD24C900DDC018 /* AllDrawingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B8A80F21AD24C900DDC018 /* AllDrawingsViewController.swift */; };
 		72E20F7721ABE42C0080A854 /* Float4x4+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E20F7621ABE42C0080A854 /* Float4x4+Extensions.swift */; };
@@ -38,6 +39,7 @@
 		728E699621AABACF0085B045 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		72B3016E21AC130B003D0FD4 /* Drawing+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Drawing+CoreDataClass.swift"; sourceTree = "<group>"; };
 		72B3016F21AC130C003D0FD4 /* Drawing+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Drawing+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		72B5213B21AFCACC0025CF4A /* ViewController+AllDrawingsViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+AllDrawingsViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		72B8A60321A69AEF00B6F814 /* StrokeAnchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeAnchor.swift; sourceTree = "<group>"; };
 		72B8A80F21AD24C900DDC018 /* AllDrawingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllDrawingsViewController.swift; sourceTree = "<group>"; };
 		72E20F7621ABE42C0080A854 /* Float4x4+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Float4x4+Extensions.swift"; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 			children = (
 				728496C92193FB4200FD2C26 /* AppDelegate.swift */,
 				728496CD2193FB4200FD2C26 /* ViewController.swift */,
+				72B5213B21AFCACC0025CF4A /* ViewController+AllDrawingsViewControllerDelegate.swift */,
 				72B8A80F21AD24C900DDC018 /* AllDrawingsViewController.swift */,
 				728E699621AABACF0085B045 /* PersistenceManager.swift */,
 				7228C15721AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodeld */,
@@ -175,6 +178,7 @@
 			files = (
 				728496CE2193FB4200FD2C26 /* ViewController.swift in Sources */,
 				72B8A60421A69AEF00B6F814 /* StrokeAnchor.swift in Sources */,
+				72B5213C21AFCACC0025CF4A /* ViewController+AllDrawingsViewControllerDelegate.swift in Sources */,
 				728630012199477900922B63 /* SCNVector3+Extensions.swift in Sources */,
 				720F91CE21AFB1880052CDF4 /* CGImagePropertyOrientation+Extensions.swift in Sources */,
 				72B3017021AC130C003D0FD4 /* Drawing+CoreDataClass.swift in Sources */,
