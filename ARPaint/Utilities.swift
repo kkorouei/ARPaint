@@ -49,6 +49,7 @@ func getPositionsOnLineBetween(point1: SCNVector3, andPoint2 point2: SCNVector3,
     return positions
 }
 
+// MARK:- SnapShots
 func takeSnapShot(ofFrame frame: ARFrame?) -> Data?{
     guard let frame = frame else {
         return nil
@@ -64,20 +65,16 @@ func takeSnapShot(ofFrame frame: ARFrame?) -> Data?{
     return data
 }
 
-extension CGImagePropertyOrientation {
-    /// Preferred image presentation orientation respecting the native sensor orientation of iOS device camera.
-    init(cameraOrientation: UIDeviceOrientation) {
-        switch cameraOrientation {
-        case .portrait:
-            self = .right
-        case .portraitUpsideDown:
-            self = .left
-        case .landscapeLeft:
-            self = .up
-        case .landscapeRight:
-            self = .down
-        default:
-            self = .right
-        }
+func takeSnapShot(ofSceneview sceneView: ARSCNView?) -> Data?{
+    guard let sceneView = sceneView else {
+        return nil
     }
+    let image = CIImage(image: sceneView.snapshot())!
+    
+    let context = CIContext(options: [.useSoftwareRenderer: false])
+    guard let data = context.jpegRepresentation(of: image,
+                                                colorSpace: CGColorSpaceCreateDeviceRGB(),
+                                                options: [kCGImageDestinationLossyCompressionQuality as CIImageRepresentationOption: 0.7])
+        else { return nil}
+    return data
 }

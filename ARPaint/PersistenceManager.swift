@@ -57,11 +57,12 @@ func saveCurrentDrawingToCoreData(forSceneView sceneView: ARSCNView, completion:
             completion(false, message)
         }
         
-        guard let screenShot = takeSnapShot(ofFrame: sceneView.session.currentFrame) as NSData? else {
+        guard let screenShot = takeSnapShot(ofSceneview: sceneView) as NSData? else {
             let message = "Could not convert screenshot to data"
             completion(false, message)
             return
         }
+        
         drawing.screenShot = screenShot
         drawing.dateCreated = Date() as NSDate
         

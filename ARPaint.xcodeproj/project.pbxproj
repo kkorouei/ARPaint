@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		720F91CE21AFB1880052CDF4 /* CGImagePropertyOrientation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720F91CD21AFB1880052CDF4 /* CGImagePropertyOrientation+Extensions.swift */; };
 		7228C15921AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7228C15721AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodeld */; };
 		728496CA2193FB4200FD2C26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728496C92193FB4200FD2C26 /* AppDelegate.swift */; };
 		728496CE2193FB4200FD2C26 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728496CD2193FB4200FD2C26 /* ViewController.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		720F91CD21AFB1880052CDF4 /* CGImagePropertyOrientation+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImagePropertyOrientation+Extensions.swift"; sourceTree = "<group>"; };
 		7228C15821AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ARPaintCoreData.xcdatamodel; sourceTree = "<group>"; };
 		728496C62193FB4200FD2C26 /* ARPaint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARPaint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		728496C92193FB4200FD2C26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			children = (
 				728630002199477900922B63 /* SCNVector3+Extensions.swift */,
 				72E20F7621ABE42C0080A854 /* Float4x4+Extensions.swift */,
+				720F91CD21AFB1880052CDF4 /* CGImagePropertyOrientation+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 				728496CE2193FB4200FD2C26 /* ViewController.swift in Sources */,
 				72B8A60421A69AEF00B6F814 /* StrokeAnchor.swift in Sources */,
 				728630012199477900922B63 /* SCNVector3+Extensions.swift in Sources */,
+				720F91CE21AFB1880052CDF4 /* CGImagePropertyOrientation+Extensions.swift in Sources */,
 				72B3017021AC130C003D0FD4 /* Drawing+CoreDataClass.swift in Sources */,
 				72B8A81021AD24C900DDC018 /* AllDrawingsViewController.swift in Sources */,
 				72E20F7721ABE42C0080A854 /* Float4x4+Extensions.swift in Sources */,

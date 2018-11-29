@@ -20,6 +20,8 @@ class ViewController: UIViewController {
     var screenTouched = false
     var previousPoint: SCNVector3?
     
+    var screenShotOverlayImageView: UIImageView?
+    
     var whiteBallCount = 0
     var label: UILabel!
     lazy var sphereNode: SCNNode = {
@@ -75,6 +77,11 @@ class ViewController: UIViewController {
             drawingsViewController.delegate = self
             let fetchedDrawings =  fetchAllDrawingsFromCoreData()
             drawingsViewController.drawings = fetchedDrawings
+            
+            if screenShotOverlayImageView != nil {
+                screenShotOverlayImageView!.removeFromSuperview()
+                screenShotOverlayImageView = nil
+            }
         }
     }
     
@@ -245,6 +252,15 @@ extension ViewController: ARSCNViewDelegate {
         print("Anchor ADDED *****")
         // This is only used when loading a worldMap
         if let strokeAnchor = anchor as? StrokeAnchor {
+            if screenShotOverlayImageView != nil {
+                DispatchQueue.main.async {
+                    self.screenShotOverlayImageView?.removeFromSuperview()
+                    self.screenShotOverlayImageView = nil
+                    // Haptick feedback
+                    let generator = UIImpactFeedbackGenerator(style: .medium)
+                    generator.impactOccurred()
+                }
+            }
             print("This is a stroke anchor")
             currentStrokeAnchorNode = node
             strokeAnchorIDs.append(strokeAnchor.identifier)
@@ -275,11 +291,9 @@ extension ViewController: AllDrawingsViewControllerDelegate {
             let worldMap = try loadWorldMap(from: drawing)
             reStartSession(withWorldMap: worldMap)
             print("Map successfuly loaded")
-            // Create an imageView and overlay it onto the screen
-//            let screenShotOverlay = UIImageView(frame: UIScreen.main.bounds)
-//            screenShotOverlay.layer.opacity = 0.8
-//            screenShotOverlay.image = screenShot
-//            sceneView.addSubview(screenShotOverlay)
+
+            addScreenShotToView(screenShot: screenShot, fullSize: true)
+            
         } catch {
             print("Could not load worldMap. Error: \(error)")
         }
@@ -289,8 +303,28 @@ extension ViewController: AllDrawingsViewControllerDelegate {
         dismiss(animated: true, completion: nil)
         sceneView.session.run(sceneView.session.configuration!)
         
-        // When the user has loaded a preivous drawing, presses Undo/delete, then presses load and then cancels,
+        // FIX:- When the user has loaded a preivous drawing, presses Undo/delete, then presses load and then cancels,
         // the previous drawing gets relocalized, this is becuase the previous session is restarted. Kapich?
         // This is probably becuase its using the old world map since the new one is not saved
+        // The best way to fix this is to probably make the allDrawingsViewController into a view and just add it as a subview.
+        // No more pausing og the session will occur
+    }
+    
+    func addScreenShotToView(screenShot: UIImage?, fullSize: Bool) {
+        if fullSize {
+            // Create an imageView and overlay it onto the screen
+            screenShotOverlayImageView = UIImageView(frame: UIScreen.main.bounds)
+            screenShotOverlayImageView!.contentMode = .scaleAspectFit
+            screenShotOverlayImageView!.layer.opacity = 0.5
+        } else {
+            // Create a small thumbNail imageView and add it to the top left corner
+            screenShotOverlayImageView = UIImageView(frame: CGRect(x: 20,
+                                                                   y: 130,
+                                                                   width: UIScreen.main.bounds.width / CGFloat(3),
+                                                                   height: UIScreen.main.bounds.height / CGFloat(3)))
+            screenShotOverlayImageView!.contentMode = .scaleAspectFit
+        }
+        screenShotOverlayImageView!.image = screenShot
+        sceneView.addSubview(screenShotOverlayImageView!)
     }
 }
