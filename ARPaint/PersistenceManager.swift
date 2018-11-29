@@ -10,10 +10,10 @@ import Foundation
 import ARKit
 import CoreData
 
-//func writeWorldMap(_ worldMap: ARWorldMap, to url: URL) throws {
-//    let data = try NSKeyedArchiver.archivedData(withRootObject: worldMap, requiringSecureCoding: true)
-//    try data.write(to: url)
-//}
+func getManagedObjectContext() -> NSManagedObjectContext {
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    return appDelegate.persistentContainer.viewContext
+}
 
 func loadWorldMap(from drawing: Drawing) throws -> ARWorldMap {
     let mapData = drawing.worldMap as Data
@@ -22,11 +22,6 @@ func loadWorldMap(from drawing: Drawing) throws -> ARWorldMap {
             throw ARError(.invalidWorldMap)
     }
     return worldMap
-}
-
-func getManagedObjectContext() -> NSManagedObjectContext {
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    return appDelegate.persistentContainer.viewContext
 }
 
 func fetchAllDrawingsFromCoreData() -> [Drawing] {
@@ -43,7 +38,7 @@ func fetchAllDrawingsFromCoreData() -> [Drawing] {
     }
 }
 
-func saveCurrentWorldMapToCoreData(forSceneView sceneView: ARSCNView, completion: @escaping (Bool, String) ->Void ) {
+func saveCurrentDrawingToCoreData(forSceneView sceneView: ARSCNView, completion: @escaping (Bool, String) ->Void ) {
     sceneView.session.getCurrentWorldMap { (worldMap, error) in
         guard let map = worldMap else {
             let message = ("Can't get world map: \(error!.localizedDescription)")
@@ -89,22 +84,17 @@ func saveCurrentWorldMapToCoreData(forSceneView sceneView: ARSCNView, completion
     }
 }
 
-//func saveCurrentWorldMap(forSceneView sceneView: ARSCNView, completion: @escaping (Bool, String) ->Void ) {
-//    sceneView.session.getCurrentWorldMap { (worldMap, error) in
-//        guard let map = worldMap else {
-//            let message = ("Can't get world map: \(error!.localizedDescription)")
-//            completion(false, message)
-//            return
-//        }
-//        // Save the map
-//        let pathToSave = getDocumentsDirectory().appendingPathComponent("test")
-//        do {
-//            try writeWorldMap(map, to: pathToSave)
-//            let message = ("Map saved succesfully")
-//            completion(true, message)
-//        } catch {
-//            let message = ("Could not save the map. \(error.localizedDescription)")
-//            completion(false, message)
-//        }
-//    }
-//}
+func deleteDrawingFromCoreData(drawing: Drawing, completion: (Bool, String) -> Void ) {
+    let managedObjectContext = getManagedObjectContext()
+    
+    managedObjectContext.delete(drawing)
+    
+    do {
+        try managedObjectContext.save()
+        let message = "Succesffully deleted drawing from coreData"
+        completion(true, message)
+    } catch {
+        let message = ("Could not save to Core Data After deleting. \(error)")
+        completion(false, message)
+    }
+}

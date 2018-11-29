@@ -178,7 +178,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
-        saveCurrentWorldMapToCoreData(forSceneView: sceneView) { (success, message) in
+        saveCurrentDrawingToCoreData(forSceneView: sceneView) { (success, message) in
             if success {
                 self.loadButton.isHidden = false
             } else {
@@ -302,6 +302,10 @@ extension ViewController: AllDrawingsViewControllerDelegate {
     func allDrawingsViewControllerDidPressCancel(_ controller: AllDrawingsViewController) {
         dismiss(animated: true, completion: nil)
         sceneView.session.run(sceneView.session.configuration!)
+        
+        // When the user has loaded a preivous drawing, presses Undo/delete, then presses load and then cancels,
+        // the previous drawing gets relocalized, this is becuase the previous session is restarted. Kapich?
+        // This is probably becuase its using the old world map since the new one is not saved
     }
     
     func addScreenShotToView(screenShot: UIImage?, fullSize: Bool) {
