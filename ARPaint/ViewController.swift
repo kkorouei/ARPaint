@@ -171,7 +171,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
-        saveCurrentWorldMapToCoreData(forSceneView: sceneView) { (success, message) in
+        saveCurrentDrawingToCoreData(forSceneView: sceneView) { (success, message) in
             if success {
                 self.loadButton.isHidden = false
             } else {

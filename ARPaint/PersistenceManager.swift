@@ -43,7 +43,7 @@ func fetchAllDrawingsFromCoreData() -> [Drawing] {
     }
 }
 
-func saveCurrentWorldMapToCoreData(forSceneView sceneView: ARSCNView, completion: @escaping (Bool, String) ->Void ) {
+func saveCurrentDrawingToCoreData(forSceneView sceneView: ARSCNView, completion: @escaping (Bool, String) ->Void ) {
     sceneView.session.getCurrentWorldMap { (worldMap, error) in
         guard let map = worldMap else {
             let message = ("Can't get world map: \(error!.localizedDescription)")
@@ -79,6 +79,21 @@ func saveCurrentWorldMapToCoreData(forSceneView sceneView: ARSCNView, completion
             let message = ("Could not save the map. \(error.localizedDescription)")
             completion(false, message)
         }
+    }
+}
+
+func deleteDrawingFromCoreData(drawing: Drawing, completion: (Bool, String) -> Void ) {
+    let managedObjectContext = getManagedObjectContext()
+    
+    managedObjectContext.delete(drawing)
+    
+    do {
+        try managedObjectContext.save()
+        let message = "Succesffully deleted drawing from coreData"
+        completion(true, message)
+    } catch {
+        let message = ("Could not save to Core Data After deleting. \(error)")
+        completion(false, message)
     }
 }
 

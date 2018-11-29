@@ -40,4 +40,25 @@ extension AllDrawingsViewController: UITableViewDelegate, UITableViewDataSource 
         delegate.allDrawingsViewController(self, didSelectDrawing: drawing)
 
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let drawing = drawings[indexPath.row]
+            
+            deleteDrawingFromCoreData(drawing: drawing) { (success, message) in
+                if success {
+                    print("Successfully deleted from core data")
+                    // Remove the drawing from the drawings array
+                    drawings.remove(at: indexPath.row)
+                    tableView.reloadData()
+                } else {
+                    print(message)
+                }
+            }
+        }
+    }
 }
