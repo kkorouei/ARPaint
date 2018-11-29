@@ -292,7 +292,7 @@ extension ViewController: AllDrawingsViewControllerDelegate {
             reStartSession(withWorldMap: worldMap)
             print("Map successfuly loaded")
 
-            addScreenShotToView(screenShot: screenShot, fullSize: false)
+            addScreenShotToView(screenShot: screenShot, fullSize: true)
             
         } catch {
             print("Could not load worldMap. Error: \(error)")
@@ -303,9 +303,11 @@ extension ViewController: AllDrawingsViewControllerDelegate {
         dismiss(animated: true, completion: nil)
         sceneView.session.run(sceneView.session.configuration!)
         
-        // When the user has loaded a preivous drawing, presses Undo/delete, then presses load and then cancels,
+        // FIX:- When the user has loaded a preivous drawing, presses Undo/delete, then presses load and then cancels,
         // the previous drawing gets relocalized, this is becuase the previous session is restarted. Kapich?
         // This is probably becuase its using the old world map since the new one is not saved
+        // The best way to fix this is to probably make the allDrawingsViewController into a view and just add it as a subview.
+        // No more pausing og the session will occur
     }
     
     func addScreenShotToView(screenShot: UIImage?, fullSize: Bool) {
