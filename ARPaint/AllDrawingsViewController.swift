@@ -51,7 +51,7 @@ extension AllDrawingsViewController: UITableViewDelegate, UITableViewDataSource 
             
             deleteDrawingFromCoreData(drawing: drawing) { (success, message) in
                 if success {
-                    print("Successfully deleted from core data")
+                    print(message)
                     // Remove the drawing from the drawings array
                     drawings.remove(at: indexPath.row)
                     tableView.reloadData()
