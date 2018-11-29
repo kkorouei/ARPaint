@@ -82,6 +82,45 @@
                                 <color key="textColor" red="1" green="0.16884363859885576" blue="0.18614286856481599" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yk9-Su-vmP">
+                                <rect key="frame" x="77" y="314.5" width="221" height="38"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="qAu-E5-20H">
+                                    <rect key="frame" x="0.0" y="0.0" width="221" height="38"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Preparing drawing area" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ARL-xf-Wk9">
+                                            <rect key="frame" x="8" y="8" width="177" height="22"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="z1u-HM-mV8">
+                                            <rect key="frame" x="193" y="9" width="20" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="20" id="N07-AI-16e"/>
+                                                <constraint firstAttribute="height" constant="20" id="T4w-mC-13R"/>
+                                            </constraints>
+                                        </activityIndicatorView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="ARL-xf-Wk9" secondAttribute="bottom" constant="8" id="2fa-iT-T2y"/>
+                                        <constraint firstItem="ARL-xf-Wk9" firstAttribute="leading" secondItem="qAu-E5-20H" secondAttribute="leading" constant="8" id="Ebj-QX-l2K"/>
+                                        <constraint firstItem="ARL-xf-Wk9" firstAttribute="top" secondItem="qAu-E5-20H" secondAttribute="top" constant="8" id="Fok-Ac-1km"/>
+                                        <constraint firstItem="z1u-HM-mV8" firstAttribute="centerY" secondItem="qAu-E5-20H" secondAttribute="centerY" id="S4X-mm-hqI"/>
+                                        <constraint firstAttribute="trailing" secondItem="z1u-HM-mV8" secondAttribute="trailing" constant="8" id="Xib-Mf-oDl"/>
+                                        <constraint firstItem="z1u-HM-mV8" firstAttribute="leading" secondItem="ARL-xf-Wk9" secondAttribute="trailing" constant="8" id="aa6-oX-9WH"/>
+                                    </constraints>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="38" id="r7I-uN-zcj"/>
+                                </constraints>
+                                <blurEffect style="light"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="7"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -89,7 +128,11 @@
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="bottom" secondItem="tg2-6H-rVr" secondAttribute="bottom" constant="20" id="9oL-LO-30I"/>
                             <constraint firstItem="Y43-5Y-xum" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="40" id="BaV-rf-jH7"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="GsS-dJ-CKf"/>
+                            <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="yk9-Su-vmP" secondAttribute="trailing" constant="20" id="Jig-Px-PqM"/>
+                            <constraint firstItem="yk9-Su-vmP" firstAttribute="centerX" secondItem="U0K-SW-4ec" secondAttribute="centerX" id="JpE-WE-3u6"/>
+                            <constraint firstItem="yk9-Su-vmP" firstAttribute="centerY" secondItem="U0K-SW-4ec" secondAttribute="centerY" id="M7O-zQ-BPg"/>
                             <constraint firstItem="oJU-TB-26W" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="40" id="MCI-8l-stM"/>
+                            <constraint firstItem="yk9-Su-vmP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="20" id="Nwo-Jc-a1Q"/>
                             <constraint firstItem="9P4-8G-agT" firstAttribute="top" secondItem="ZX3-Xu-q8s" secondAttribute="bottom" constant="8" id="ULu-0d-qJD"/>
                             <constraint firstItem="Y43-5Y-xum" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="20" id="V7b-T5-DSJ"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="bottom" secondItem="fQZ-KI-GVf" secondAttribute="bottom" id="VpT-BR-CcM"/>
@@ -106,6 +149,8 @@
                     </view>
                     <connections>
                         <outlet property="loadButton" destination="tg2-6H-rVr" id="MEv-yv-bBy"/>
+                        <outlet property="preparingDrawingAreaLabel" destination="ARL-xf-Wk9" id="Gpp-ns-77e"/>
+                        <outlet property="preparingDrawingAreaView" destination="yk9-Su-vmP" id="5IH-Q6-DQ7"/>
                         <outlet property="saveButton" destination="9P4-8G-agT" id="yN1-42-6SY"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
                         <outlet property="trackingStateLabel" destination="GFZ-Qz-sR2" id="aeE-dc-1NZ"/>

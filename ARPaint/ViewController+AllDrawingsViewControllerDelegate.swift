@@ -52,4 +52,12 @@ extension ViewController: AllDrawingsViewControllerDelegate {
         screenShotOverlayImageView!.image = screenShot
         sceneView.addSubview(screenShotOverlayImageView!)
     }
+    
+    func removeScreenShotFromView() {
+        self.screenShotOverlayImageView?.removeFromSuperview()
+        self.screenShotOverlayImageView = nil
+        // Haptick feedback
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
+    }
 }

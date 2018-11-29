@@ -17,6 +17,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var worldMappingStateLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var loadButton: UIButton!
+    @IBOutlet weak var preparingDrawingAreaView: UIVisualEffectView!
+    @IBOutlet weak var preparingDrawingAreaLabel: UILabel!
     
     var screenTouched = false
     var previousPoint: SCNVector3?
@@ -33,6 +35,8 @@ class ViewController: UIViewController {
     
     var strokeAnchorIDs: [UUID] = []
     var currentStrokeAnchorNode: SCNNode?
+    
+    var isLoadingSavedWorldMap = false
     
     // MARK:- View Lifecycle
     override func viewDidLoad() {
@@ -95,6 +99,7 @@ class ViewController: UIViewController {
         configuration.initialWorldMap = worldMap
         sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
         currentStrokeAnchorNode = nil
+        isLoadingSavedWorldMap = true
     }
     
     // MARK:- Drawing
@@ -213,17 +218,38 @@ class ViewController: UIViewController {
     private func updateTrackingStatusLabel(forCamera camera: ARCamera) {
         switch camera.trackingState {
         case .notAvailable:
+            // "Tracking unavailable."
             trackingStateLabel.text = "Tracking state notAvailable"
+            preparingDrawingAreaView.isHidden = false
         case .limited(.initializing):
+            // "Initializing AR session."
             trackingStateLabel.text = "Tracking state limited(initializing)"
+            preparingDrawingAreaView.isHidden = false
         case .limited(.relocalizing):
+            // Recovering: Move your phone around the area shown in the image
+            if isLoadingSavedWorldMap{
+                preparingDrawingAreaLabel.text = "Move your device to the location shown in the image."
+            } else {
+                
+            }
             trackingStateLabel.text = "Tracking state limited(relocalizing)"
+            preparingDrawingAreaView.isHidden = false
         case .limited(.excessiveMotion):
+            // "Tracking limited - Move the device more slowly."
             trackingStateLabel.text = "Tracking state limited(excessiveMotion)"
+            preparingDrawingAreaView.isHidden = false
         case .limited(.insufficientFeatures):
+            // Tracking limited - Point the device at an area with visible surface detail, or improve lighting conditions.
             trackingStateLabel.text = "Tracking state limited(insufficientFeatures)"
+            preparingDrawingAreaView.isHidden = false
         case .normal:
+            if isLoadingSavedWorldMap {
+                isLoadingSavedWorldMap = false
+                removeScreenShotFromView()
+            }
+            print("Tracking state normal")
             trackingStateLabel.text = "Tracking state normal"
+            preparingDrawingAreaView.isHidden = true
         }
     }
     
@@ -290,15 +316,6 @@ extension ViewController: ARSCNViewDelegate {
         print("Anchor ADDED *****")
         // This is only used when loading a worldMap
         if let strokeAnchor = anchor as? StrokeAnchor {
-            if screenShotOverlayImageView != nil {
-                DispatchQueue.main.async {
-                    self.screenShotOverlayImageView?.removeFromSuperview()
-                    self.screenShotOverlayImageView = nil
-                    // Haptick feedback
-                    let generator = UIImpactFeedbackGenerator(style: .medium)
-                    generator.impactOccurred()
-                }
-            }
             print("This is a stroke anchor")
             currentStrokeAnchorNode = node
             strokeAnchorIDs.append(strokeAnchor.identifier)
