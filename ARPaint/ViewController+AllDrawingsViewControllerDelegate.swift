@@ -26,7 +26,6 @@ extension ViewController: AllDrawingsViewControllerDelegate {
     
     func allDrawingsViewControllerDidPressCancel(_ controller: AllDrawingsViewController) {
         dismiss(animated: true, completion: nil)
-        sceneView.session.run(sceneView.session.configuration!)
         
         // FIX:- When the user has loaded a preivous drawing, presses Undo/delete, then presses load and then cancels,
         // the previous drawing gets relocalized, this is becuase the previous session is restarted. Kapich?
