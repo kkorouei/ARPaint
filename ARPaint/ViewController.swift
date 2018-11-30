@@ -13,9 +13,12 @@ import ARKit
 class ViewController: UIViewController {
     
     @IBOutlet var sceneView: ARSCNView!
-    @IBOutlet weak var mappingStatusLabel: UILabel!
+    @IBOutlet weak var trackingStateLabel: UILabel!
+    @IBOutlet weak var worldMappingStateLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var loadButton: UIButton!
+    @IBOutlet weak var preparingDrawingAreaView: UIVisualEffectView!
+    @IBOutlet weak var preparingDrawingAreaLabel: UILabel!
     
     var screenTouched = false
     var previousPoint: SCNVector3?
@@ -33,9 +36,14 @@ class ViewController: UIViewController {
     var strokeAnchorIDs: [UUID] = []
     var currentStrokeAnchorNode: SCNNode?
     
+    var isLoadingSavedWorldMap = false
+    
     // MARK:- View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Prevent the screen from being dimmed
+        UIApplication.shared.isIdleTimerDisabled = true
         
         sceneView.delegate = self
         sceneView.session.delegate = self
@@ -91,6 +99,7 @@ class ViewController: UIViewController {
         configuration.initialWorldMap = worldMap
         sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
         currentStrokeAnchorNode = nil
+        isLoadingSavedWorldMap = true
     }
     
     // MARK:- Drawing
@@ -188,35 +197,93 @@ class ViewController: UIViewController {
         }
     }
     
-    private func updateWorldMappingStatusInfoLabel(for frame: ARFrame) {
+    private func updateWorldMappingStatusInfoLabel(forframe frame: ARFrame) {
         
         switch frame.worldMappingStatus {
         case .notAvailable:
-            mappingStatusLabel.text = "not available"
+            worldMappingStateLabel.text = "Mapping status: notAvailable"
             saveButton.isHidden = true
         case .limited:
-            mappingStatusLabel.text = "limited"
+            worldMappingStateLabel.text = "Mapping status: limited"
             saveButton.isHidden = true
         case .extending:
-            mappingStatusLabel.text = "extending"
+            worldMappingStateLabel.text = "Mapping status: extending"
             saveButton.isHidden = false
         case .mapped:
-            mappingStatusLabel.text = "mapped"
+            worldMappingStateLabel.text = "Mapping status: mapped"
             saveButton.isHidden = false
         }
     }
+    
+    private func updateTrackingStatusLabel(forCamera camera: ARCamera) {
+        switch camera.trackingState {
+        case .notAvailable:
+            // "Tracking unavailable."
+            print("-------Tracking state notAvailable")
+            trackingStateLabel.text = "Tracking state notAvailable"
+            preparingDrawingAreaView.isHidden = false
+        case .limited(.initializing):
+            // "Initializing AR session."
+            trackingStateLabel.text = "Tracking state limited(initializing)"
+            preparingDrawingAreaView.isHidden = false
+        case .limited(.relocalizing):
+            // Recovering: Move your phone around the area shown in the image
+            if isLoadingSavedWorldMap{
+                preparingDrawingAreaLabel.text = "Move your device to the location shown in the image."
+            } else {
+                
+            }
+            trackingStateLabel.text = "Tracking state limited(relocalizing)"
+            preparingDrawingAreaView.isHidden = false
+        case .limited(.excessiveMotion):
+            // "Tracking limited - Move the device more slowly."
+            trackingStateLabel.text = "Tracking state limited(excessiveMotion)"
+            preparingDrawingAreaView.isHidden = false
+        case .limited(.insufficientFeatures):
+            // Tracking limited - Point the device at an area with visible surface detail, or improve lighting conditions.
+            trackingStateLabel.text = "Tracking state limited(insufficientFeatures)"
+            preparingDrawingAreaView.isHidden = false
+        case .normal:
+            if isLoadingSavedWorldMap {
+                isLoadingSavedWorldMap = false
+                removeScreenShotFromView()
+            }
+            print("Tracking state normal")
+            trackingStateLabel.text = "Tracking state normal"
+            preparingDrawingAreaView.isHidden = true
+        }
+    }
+    
+    // MARK:- ARSessionObserver Protocols
+    
+    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
+        guard let currentFrame = session.currentFrame else { return }
+        updateWorldMappingStatusInfoLabel(forframe: currentFrame)
+        updateTrackingStatusLabel(forCamera: camera)
+    }
+    
+    func sessionWasInterrupted(_ session: ARSession) {
+        print("*****Session was interrupted*****")
+    }
+    
+    func sessionInterruptionEnded(_ session: ARSession) {
+        print("*****Session interruption ended*****")
+        // "Resuming session — move to where you were when the session was interrupted."
+    }
+    
+    func session(_ session: ARSession, didFailWithError error: Error) {
+        // TODO:- Handle the different types of error
+        print("*****Session did fail with Error: \(error.localizedDescription)*****")
+    }
+
 }
 
 // MARK:- ARSessionDelegate
 extension ViewController: ARSessionDelegate {
-    
-    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
-        guard let currentFrame = session.currentFrame else { return }
-        updateWorldMappingStatusInfoLabel(for: currentFrame)
-    }
-    
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
-        updateWorldMappingStatusInfoLabel(for: frame)
+        
+        updateWorldMappingStatusInfoLabel(forframe: frame)
+        
         // Draw the spheres
         guard let currentStrokeAnchorID = strokeAnchorIDs.last else { return }
         let currentStrokeAnchor = anchorForID(currentStrokeAnchorID)
@@ -252,27 +319,12 @@ extension ViewController: ARSCNViewDelegate {
         print("Anchor ADDED *****")
         // This is only used when loading a worldMap
         if let strokeAnchor = anchor as? StrokeAnchor {
-            if screenShotOverlayImageView != nil {
-                DispatchQueue.main.async {
-                    self.screenShotOverlayImageView?.removeFromSuperview()
-                    self.screenShotOverlayImageView = nil
-                    // Haptick feedback
-                    let generator = UIImpactFeedbackGenerator(style: .medium)
-                    generator.impactOccurred()
-                }
-            }
             print("This is a stroke anchor")
             currentStrokeAnchorNode = node
             strokeAnchorIDs.append(strokeAnchor.identifier)
             for sphereLocation in strokeAnchor.sphereLocations {
                 createSphereAndInsert(atPosition: SCNVector3Make(sphereLocation[0], sphereLocation[1], sphereLocation[2]), andAddToStrokeAnchor: strokeAnchor)
             }
-            
-            // add a fucking blue cube to the anchor
-            let cube = SCNBox(width: 0.01, height: 0.01, length: 0.01, chamferRadius: 0)
-            cube.firstMaterial?.diffuse.contents = UIColor.blue
-            let cubeNode = SCNNode(geometry: cube)
-            node.addChildNode(cubeNode)
         }
     }
     
@@ -280,51 +332,5 @@ extension ViewController: ARSCNViewDelegate {
         // Remove the anchorID from the strokes array
         print("Anchor removed")
         strokeAnchorIDs.removeAll(where: { $0 == anchor.identifier })
-    }
-}
-
-extension ViewController: AllDrawingsViewControllerDelegate {
-    func allDrawingsViewController(_ controller: AllDrawingsViewController, didSelectDrawing drawing: Drawing) {
-        let screenShot = UIImage(data: drawing.screenShot as Data)
-        dismiss(animated: true, completion: nil)
-        do {
-            let worldMap = try loadWorldMap(from: drawing)
-            reStartSession(withWorldMap: worldMap)
-            print("Map successfuly loaded")
-
-            addScreenShotToView(screenShot: screenShot, fullSize: true)
-            
-        } catch {
-            print("Could not load worldMap. Error: \(error)")
-        }
-    }
-    
-    func allDrawingsViewControllerDidPressCancel(_ controller: AllDrawingsViewController) {
-        dismiss(animated: true, completion: nil)
-        sceneView.session.run(sceneView.session.configuration!)
-        
-        // FIX:- When the user has loaded a preivous drawing, presses Undo/delete, then presses load and then cancels,
-        // the previous drawing gets relocalized, this is becuase the previous session is restarted. Kapich?
-        // This is probably becuase its using the old world map since the new one is not saved
-        // The best way to fix this is to probably make the allDrawingsViewController into a view and just add it as a subview.
-        // No more pausing og the session will occur
-    }
-    
-    func addScreenShotToView(screenShot: UIImage?, fullSize: Bool) {
-        if fullSize {
-            // Create an imageView and overlay it onto the screen
-            screenShotOverlayImageView = UIImageView(frame: UIScreen.main.bounds)
-            screenShotOverlayImageView!.contentMode = .scaleAspectFit
-            screenShotOverlayImageView!.layer.opacity = 0.5
-        } else {
-            // Create a small thumbNail imageView and add it to the top left corner
-            screenShotOverlayImageView = UIImageView(frame: CGRect(x: 20,
-                                                                   y: 130,
-                                                                   width: UIScreen.main.bounds.width / CGFloat(3),
-                                                                   height: UIScreen.main.bounds.height / CGFloat(3)))
-            screenShotOverlayImageView!.contentMode = .scaleAspectFit
-        }
-        screenShotOverlayImageView!.image = screenShot
-        sceneView.addSubview(screenShotOverlayImageView!)
     }
 }
