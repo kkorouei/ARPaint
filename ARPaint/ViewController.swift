@@ -219,6 +219,7 @@ class ViewController: UIViewController {
         switch camera.trackingState {
         case .notAvailable:
             // "Tracking unavailable."
+            print("-------Tracking state notAvailable")
             trackingStateLabel.text = "Tracking state notAvailable"
             preparingDrawingAreaView.isHidden = false
         case .limited(.initializing):
@@ -262,15 +263,17 @@ class ViewController: UIViewController {
     }
     
     func sessionWasInterrupted(_ session: ARSession) {
-        
+        print("*****Session was interrupted*****")
     }
     
     func sessionInterruptionEnded(_ session: ARSession) {
-        
+        print("*****Session interruption ended*****")
+        // "Resuming session — move to where you were when the session was interrupted."
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
-        
+        // TODO:- Handle the different types of error
+        print("*****Session did fail with Error: \(error.localizedDescription)*****")
     }
 
 }
