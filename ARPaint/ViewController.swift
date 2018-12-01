@@ -20,8 +20,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var preparingDrawingAreaView: UIVisualEffectView!
     @IBOutlet weak var preparingDrawingAreaLabel: UILabel!
     
-    var screenTouched = false
     var previousPoint: SCNVector3?
+    var currentFingerPosition: CGPoint?
     
     var screenShotOverlayImageView: UIImageView?
     
@@ -44,6 +44,8 @@ class ViewController: UIViewController {
         
         // Prevent the screen from being dimmed
         UIApplication.shared.isIdleTimerDisabled = true
+        
+        sceneView.preferredFramesPerSecond = 60
         
         sceneView.delegate = self
         sceneView.session.delegate = self
@@ -124,22 +126,36 @@ class ViewController: UIViewController {
     
     // MARK: Touches
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        screenTouched = true
-        guard let positionInFrontOfCamera = getPositionInFront(OfCamera: sceneView.session.currentFrame?.camera, byAmount: -0.2) else { return }
-        let strokeAnchor = StrokeAnchor(name: "strokeAnchor", transform: positionInFrontOfCamera)
+        // Create a StrokeAnchor and add it to the Scene (One Anchor will be added to the exaction position of the first sphere for every new stroke)
+        guard let touch = touches.first else { return }
+        guard let touchPositionInFrontOfCamera = getPosition(ofPoint: touch.location(in: sceneView), atDistanceFromCamera: 0.2, inView: sceneView) else { return }
+        // Convert the position from SCNVector3 to float4x4
+        let strokeAnchor = StrokeAnchor(name: "strokeAnchor", transform: float4x4(float4(1, 0, 0, 0),
+                                                                                  float4(0, 1, 0, 0),
+                                                                                  float4(0, 0, 1, 0),
+                                                                                  float4(touchPositionInFrontOfCamera.x,
+                                                                                         touchPositionInFrontOfCamera.y,
+                                                                                         touchPositionInFrontOfCamera.z,
+                                                                                         1)))
         sceneView.session.add(anchor: strokeAnchor)
+        currentFingerPosition = touch.location(in: sceneView)
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        currentFingerPosition = touch.location(in: sceneView)
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        screenTouched = false
         previousPoint = nil
         currentStrokeAnchorNode = nil
+        currentFingerPosition = nil
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        screenTouched = false
         previousPoint = nil
         currentStrokeAnchorNode = nil
+        currentFingerPosition = nil
     }
     
     func anchorForID(_ anchorID: UUID) -> StrokeAnchor? {
@@ -287,8 +303,8 @@ extension ViewController: ARSessionDelegate {
         // Draw the spheres
         guard let currentStrokeAnchorID = strokeAnchorIDs.last else { return }
         let currentStrokeAnchor = anchorForID(currentStrokeAnchorID)
-        if screenTouched && currentStrokeAnchor != nil {
-            guard let currentPointPosition = getPositionInFront(OfCamera: session.currentFrame?.camera, byAmount: -0.2)?.convertToSCNVector3() else { return }
+        if currentFingerPosition != nil && currentStrokeAnchor != nil {
+            guard let currentPointPosition = getPosition(ofPoint: currentFingerPosition!, atDistanceFromCamera: 0.2, inView: sceneView) else { return }
             
             if let previousPoint = previousPoint {
                 // Do not create any new spheres if the distance hasn't changed much
