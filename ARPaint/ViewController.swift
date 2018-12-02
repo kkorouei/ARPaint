@@ -213,6 +213,18 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func takePhotoButtonPressed(_ sender: UIButton) {
+
+        
+        let image = sceneView.snapshot()
+        
+        
+        let screenShotNavigationController = storyboard?.instantiateViewController(withIdentifier: "screenShotNav") as! UINavigationController
+        let screenShotViewController = screenShotNavigationController.viewControllers[0] as! ScreenShotViewController
+        screenShotViewController.screenShotImage = image
+        present(screenShotNavigationController, animated: true, completion: nil)
+    }
+    
     private func updateWorldMappingStatusInfoLabel(forframe frame: ARFrame) {
         
         switch frame.worldMappingStatus {
