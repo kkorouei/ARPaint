@@ -6,11 +6,14 @@
 //  Copyright © 2018 Koushan Korouei. All rights reserved.
 //
 
+
 import UIKit
 
+@IBDesignable
 class CircleView: UIView {
     
     let shapeLayer = CAShapeLayer()
+    
     var height: CGFloat {
         return self.bounds.height
     }
@@ -38,7 +41,8 @@ class CircleView: UIView {
         setupView()
     }
     
-    override func draw(_ rect: CGRect) {
+    override func prepareForInterfaceBuilder() {
+        setupView()
     }
     
     private func setupView() {

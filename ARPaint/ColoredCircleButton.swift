@@ -8,6 +8,7 @@
 
 import UIKit
 
+@IBDesignable
 class ColoredCircleButton: UIButton {
     
     var circle: CircleView!
@@ -29,9 +30,12 @@ class ColoredCircleButton: UIButton {
         setupButton()
     }
     
+    override func prepareForInterfaceBuilder() {
+        setupButton()
+    }
+    
     func setupButton() {
         self.setTitle("", for: .normal)
-        
         circle = CircleView(frame: self.bounds)
         circle.color = circleColor
         addSubview(circle)
