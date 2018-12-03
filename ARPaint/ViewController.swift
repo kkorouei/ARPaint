@@ -49,7 +49,7 @@ class ViewController: UIViewController {
         
         sceneView.delegate = self
         sceneView.session.delegate = self
-        sceneView.showsStatistics = true
+        sceneView.showsStatistics = false
         let scene = SCNScene()
         sceneView.scene = scene
 
@@ -78,6 +78,10 @@ class ViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         sceneView.session.pause()
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

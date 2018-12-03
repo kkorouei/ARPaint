@@ -18,6 +18,10 @@ class AllDrawingsViewController: UIViewController {
     var drawings: [Drawing]!
     weak var delegate: AllDrawingsViewControllerDelegate!
     
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
     @IBAction func didPressCancelButton(_ sender: UIBarButtonItem) {
         delegate.allDrawingsViewControllerDidPressCancel(self)
     }
