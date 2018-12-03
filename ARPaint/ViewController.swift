@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var loadButton: UIButton!
     @IBOutlet weak var preparingDrawingAreaView: UIVisualEffectView!
     @IBOutlet weak var preparingDrawingAreaLabel: UILabel!
+    @IBOutlet weak var additionalButtonsView: UIView!
     
     var previousPoint: SCNVector3?
     var currentFingerPosition: CGPoint?
@@ -215,6 +216,10 @@ class ViewController: UIViewController {
             }
             print(message)
         }
+    }
+    
+    @IBAction func changeColorButtonPressed(_ sender: UIButton) {
+        additionalButtonsView.isHidden = !additionalButtonsView.isHidden
     }
     
     @IBAction func takePhotoButtonPressed(_ sender: UIButton) {
