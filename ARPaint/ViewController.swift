@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var preparingDrawingAreaLabel: UILabel!
     @IBOutlet weak var additionalButtonsView: UIView!
     @IBOutlet weak var brushSizeSlider: UISlider!
+    @IBOutlet weak var brushSizeCircleView: CircleView!
     
     var previousPoint: SCNVector3?
     var currentFingerPosition: CGPoint?
@@ -236,7 +237,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func brushSizeSliderValueChanged(_ sender: UISlider) {
-        sender.value = roundf(sender.value);
+//        sender.value = roundf(sender.value);
+        brushSizeCircleView.change(size: sender.value * 4)
     }
     
     private func updateWorldMappingStatusInfoLabel(forframe frame: ARFrame) {

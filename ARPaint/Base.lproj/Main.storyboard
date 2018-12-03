@@ -342,30 +342,25 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pbp-XI-byA" userLabel="brush size">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                         <subviews>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="R91-9C-B0Z">
-                                                <rect key="frame" x="98" y="10" width="259" height="31"/>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="R91-9C-B0Z">
+                                                <rect key="frame" x="98" y="10" width="239" height="31"/>
                                                 <connections>
                                                     <action selector="brushSizeSliderValueChanged:" destination="BV1-FR-VrT" eventType="valueChanged" id="ul0-Ef-U1y"/>
                                                 </connections>
                                             </slider>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TeO-kz-kZs">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TeO-kz-kZs" customClass="CircleView" customModule="ARPaint" customModuleProvider="target">
                                                 <rect key="frame" x="20" y="10" width="30" height="30"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="KNV-Fx-zfv"/>
                                                     <constraint firstAttribute="width" constant="30" id="dBa-vT-JS4"/>
                                                 </constraints>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="15"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="R91-9C-B0Z" firstAttribute="leading" secondItem="Pbp-XI-byA" secondAttribute="leading" constant="100" id="CjK-T3-rtn"/>
-                                            <constraint firstAttribute="trailing" secondItem="R91-9C-B0Z" secondAttribute="trailing" constant="20" id="gYU-TC-YPE"/>
+                                            <constraint firstAttribute="trailing" secondItem="R91-9C-B0Z" secondAttribute="trailing" constant="40" id="gYU-TC-YPE"/>
                                             <constraint firstItem="TeO-kz-kZs" firstAttribute="leading" secondItem="Pbp-XI-byA" secondAttribute="leading" constant="20" id="hfS-7d-qrt"/>
                                             <constraint firstItem="R91-9C-B0Z" firstAttribute="centerY" secondItem="Pbp-XI-byA" secondAttribute="centerY" id="hn9-BJ-s8B"/>
                                             <constraint firstItem="TeO-kz-kZs" firstAttribute="centerY" secondItem="Pbp-XI-byA" secondAttribute="centerY" id="vIP-y1-5Nw"/>
@@ -448,6 +443,7 @@
                     </view>
                     <connections>
                         <outlet property="additionalButtonsView" destination="ztE-Ww-FT8" id="Gqa-p5-Boc"/>
+                        <outlet property="brushSizeCircleView" destination="TeO-kz-kZs" id="iDo-eI-h9G"/>
                         <outlet property="brushSizeSlider" destination="R91-9C-B0Z" id="I9L-Lk-irN"/>
                         <outlet property="loadButton" destination="15U-nj-cup" id="3Zv-uQ-gbm"/>
                         <outlet property="preparingDrawingAreaLabel" destination="ARL-xf-Wk9" id="Gpp-ns-77e"/>
