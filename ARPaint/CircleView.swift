@@ -17,6 +17,11 @@ class CircleView: UIView {
     var width: CGFloat {
         return self.bounds.width
     }
+    var radius: Float = 5 {
+        didSet {
+            change(radius: radius)
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,12 +36,12 @@ class CircleView: UIView {
     override func draw(_ rect: CGRect) {
     }
     
-    func setupView() {
+    private func setupView() {
         self.backgroundColor = UIColor.clear
         drawCircle()
     }
     
-    func drawCircle() {
+    private func drawCircle() {
         let circlePath = UIBezierPath(arcCenter: CGPoint(x: width / 2,y: height / 2), radius: CGFloat(width / 2), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
         
         shapeLayer.path = circlePath.cgPath
@@ -48,8 +53,8 @@ class CircleView: UIView {
         layer.addSublayer(shapeLayer)
     }
     
-    func change(size: Float) {
-        let circlePath = UIBezierPath(arcCenter: CGPoint(x: width / 2,y: height / 2), radius: CGFloat(size), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+    private func change(radius: Float) {
+        let circlePath = UIBezierPath(arcCenter: CGPoint(x: width / 2,y: height / 2), radius: CGFloat(radius), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
         shapeLayer.path = circlePath.cgPath
     }
 

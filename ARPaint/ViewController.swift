@@ -238,7 +238,7 @@ class ViewController: UIViewController {
     
     @IBAction func brushSizeSliderValueChanged(_ sender: UISlider) {
 //        sender.value = roundf(sender.value);
-        brushSizeCircleView.change(size: sender.value * 4)
+        brushSizeCircleView.radius = sender.value * 4
     }
     
     private func updateWorldMappingStatusInfoLabel(forframe frame: ARFrame) {
