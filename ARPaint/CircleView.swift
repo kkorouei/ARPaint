@@ -22,6 +22,11 @@ class CircleView: UIView {
             change(radius: radius)
         }
     }
+    var color: UIColor = .white {
+        didSet {
+            shapeLayer.fillColor = color.cgColor
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
