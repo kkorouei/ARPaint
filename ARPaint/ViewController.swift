@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var preparingDrawingAreaView: UIVisualEffectView!
     @IBOutlet weak var preparingDrawingAreaLabel: UILabel!
     @IBOutlet weak var additionalButtonsView: UIView!
+    @IBOutlet weak var brushSizeSlider: UISlider!
     
     var previousPoint: SCNVector3?
     var currentFingerPosition: CGPoint?
@@ -232,6 +233,10 @@ class ViewController: UIViewController {
         let screenShotViewController = screenShotNavigationController.viewControllers[0] as! ScreenShotViewController
         screenShotViewController.screenShotImage = image
         present(screenShotNavigationController, animated: true, completion: nil)
+    }
+    
+    @IBAction func brushSizeSliderValueChanged(_ sender: UISlider) {
+        sender.value = roundf(sender.value);
     }
     
     private func updateWorldMappingStatusInfoLabel(forframe frame: ARFrame) {
