@@ -208,7 +208,7 @@
                                             <action selector="takePhotoButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="ArH-pe-Ruc"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJe-9v-2z4">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJe-9v-2z4" customClass="RainbowColorCircleButton" customModule="ARPaint" customModuleProvider="target">
                                         <rect key="frame" x="240" y="17.5" width="35" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="JNu-XY-EhK"/>
@@ -216,9 +216,9 @@
                                         </constraints>
                                         <color key="tintColor" red="0.93725490199999995" green="0.29411764709999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <inset key="imageEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
-                                        <state key="normal" title="Button" image="circle-shape-outline"/>
+                                        <state key="normal" title="Button"/>
                                         <connections>
-                                            <action selector="changeColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="GdL-Jh-thR"/>
+                                            <action selector="changeColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Iqy-WW-RS9"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bfL-VD-TjD">
@@ -289,7 +289,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2OC-hf-oqB" customClass="RainbowColorCircleButton" customModule="ARPaint" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2OC-hf-oqB" customClass="SingleColorCircleButton" customModule="ARPaint" customModuleProvider="target">
                                                 <rect key="frame" x="85" y="7.5" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="35" id="Upq-V0-22F"/>
@@ -574,7 +574,6 @@
     </scenes>
     <resources>
         <image name="bullseye" width="351.08572387695312" height="351.08572387695312"/>
-        <image name="circle-shape-outline" width="351.08572387695312" height="351.08572387695312"/>
         <image name="photo-camera" width="438.85714721679688" height="438.85714721679688"/>
         <image name="refresh-page-option" width="351.08572387695312" height="351.08572387695312"/>
         <image name="reply" width="409.60000610351562" height="409.60000610351562"/>

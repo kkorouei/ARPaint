@@ -42,6 +42,7 @@ class CircleView: UIView {
     }
 
     private func setupView() {
+        self.isUserInteractionEnabled = false
         self.backgroundColor = UIColor.clear
     }
     
