@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable
-class ColoredCircleButton: UIButton {
+class SingleColorCircleButton: UIButton {
     
     var circle: CircleView!
     
@@ -37,6 +37,7 @@ class ColoredCircleButton: UIButton {
     func setupButton() {
         self.setTitle("", for: .normal)
         circle = CircleView(frame: self.bounds)
+        circle.drawSingleColorCircle()
         circle.color = circleColor
         addSubview(circle)
 

@@ -9,10 +9,8 @@
 
 import UIKit
 
-@IBDesignable
 class CircleView: UIView {
     
-    let shapeLayer = CAShapeLayer()
     
     var height: CGFloat {
         return self.bounds.height
@@ -31,6 +29,8 @@ class CircleView: UIView {
         }
     }
     
+    private let shapeLayer = CAShapeLayer()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -40,18 +40,12 @@ class CircleView: UIView {
         super.init(coder: aDecoder)
         setupView()
     }
-    
-    override func prepareForInterfaceBuilder() {
-        setupView()
-    }
-    
+
     private func setupView() {
         self.backgroundColor = UIColor.clear
-//        drawCircle()
-        drawRainbowCircle()
     }
     
-    private func drawCircle() {
+    func drawSingleColorCircle() {
         let circlePath = UIBezierPath(arcCenter: CGPoint(x: width / 2,y: height / 2),
                                       radius: CGFloat(width / 2),
                                       startAngle: CGFloat(0),
@@ -71,7 +65,7 @@ class CircleView: UIView {
         shapeLayer.path = circlePath.cgPath
     }
 
-    func drawRainbowCircle() {
+    func drawRainbowColorCircle() {
         let rainbowColors: [UIColor] = [.red, .blue, .green, .yellow, .black, .white, .orange, .purple, .gray]
         let count: Int = 6
         let gapSize: CGFloat = 0.0
@@ -106,6 +100,5 @@ class CircleView: UIView {
             
             layer.addSublayer(shapeLayer)
         }
-
     }
 }
