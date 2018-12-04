@@ -19,6 +19,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var loadButton: UIButton!
     @IBOutlet weak var preparingDrawingAreaView: UIVisualEffectView!
     @IBOutlet weak var preparingDrawingAreaLabel: UILabel!
+    @IBOutlet weak var additionalButtonsView: UIView!
+    @IBOutlet weak var brushSizeSlider: UISlider!
+    @IBOutlet weak var brushSizeCircleView: CircleView!
     
     var previousPoint: SCNVector3?
     var currentFingerPosition: CGPoint?
@@ -49,7 +52,7 @@ class ViewController: UIViewController {
         
         sceneView.delegate = self
         sceneView.session.delegate = self
-        sceneView.showsStatistics = true
+        sceneView.showsStatistics = false
         let scene = SCNScene()
         sceneView.scene = scene
 
@@ -78,6 +81,10 @@ class ViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         sceneView.session.pause()
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -213,6 +220,10 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func changeColorButtonPressed(_ sender: UIButton) {
+        additionalButtonsView.isHidden = !additionalButtonsView.isHidden
+    }
+    
     @IBAction func takePhotoButtonPressed(_ sender: UIButton) {
 
         
@@ -223,6 +234,11 @@ class ViewController: UIViewController {
         let screenShotViewController = screenShotNavigationController.viewControllers[0] as! ScreenShotViewController
         screenShotViewController.screenShotImage = image
         present(screenShotNavigationController, animated: true, completion: nil)
+    }
+    
+    @IBAction func brushSizeSliderValueChanged(_ sender: UISlider) {
+//        sender.value = roundf(sender.value);
+        brushSizeCircleView.radius = sender.value * 4
     }
     
     private func updateWorldMappingStatusInfoLabel(forframe frame: ARFrame) {
