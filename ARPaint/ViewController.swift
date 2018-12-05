@@ -35,7 +35,7 @@ class ViewController: UIViewController {
     
     var isLoadingSavedWorldMap = false
     
-    var currentSphereNodeType: SphereNodeType = .red
+    var currentStrokeColor: StrokeColor = .red
     
     // MARK:- View Lifecycle
     override func viewDidLoad() {
@@ -48,7 +48,7 @@ class ViewController: UIViewController {
         
         sceneView.delegate = self
         sceneView.session.delegate = self
-        sceneView.showsStatistics = true
+        sceneView.showsStatistics = false
         let scene = SCNScene()
         sceneView.scene = scene
 
@@ -116,9 +116,9 @@ class ViewController: UIViewController {
     
     func createSphereAndInsert(atPosition position: SCNVector3, andAddToStrokeAnchor strokeAnchor: StrokeAnchor) {
         guard let currentStrokeNode = currentStrokeAnchorNode else { return }
-        // Get the sphere node
-        let x = getSphereNode(forType: SphereNodeType(rawValue: strokeAnchor.sphereNodeType)!)
-        let newSphereNode = x.clone()
+        // Get the reference sphere node and clone it
+        let referenceSphereNode = getReferenceSphereNode(forStrokeColor: strokeAnchor.color)
+        let newSphereNode = referenceSphereNode.clone()
         // Convert the position from world transform to local transform (relative to the anchors default node)
         let localPosition = currentStrokeNode.convertPosition(position, from: nil)
         newSphereNode.position = localPosition
@@ -142,7 +142,7 @@ class ViewController: UIViewController {
                                                                                          touchPositionInFrontOfCamera.y,
                                                                                          touchPositionInFrontOfCamera.z,
                                                                                          1)))
-        strokeAnchor.sphereNodeType = currentSphereNodeType.rawValue
+        strokeAnchor.color = currentStrokeColor
         sceneView.session.add(anchor: strokeAnchor)
         currentFingerPosition = touch.location(in: sceneView)
     }
@@ -231,16 +231,24 @@ class ViewController: UIViewController {
     
     // Brush Colors changed
     // TODO: Make them into action outlet
+    @IBAction func redColorButtonPressed(_ sender: Any) {
+        currentStrokeColor = .red
+    }
+    
     @IBAction func greenColorButtonPressed(_ sender: Any) {
-        currentSphereNodeType = .green
+        currentStrokeColor = .green
     }
     
     @IBAction func blueColorButtonPressed(_ sender: Any) {
-        currentSphereNodeType = .white
+        currentStrokeColor = .blue
     }
     
-    @IBAction func redColorButtonPressed(_ sender: Any) {
-        currentSphereNodeType = .red
+    @IBAction func blackColorButtonPressed(_ sender: Any) {
+        currentStrokeColor = .black
+    }
+    
+    @IBAction func whiteColorButtonPressed(_ sender: Any) {
+        currentStrokeColor = .white
     }
     
     @IBAction func takePhotoButtonPressed(_ sender: UIButton) {

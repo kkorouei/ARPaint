@@ -175,71 +175,82 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </visualEffectView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5kb-uQ-I6d">
-                                        <rect key="frame" x="105" y="17.5" width="35" height="35"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yHN-w7-59M">
+                                        <rect key="frame" x="57.5" y="0.0" width="260" height="70"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5kb-uQ-I6d">
+                                                <rect key="frame" x="0.0" y="17.5" width="35" height="35"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="35" id="OXP-sN-wfz"/>
+                                                    <constraint firstAttribute="height" constant="35" id="aau-8D-wnj"/>
+                                                </constraints>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
+                                                <state key="normal" title="Button" image="save-file-option"/>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YDD-oS-Jru">
+                                                <rect key="frame" x="75" y="17.5" width="35" height="35"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="35" id="V9s-mg-AtU"/>
+                                                    <constraint firstAttribute="height" constant="35" id="dW6-kk-fyq"/>
+                                                </constraints>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
+                                                <state key="normal" title="Button" image="photo-camera"/>
+                                                <connections>
+                                                    <action selector="takePhotoButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="ArH-pe-Ruc"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJe-9v-2z4" customClass="RainbowColorCircleButton" customModule="ARPaint" customModuleProvider="target">
+                                                <rect key="frame" x="150" y="17.5" width="35" height="35"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="35" id="JNu-XY-EhK"/>
+                                                    <constraint firstAttribute="width" constant="35" id="vst-au-lDS"/>
+                                                </constraints>
+                                                <color key="tintColor" red="0.93725490199999995" green="0.29411764709999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <inset key="imageEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
+                                                <state key="normal" title="Button"/>
+                                                <connections>
+                                                    <action selector="changeColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Iqy-WW-RS9"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bfL-VD-TjD">
+                                                <rect key="frame" x="225" y="17.5" width="35" height="35"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="35" id="GxL-BS-YeO"/>
+                                                    <constraint firstAttribute="height" constant="35" id="tl9-YU-zyg"/>
+                                                </constraints>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="Button" image="reply"/>
+                                                <connections>
+                                                    <action selector="undoButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="rZK-Bv-LSi"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="35" id="OXP-sN-wfz"/>
-                                            <constraint firstAttribute="height" constant="35" id="aau-8D-wnj"/>
+                                            <constraint firstItem="qJe-9v-2z4" firstAttribute="centerY" secondItem="yHN-w7-59M" secondAttribute="centerY" id="GPd-UA-9dl"/>
+                                            <constraint firstItem="5kb-uQ-I6d" firstAttribute="leading" secondItem="yHN-w7-59M" secondAttribute="leading" id="GnT-HI-9OT"/>
+                                            <constraint firstAttribute="trailing" secondItem="bfL-VD-TjD" secondAttribute="trailing" id="LmO-in-KG4"/>
+                                            <constraint firstItem="5kb-uQ-I6d" firstAttribute="centerY" secondItem="yHN-w7-59M" secondAttribute="centerY" id="Y0G-2i-v0Q"/>
+                                            <constraint firstItem="qJe-9v-2z4" firstAttribute="leading" secondItem="YDD-oS-Jru" secondAttribute="trailing" constant="40" id="Yyb-ZS-TCz"/>
+                                            <constraint firstItem="YDD-oS-Jru" firstAttribute="centerY" secondItem="yHN-w7-59M" secondAttribute="centerY" id="bAs-88-kYS"/>
+                                            <constraint firstItem="YDD-oS-Jru" firstAttribute="leading" secondItem="5kb-uQ-I6d" secondAttribute="trailing" constant="40" id="jQB-Du-SzT"/>
+                                            <constraint firstItem="bfL-VD-TjD" firstAttribute="leading" secondItem="qJe-9v-2z4" secondAttribute="trailing" constant="40" id="rHs-Iu-zYG"/>
+                                            <constraint firstItem="bfL-VD-TjD" firstAttribute="centerY" secondItem="yHN-w7-59M" secondAttribute="centerY" id="ycc-9a-uD2"/>
                                         </constraints>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <inset key="imageEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
-                                        <state key="normal" title="Button" image="save-file-option"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YDD-oS-Jru">
-                                        <rect key="frame" x="170" y="17.5" width="35" height="35"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="35" id="V9s-mg-AtU"/>
-                                            <constraint firstAttribute="height" constant="35" id="dW6-kk-fyq"/>
-                                        </constraints>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <inset key="imageEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
-                                        <state key="normal" title="Button" image="photo-camera"/>
-                                        <connections>
-                                            <action selector="takePhotoButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="ArH-pe-Ruc"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJe-9v-2z4" customClass="RainbowColorCircleButton" customModule="ARPaint" customModuleProvider="target">
-                                        <rect key="frame" x="240" y="17.5" width="35" height="35"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="35" id="JNu-XY-EhK"/>
-                                            <constraint firstAttribute="width" constant="35" id="vst-au-lDS"/>
-                                        </constraints>
-                                        <color key="tintColor" red="0.93725490199999995" green="0.29411764709999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <inset key="imageEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
-                                        <state key="normal" title="Button"/>
-                                        <connections>
-                                            <action selector="changeColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Iqy-WW-RS9"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bfL-VD-TjD">
-                                        <rect key="frame" x="310" y="17.5" width="35" height="35"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="35" id="GxL-BS-YeO"/>
-                                            <constraint firstAttribute="height" constant="35" id="tl9-YU-zyg"/>
-                                        </constraints>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Button" image="reply"/>
-                                        <connections>
-                                            <action selector="undoButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="rZK-Bv-LSi"/>
-                                        </connections>
-                                    </button>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="qJe-9v-2z4" firstAttribute="centerY" secondItem="itw-ME-As5" secondAttribute="centerY" id="2r3-Gs-PM3"/>
                                     <constraint firstAttribute="height" constant="70" id="3T3-w3-f5T"/>
-                                    <constraint firstAttribute="trailing" secondItem="bfL-VD-TjD" secondAttribute="trailing" constant="30" id="4nV-Ve-VOq"/>
-                                    <constraint firstItem="5kb-uQ-I6d" firstAttribute="centerY" secondItem="itw-ME-As5" secondAttribute="centerY" id="8LA-zx-Tlw"/>
-                                    <constraint firstItem="YDD-oS-Jru" firstAttribute="leading" secondItem="5kb-uQ-I6d" secondAttribute="trailing" constant="30" id="8ba-rb-1OE"/>
-                                    <constraint firstItem="qJe-9v-2z4" firstAttribute="leading" secondItem="YDD-oS-Jru" secondAttribute="trailing" constant="35" id="Axd-CM-nNt"/>
+                                    <constraint firstItem="yHN-w7-59M" firstAttribute="centerX" secondItem="itw-ME-As5" secondAttribute="centerX" id="LYw-zM-pYV"/>
                                     <constraint firstItem="GXY-dQ-2IB" firstAttribute="leading" secondItem="itw-ME-As5" secondAttribute="leading" id="OYR-0h-hzG"/>
-                                    <constraint firstItem="bfL-VD-TjD" firstAttribute="centerY" secondItem="itw-ME-As5" secondAttribute="centerY" id="OzR-We-7y1"/>
-                                    <constraint firstItem="bfL-VD-TjD" firstAttribute="leading" secondItem="qJe-9v-2z4" secondAttribute="trailing" constant="35" id="TXv-Gq-S8F"/>
                                     <constraint firstItem="GXY-dQ-2IB" firstAttribute="top" secondItem="itw-ME-As5" secondAttribute="top" id="XjM-sx-8vx"/>
+                                    <constraint firstItem="yHN-w7-59M" firstAttribute="top" secondItem="itw-ME-As5" secondAttribute="top" id="bR7-aW-ow2"/>
                                     <constraint firstAttribute="trailing" secondItem="GXY-dQ-2IB" secondAttribute="trailing" id="mqD-Xv-anh"/>
-                                    <constraint firstItem="5kb-uQ-I6d" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="itw-ME-As5" secondAttribute="leading" constant="30" id="qIW-8Z-BcK"/>
+                                    <constraint firstAttribute="bottom" secondItem="yHN-w7-59M" secondAttribute="bottom" id="nf6-Re-t6L"/>
                                     <constraint firstAttribute="bottom" secondItem="GXY-dQ-2IB" secondAttribute="bottom" id="sbX-bH-qzZ"/>
-                                    <constraint firstItem="YDD-oS-Jru" firstAttribute="centerY" secondItem="itw-ME-As5" secondAttribute="centerY" id="swU-A4-7bw"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ztE-Ww-FT8" userLabel="Additional Buttons">
@@ -259,10 +270,10 @@
                                         </userDefinedRuntimeAttributes>
                                     </visualEffectView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="weL-Sq-ZRD" userLabel="colors">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                        <rect key="frame" x="30" y="0.0" width="315" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bVj-zT-CLu" customClass="SingleColorCircleButton" customModule="ARPaint" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="7.5" width="35" height="35"/>
+                                                <rect key="frame" x="0.0" y="7.5" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="35" id="0Uj-cN-UWd"/>
                                                     <constraint firstAttribute="width" constant="35" id="xDS-Hq-lFn"/>
@@ -272,15 +283,15 @@
                                                 <state key="normal" title="Button"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
-                                                        <color key="value" red="0.1145173654" green="1" blue="0.039683754809999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="value" red="1" green="0.32156862749999998" blue="0.1764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <action selector="greenColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="HDm-Lx-BR7"/>
+                                                    <action selector="redColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="HDm-Lx-BR7"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2OC-hf-oqB" customClass="SingleColorCircleButton" customModule="ARPaint" customModuleProvider="target">
-                                                <rect key="frame" x="85" y="7.5" width="35" height="35"/>
+                                                <rect key="frame" x="70" y="7.5" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="35" id="Upq-V0-22F"/>
                                                     <constraint firstAttribute="width" constant="35" id="evT-mt-5jm"/>
@@ -288,12 +299,17 @@
                                                 <color key="tintColor" red="0.1145173654" green="1" blue="0.039683754809999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <inset key="imageEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
                                                 <state key="normal" title="Button"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
+                                                        <color key="value" red="0.1145173654" green="1" blue="0.039683754809999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <action selector="blueColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="cH9-aB-Dvn"/>
+                                                    <action selector="greenColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="cH9-aB-Dvn"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gQ-Qu-H54" customClass="SingleColorCircleButton" customModule="ARPaint" customModuleProvider="target">
-                                                <rect key="frame" x="170" y="7.5" width="35" height="35"/>
+                                                <rect key="frame" x="140" y="7.5" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="35" id="Vgh-C2-w7R"/>
                                                     <constraint firstAttribute="width" constant="35" id="Yfe-tB-OXU"/>
@@ -303,15 +319,15 @@
                                                 <state key="normal" title="Button"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
-                                                        <color key="value" red="1" green="0.32156862749999998" blue="0.1764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <action selector="redColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="ZMf-NA-2RN"/>
+                                                    <action selector="blueColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="8S7-iH-2vw"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BDH-QJ-5KQ" customClass="SingleColorCircleButton" customModule="ARPaint" customModuleProvider="target">
-                                                <rect key="frame" x="255" y="7.5" width="35" height="35"/>
+                                                <rect key="frame" x="210" y="7.5" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="35" id="qOU-s9-UF5"/>
                                                     <constraint firstAttribute="width" constant="35" id="y1y-TP-6MG"/>
@@ -324,9 +340,12 @@
                                                         <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="whiteColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="1bL-PM-EVv"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Oy-KT-chL" customClass="SingleColorCircleButton" customModule="ARPaint" customModuleProvider="target">
-                                                <rect key="frame" x="320" y="7.5" width="35" height="35"/>
+                                                <rect key="frame" x="280" y="7.5" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="35" id="EjY-ju-AZk"/>
                                                     <constraint firstAttribute="width" constant="35" id="FR0-LH-Pvx"/>
@@ -339,20 +358,24 @@
                                                         <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="blackColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="oC3-Zg-PSJ"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="BDH-QJ-5KQ" firstAttribute="centerY" secondItem="weL-Sq-ZRD" secondAttribute="centerY" id="1Wh-se-gaT"/>
                                             <constraint firstItem="bVj-zT-CLu" firstAttribute="centerY" secondItem="weL-Sq-ZRD" secondAttribute="centerY" id="7o1-gf-gj6"/>
+                                            <constraint firstItem="9gQ-Qu-H54" firstAttribute="leading" secondItem="2OC-hf-oqB" secondAttribute="trailing" constant="35" id="Cvg-Zy-FoA"/>
                                             <constraint firstItem="2Oy-KT-chL" firstAttribute="centerY" secondItem="weL-Sq-ZRD" secondAttribute="centerY" id="FiK-FZ-A7G"/>
-                                            <constraint firstItem="2Oy-KT-chL" firstAttribute="leading" secondItem="BDH-QJ-5KQ" secondAttribute="trailing" constant="30" id="LCf-r4-uHo"/>
-                                            <constraint firstItem="bVj-zT-CLu" firstAttribute="leading" secondItem="weL-Sq-ZRD" secondAttribute="leading" constant="20" id="Z9b-k9-CJR"/>
-                                            <constraint firstAttribute="trailing" secondItem="2Oy-KT-chL" secondAttribute="trailing" constant="20" id="cTy-Us-ihq"/>
+                                            <constraint firstItem="2Oy-KT-chL" firstAttribute="leading" secondItem="BDH-QJ-5KQ" secondAttribute="trailing" constant="35" id="LCf-r4-uHo"/>
+                                            <constraint firstItem="BDH-QJ-5KQ" firstAttribute="leading" secondItem="9gQ-Qu-H54" secondAttribute="trailing" constant="35" id="O3R-jD-jBL"/>
+                                            <constraint firstItem="bVj-zT-CLu" firstAttribute="leading" secondItem="weL-Sq-ZRD" secondAttribute="leading" id="Z9b-k9-CJR"/>
+                                            <constraint firstAttribute="trailing" secondItem="2Oy-KT-chL" secondAttribute="trailing" id="cTy-Us-ihq"/>
                                             <constraint firstItem="2OC-hf-oqB" firstAttribute="centerY" secondItem="weL-Sq-ZRD" secondAttribute="centerY" id="hxi-vq-7gj"/>
                                             <constraint firstItem="9gQ-Qu-H54" firstAttribute="centerY" secondItem="weL-Sq-ZRD" secondAttribute="centerY" id="kDP-Be-Ce4"/>
-                                            <constraint firstItem="9gQ-Qu-H54" firstAttribute="centerX" secondItem="weL-Sq-ZRD" secondAttribute="centerX" id="rVP-9i-7M8"/>
-                                            <constraint firstItem="2OC-hf-oqB" firstAttribute="leading" secondItem="bVj-zT-CLu" secondAttribute="trailing" constant="30" id="uYZ-4C-aLa"/>
+                                            <constraint firstItem="2OC-hf-oqB" firstAttribute="leading" secondItem="bVj-zT-CLu" secondAttribute="trailing" constant="35" id="uYZ-4C-aLa"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -361,10 +384,9 @@
                                     <constraint firstAttribute="bottom" secondItem="weL-Sq-ZRD" secondAttribute="bottom" id="Abv-cx-bTO"/>
                                     <constraint firstItem="xCS-LF-N2e" firstAttribute="top" secondItem="ztE-Ww-FT8" secondAttribute="top" id="BAD-kJ-o3k"/>
                                     <constraint firstAttribute="bottom" secondItem="xCS-LF-N2e" secondAttribute="bottom" id="D8G-WI-Kqj"/>
-                                    <constraint firstItem="weL-Sq-ZRD" firstAttribute="leading" secondItem="ztE-Ww-FT8" secondAttribute="leading" id="HJS-dG-Hv0"/>
                                     <constraint firstItem="weL-Sq-ZRD" firstAttribute="top" secondItem="ztE-Ww-FT8" secondAttribute="top" id="Nkn-2f-Yfh"/>
-                                    <constraint firstAttribute="trailing" secondItem="weL-Sq-ZRD" secondAttribute="trailing" id="bMX-nm-Z6n"/>
                                     <constraint firstAttribute="trailing" secondItem="xCS-LF-N2e" secondAttribute="trailing" id="bWl-uv-EVT"/>
+                                    <constraint firstItem="weL-Sq-ZRD" firstAttribute="centerX" secondItem="ztE-Ww-FT8" secondAttribute="centerX" id="hfc-eV-yYD"/>
                                     <constraint firstAttribute="height" constant="50" id="xQo-zf-wqQ"/>
                                     <constraint firstItem="xCS-LF-N2e" firstAttribute="leading" secondItem="ztE-Ww-FT8" secondAttribute="leading" id="yp3-GD-j4U"/>
                                 </constraints>
