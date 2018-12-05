@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var worldMappingStateLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var loadButton: UIButton!
+    @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var preparingDrawingAreaView: UIVisualEffectView!
     @IBOutlet weak var preparingDrawingAreaLabel: UILabel!
     @IBOutlet weak var additionalButtonsView: UIView!
@@ -60,6 +61,10 @@ class ViewController: UIViewController {
         
         let configuration = ARWorldTrackingConfiguration()
         sceneView.session.run(configuration)
+        
+        // Add long press gesture to undo button
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressUndoButton))
+        undoButton.addGestureRecognizer(longPressGesture)
         
         // Check to see if any previous maps have been saved
         if fetchAllDrawingsFromCoreData().count > 0 {
@@ -184,7 +189,9 @@ class ViewController: UIViewController {
     }
     
     // MARK:- IBActions
-    @IBAction func deleteAllButtonPressed(_ sender: UIButton) {
+    
+    @objc func longPressUndoButton(gesture: UILongPressGestureRecognizer) {
+        print("long pressed")
         for strokeAnchorID in strokeAnchorIDs {
             if let strokeAnchor = anchorForID(strokeAnchorID) {
                 sceneView.session.remove(anchor: strokeAnchor)
@@ -222,11 +229,6 @@ class ViewController: UIViewController {
     @IBAction func changeColorButtonPressed(_ sender: UIButton) {
         additionalButtonsView.isHidden = !additionalButtonsView.isHidden
         colorSelectionView.isHidden = false
-    }
-    
-    @IBAction func changeSizeButtonPressed(_ sender: UIButton) {
-        additionalButtonsView.isHidden = !additionalButtonsView.isHidden
-        colorSelectionView.isHidden = true
     }
     
     // Brush Colors changed

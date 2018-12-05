@@ -61,18 +61,6 @@
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-h1-WRS">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </arscnView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y43-5Y-xum">
-                                <rect key="frame" x="20" y="80" width="66" height="50"/>
-                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="66" id="HYY-Ac-mEG"/>
-                                    <constraint firstAttribute="height" constant="50" id="rV4-jI-Giw"/>
-                                </constraints>
-                                <state key="normal" title="Delete All"/>
-                                <connections>
-                                    <action selector="deleteAllButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Jdd-vZ-LUv"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZX3-Xu-q8s">
                                 <rect key="frame" x="16" y="516.5" width="49.5" height="20.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -419,7 +407,6 @@
                             <constraint firstItem="itw-ME-As5" firstAttribute="top" secondItem="ztE-Ww-FT8" secondAttribute="bottom" constant="1" id="3t5-pY-3ql"/>
                             <constraint firstItem="EDR-zj-9zM" firstAttribute="leading" secondItem="15U-nj-cup" secondAttribute="trailing" constant="20" id="43u-bV-ALD"/>
                             <constraint firstItem="itw-ME-As5" firstAttribute="top" secondItem="ZX3-Xu-q8s" secondAttribute="bottom" constant="60" id="5hd-Pt-APN"/>
-                            <constraint firstItem="Y43-5Y-xum" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="60" id="BaV-rf-jH7"/>
                             <constraint firstItem="EDR-zj-9zM" firstAttribute="centerY" secondItem="15U-nj-cup" secondAttribute="centerY" id="CRG-HI-c2R"/>
                             <constraint firstItem="itw-ME-As5" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="F8B-hO-CSk"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="GsS-dJ-CKf"/>
@@ -427,7 +414,6 @@
                             <constraint firstItem="yk9-Su-vmP" firstAttribute="centerX" secondItem="U0K-SW-4ec" secondAttribute="centerX" id="JpE-WE-3u6"/>
                             <constraint firstItem="yk9-Su-vmP" firstAttribute="centerY" secondItem="U0K-SW-4ec" secondAttribute="centerY" id="M7O-zQ-BPg"/>
                             <constraint firstItem="yk9-Su-vmP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="20" id="Nwo-Jc-a1Q"/>
-                            <constraint firstItem="Y43-5Y-xum" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="20" id="V7b-T5-DSJ"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="bottom" secondItem="fQZ-KI-GVf" secondAttribute="bottom" id="VpT-BR-CcM"/>
                             <constraint firstItem="15U-nj-cup" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="20" id="XeT-Dt-4uf"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="trailing" secondItem="fQZ-KI-GVf" secondAttribute="trailing" id="XyZ-9z-H8e"/>
@@ -452,6 +438,7 @@
                         <outlet property="saveButton" destination="EDR-zj-9zM" id="teH-xE-ybk"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
                         <outlet property="trackingStateLabel" destination="GFZ-Qz-sR2" id="aeE-dc-1NZ"/>
+                        <outlet property="undoButton" destination="bfL-VD-TjD" id="Bz3-UV-wei"/>
                         <outlet property="worldMappingStateLabel" destination="ZX3-Xu-q8s" id="XGd-uZ-gyx"/>
                     </connections>
                 </viewController>
