@@ -98,12 +98,16 @@ class ViewController: UIViewController {
     }
     
     
-    func reStartSession(withWorldMap worldMap: ARWorldMap) {
+    func reStartSession(withWorldMap worldMap: ARWorldMap?) {
         let configuration = ARWorldTrackingConfiguration()
-        configuration.initialWorldMap = worldMap
-        sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+        if let worldMap = worldMap {
+            configuration.initialWorldMap = worldMap
+            sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+            isLoadingSavedWorldMap = true
+        } else {
+            sceneView.session.run(configuration, options: [.resetTracking])
+        }
         currentStrokeAnchorNode = nil
-        isLoadingSavedWorldMap = true
     }
     
     // MARK:- Drawing
@@ -194,6 +198,10 @@ class ViewController: UIViewController {
             }
         }
         currentStrokeAnchorNode = nil
+    }
+    
+    @IBAction func resetTrackingButtonPressed(_ sender: UIButton) {
+        reStartSession(withWorldMap: nil)
     }
     
     @IBAction func undoButtonPressed(_ sender: UIButton) {
