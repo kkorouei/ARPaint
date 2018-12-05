@@ -28,10 +28,19 @@ class RainbowColorCircleButton: UIButton {
     
     func setupButton() {
         self.setTitle("", for: .normal)
-        circle = CircleView(frame: self.bounds)
+        
+        // Make sure to adjust for the imageInsets (if they have been changed)
+        let topInset = self.imageEdgeInsets.top
+        let bottomInset = self.imageEdgeInsets.bottom
+        let leftInset = self.imageEdgeInsets.left
+        let rightInset = self.imageEdgeInsets.right
+        
+        circle = CircleView(frame: CGRect(x: 0 + rightInset,
+                                          y: 0 + topInset,
+                                          width: self.bounds.width - (leftInset + rightInset),
+                                          height: self.bounds.height - (topInset + bottomInset)))
         circle.drawRainbowColorCircle()
         addSubview(circle)
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

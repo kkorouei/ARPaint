@@ -135,10 +135,10 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yHN-w7-59M">
-                                        <rect key="frame" x="57.5" y="0.0" width="260" height="70"/>
+                                        <rect key="frame" x="53" y="0.0" width="269" height="70"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Afu-1B-N38" userLabel="Ignore Touches Button">
-                                                <rect key="frame" x="0.0" y="0.0" width="260" height="70"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="269" height="70"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5kb-uQ-I6d">
@@ -168,20 +168,19 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJe-9v-2z4" customClass="RainbowColorCircleButton" customModule="ARPaint" customModuleProvider="target">
-                                                <rect key="frame" x="150" y="17.5" width="35" height="35"/>
+                                                <rect key="frame" x="150" y="13" width="44" height="44"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="35" id="JNu-XY-EhK"/>
-                                                    <constraint firstAttribute="width" constant="35" id="vst-au-lDS"/>
+                                                    <constraint firstAttribute="height" constant="44" id="JNu-XY-EhK"/>
+                                                    <constraint firstAttribute="width" constant="44" id="vst-au-lDS"/>
                                                 </constraints>
                                                 <color key="tintColor" red="0.93725490199999995" green="0.29411764709999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <inset key="imageEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
-                                                <state key="normal" title="Button"/>
+                                                <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                                 <connections>
                                                     <action selector="changeColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Iqy-WW-RS9"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bfL-VD-TjD">
-                                                <rect key="frame" x="225" y="17.5" width="35" height="35"/>
+                                                <rect key="frame" x="234" y="17.5" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="GxL-BS-YeO"/>
                                                     <constraint firstAttribute="height" constant="35" id="tl9-YU-zyg"/>
@@ -248,20 +247,20 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </button>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="weL-Sq-ZRD" userLabel="colors">
-                                        <rect key="frame" x="30" y="0.0" width="315" height="50"/>
+                                        <rect key="frame" x="37.5" y="0.0" width="300" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Ed-be-qT2" userLabel="Ignore Touches Button">
-                                                <rect key="frame" x="0.0" y="0.0" width="315" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bVj-zT-CLu" customClass="SingleColorCircleButton" customModule="ARPaint" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="7.5" width="35" height="35"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bVj-zT-CLu" userLabel="Red " customClass="SingleColorCircleButton" customModule="ARPaint" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="3" width="44" height="44"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="35" id="0Uj-cN-UWd"/>
-                                                    <constraint firstAttribute="width" constant="35" id="xDS-Hq-lFn"/>
+                                                    <constraint firstAttribute="height" constant="44" id="0Uj-cN-UWd"/>
+                                                    <constraint firstAttribute="width" constant="44" id="xDS-Hq-lFn"/>
                                                 </constraints>
                                                 <color key="tintColor" red="0.93725490199999995" green="0.29411764709999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <inset key="imageEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
+                                                <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                                 <state key="normal" title="Button"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
@@ -272,14 +271,14 @@
                                                     <action selector="redColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="HDm-Lx-BR7"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2OC-hf-oqB" customClass="SingleColorCircleButton" customModule="ARPaint" customModuleProvider="target">
-                                                <rect key="frame" x="70" y="7.5" width="35" height="35"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2OC-hf-oqB" userLabel="Green" customClass="SingleColorCircleButton" customModule="ARPaint" customModuleProvider="target">
+                                                <rect key="frame" x="64" y="3" width="44" height="44"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="35" id="Upq-V0-22F"/>
-                                                    <constraint firstAttribute="width" constant="35" id="evT-mt-5jm"/>
+                                                    <constraint firstAttribute="height" constant="44" id="Upq-V0-22F"/>
+                                                    <constraint firstAttribute="width" constant="44" id="evT-mt-5jm"/>
                                                 </constraints>
                                                 <color key="tintColor" red="0.1145173654" green="1" blue="0.039683754809999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <inset key="imageEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
+                                                <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                                 <state key="normal" title="Button"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
@@ -290,14 +289,14 @@
                                                     <action selector="greenColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="cH9-aB-Dvn"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gQ-Qu-H54" customClass="SingleColorCircleButton" customModule="ARPaint" customModuleProvider="target">
-                                                <rect key="frame" x="140" y="7.5" width="35" height="35"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gQ-Qu-H54" userLabel="Blue" customClass="SingleColorCircleButton" customModule="ARPaint" customModuleProvider="target">
+                                                <rect key="frame" x="128" y="3" width="44" height="44"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="35" id="Vgh-C2-w7R"/>
-                                                    <constraint firstAttribute="width" constant="35" id="Yfe-tB-OXU"/>
+                                                    <constraint firstAttribute="height" constant="44" id="Vgh-C2-w7R"/>
+                                                    <constraint firstAttribute="width" constant="44" id="Yfe-tB-OXU"/>
                                                 </constraints>
                                                 <color key="tintColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <inset key="imageEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
+                                                <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                                 <state key="normal" title="Button"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
@@ -308,14 +307,14 @@
                                                     <action selector="blueColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="8S7-iH-2vw"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BDH-QJ-5KQ" customClass="SingleColorCircleButton" customModule="ARPaint" customModuleProvider="target">
-                                                <rect key="frame" x="210" y="7.5" width="35" height="35"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BDH-QJ-5KQ" userLabel="White" customClass="SingleColorCircleButton" customModule="ARPaint" customModuleProvider="target">
+                                                <rect key="frame" x="192" y="3" width="44" height="44"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="35" id="qOU-s9-UF5"/>
-                                                    <constraint firstAttribute="width" constant="35" id="y1y-TP-6MG"/>
+                                                    <constraint firstAttribute="height" constant="44" id="qOU-s9-UF5"/>
+                                                    <constraint firstAttribute="width" constant="44" id="y1y-TP-6MG"/>
                                                 </constraints>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="imageEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
+                                                <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                                 <state key="normal" title="Button"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
@@ -326,14 +325,14 @@
                                                     <action selector="whiteColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="1bL-PM-EVv"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Oy-KT-chL" customClass="SingleColorCircleButton" customModule="ARPaint" customModuleProvider="target">
-                                                <rect key="frame" x="280" y="7.5" width="35" height="35"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Oy-KT-chL" userLabel="Black" customClass="SingleColorCircleButton" customModule="ARPaint" customModuleProvider="target">
+                                                <rect key="frame" x="256" y="3" width="44" height="44"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="35" id="EjY-ju-AZk"/>
-                                                    <constraint firstAttribute="width" constant="35" id="FR0-LH-Pvx"/>
+                                                    <constraint firstAttribute="height" constant="44" id="EjY-ju-AZk"/>
+                                                    <constraint firstAttribute="width" constant="44" id="FR0-LH-Pvx"/>
                                                 </constraints>
                                                 <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="imageEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
+                                                <inset key="imageEdgeInsets" minX="5" minY="5" maxX="3" maxY="5"/>
                                                 <state key="normal" title="Button"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
@@ -350,17 +349,17 @@
                                             <constraint firstItem="BDH-QJ-5KQ" firstAttribute="centerY" secondItem="weL-Sq-ZRD" secondAttribute="centerY" id="1Wh-se-gaT"/>
                                             <constraint firstItem="7Ed-be-qT2" firstAttribute="leading" secondItem="weL-Sq-ZRD" secondAttribute="leading" id="3Wo-G0-FJw"/>
                                             <constraint firstItem="bVj-zT-CLu" firstAttribute="centerY" secondItem="weL-Sq-ZRD" secondAttribute="centerY" id="7o1-gf-gj6"/>
-                                            <constraint firstItem="9gQ-Qu-H54" firstAttribute="leading" secondItem="2OC-hf-oqB" secondAttribute="trailing" constant="35" id="Cvg-Zy-FoA"/>
+                                            <constraint firstItem="9gQ-Qu-H54" firstAttribute="leading" secondItem="2OC-hf-oqB" secondAttribute="trailing" constant="20" id="Cvg-Zy-FoA"/>
                                             <constraint firstItem="2Oy-KT-chL" firstAttribute="centerY" secondItem="weL-Sq-ZRD" secondAttribute="centerY" id="FiK-FZ-A7G"/>
-                                            <constraint firstItem="2Oy-KT-chL" firstAttribute="leading" secondItem="BDH-QJ-5KQ" secondAttribute="trailing" constant="35" id="LCf-r4-uHo"/>
-                                            <constraint firstItem="BDH-QJ-5KQ" firstAttribute="leading" secondItem="9gQ-Qu-H54" secondAttribute="trailing" constant="35" id="O3R-jD-jBL"/>
+                                            <constraint firstItem="2Oy-KT-chL" firstAttribute="leading" secondItem="BDH-QJ-5KQ" secondAttribute="trailing" constant="20" id="LCf-r4-uHo"/>
+                                            <constraint firstItem="BDH-QJ-5KQ" firstAttribute="leading" secondItem="9gQ-Qu-H54" secondAttribute="trailing" constant="20" id="O3R-jD-jBL"/>
                                             <constraint firstItem="bVj-zT-CLu" firstAttribute="leading" secondItem="weL-Sq-ZRD" secondAttribute="leading" id="Z9b-k9-CJR"/>
                                             <constraint firstAttribute="trailing" secondItem="2Oy-KT-chL" secondAttribute="trailing" id="cTy-Us-ihq"/>
                                             <constraint firstAttribute="trailing" secondItem="7Ed-be-qT2" secondAttribute="trailing" id="f30-Ml-GYe"/>
                                             <constraint firstItem="2OC-hf-oqB" firstAttribute="centerY" secondItem="weL-Sq-ZRD" secondAttribute="centerY" id="hxi-vq-7gj"/>
                                             <constraint firstItem="9gQ-Qu-H54" firstAttribute="centerY" secondItem="weL-Sq-ZRD" secondAttribute="centerY" id="kDP-Be-Ce4"/>
                                             <constraint firstItem="7Ed-be-qT2" firstAttribute="top" secondItem="weL-Sq-ZRD" secondAttribute="top" id="nBR-iq-ADX"/>
-                                            <constraint firstItem="2OC-hf-oqB" firstAttribute="leading" secondItem="bVj-zT-CLu" secondAttribute="trailing" constant="35" id="uYZ-4C-aLa"/>
+                                            <constraint firstItem="2OC-hf-oqB" firstAttribute="leading" secondItem="bVj-zT-CLu" secondAttribute="trailing" constant="20" id="uYZ-4C-aLa"/>
                                             <constraint firstAttribute="bottom" secondItem="7Ed-be-qT2" secondAttribute="bottom" id="xRZ-ZJ-5zh"/>
                                         </constraints>
                                     </view>
