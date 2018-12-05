@@ -20,6 +20,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var preparingDrawingAreaView: UIVisualEffectView!
     @IBOutlet weak var preparingDrawingAreaLabel: UILabel!
     @IBOutlet weak var additionalButtonsView: UIView!
+    @IBOutlet weak var colorSelectionView: UIView!
+    @IBOutlet weak var sizeSelectionView: UIView!
     @IBOutlet weak var brushSizeSlider: UISlider!
     @IBOutlet weak var brushSizeCircleView: CircleView!
     
@@ -222,6 +224,14 @@ class ViewController: UIViewController {
     
     @IBAction func changeColorButtonPressed(_ sender: UIButton) {
         additionalButtonsView.isHidden = !additionalButtonsView.isHidden
+        colorSelectionView.isHidden = false
+        sizeSelectionView.isHidden = true
+    }
+    
+    @IBAction func changeSizeButtonPressed(_ sender: UIButton) {
+        additionalButtonsView.isHidden = !additionalButtonsView.isHidden
+        colorSelectionView.isHidden = true
+        sizeSelectionView.isHidden = false
     }
     
     // Brush Colors changed
@@ -251,8 +261,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func brushSizeSliderValueChanged(_ sender: UISlider) {
-//        sender.value = roundf(sender.value);
+        sender.value = roundf(sender.value);
         brushSizeCircleView.radius = sender.value * 4
+        // Set the brush size to sender.value
     }
     
     private func updateWorldMappingStatusInfoLabel(forframe frame: ARFrame) {
@@ -354,6 +365,7 @@ extension ViewController: ARSessionDelegate {
                 if distance > 0.00026 {
                     createSphereAndInsert(atPosition: currentPointPosition, andAddToStrokeAnchor: currentStrokeAnchor!)
                     // Draw spheres between the currentPoint and previous point if they are further than the specified distance (Otherwise fast movement will make the line blocky)
+                    // TODO: The spacing should depend on the brush size
                     let positions = getPositionsOnLineBetween(point1: previousPoint, andPoint2: currentPointPosition, withSpacing: 0.00025)
                     createSphereAndInsert(atPositions: positions, andAddToStrokeAnchor: currentStrokeAnchor!)
                     self.previousPoint = currentPointPosition
