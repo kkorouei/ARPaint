@@ -116,10 +116,9 @@ class ViewController: UIViewController {
     
     func createSphereAndInsert(atPosition position: SCNVector3, andAddToStrokeAnchor strokeAnchor: StrokeAnchor) {
         guard let currentStrokeNode = currentStrokeAnchorNode else { return }
-        // Get the sphere node
-        let x = getReferenceSphereNode(forStrokeColor: StrokeColor(rawValue: strokeAnchor.color)!)
-//        let x = getReferenceSphereNode(forType: SphereNodeType(rawValue: strokeAnchor.sphereNodeType)!)
-        let newSphereNode = x.clone()
+        // Get the reference sphere node and clone it
+        let referenceSphereNode = getReferenceSphereNode(forStrokeColor: strokeAnchor.color)
+        let newSphereNode = referenceSphereNode.clone()
         // Convert the position from world transform to local transform (relative to the anchors default node)
         let localPosition = currentStrokeNode.convertPosition(position, from: nil)
         newSphereNode.position = localPosition
@@ -143,7 +142,7 @@ class ViewController: UIViewController {
                                                                                          touchPositionInFrontOfCamera.y,
                                                                                          touchPositionInFrontOfCamera.z,
                                                                                          1)))
-        strokeAnchor.color = currentStrokeColor.rawValue
+        strokeAnchor.color = currentStrokeColor
         sceneView.session.add(anchor: strokeAnchor)
         currentFingerPosition = touch.location(in: sceneView)
     }

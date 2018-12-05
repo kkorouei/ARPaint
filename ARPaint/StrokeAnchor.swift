@@ -13,7 +13,7 @@ class StrokeAnchor: ARAnchor {
     
     var sphereLocations: [[Float]] = []
     let dateCreated: TimeInterval
-    var color: String = StrokeColor.white.rawValue
+    var color: StrokeColor = .white
     
     override init(name: String, transform: float4x4) {
         self.dateCreated = NSDate().timeIntervalSince1970
@@ -33,7 +33,7 @@ class StrokeAnchor: ARAnchor {
             let color = aDecoder.decodeObject(forKey: "color") as? String{
             self.sphereLocations = sphereLocations
             self.dateCreated = dateCreated.doubleValue
-            self.color = color
+            self.color = StrokeColor(rawValue: color)!
         } else {
             return nil
         }
@@ -45,7 +45,7 @@ class StrokeAnchor: ARAnchor {
         super.encode(with: aCoder)
         aCoder.encode(sphereLocations, forKey: "array")
         aCoder.encode(NSNumber(value: dateCreated), forKey: "dateCreated")
-        aCoder.encode(color, forKey: "color")
+        aCoder.encode(color.rawValue, forKey: "color")
     }
     
     override class var supportsSecureCoding: Bool {
