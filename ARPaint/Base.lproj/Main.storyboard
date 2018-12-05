@@ -194,6 +194,9 @@
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="imageEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
                                         <state key="normal" title="Button" image="bullseye"/>
+                                        <connections>
+                                            <action selector="changeSizeButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="20y-ZF-NqC"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YDD-oS-Jru">
                                         <rect key="frame" x="170" y="17.5" width="35" height="35"/>
@@ -371,7 +374,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pbp-XI-byA" userLabel="brush size">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                         <subviews>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="R91-9C-B0Z">
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2" minValue="1" maxValue="3" translatesAutoresizingMaskIntoConstraints="NO" id="R91-9C-B0Z">
                                                 <rect key="frame" x="98" y="10" width="239" height="31"/>
                                                 <connections>
                                                     <action selector="brushSizeSliderValueChanged:" destination="BV1-FR-VrT" eventType="valueChanged" id="ul0-Ef-U1y"/>
@@ -412,11 +415,6 @@
                                     <constraint firstItem="xCS-LF-N2e" firstAttribute="leading" secondItem="ztE-Ww-FT8" secondAttribute="leading" id="yp3-GD-j4U"/>
                                     <constraint firstAttribute="trailing" secondItem="Pbp-XI-byA" secondAttribute="trailing" id="zSc-YP-aVu"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="subviews">
-                                        <exclude reference="Pbp-XI-byA"/>
-                                    </mask>
-                                </variation>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="15U-nj-cup">
                                 <rect key="frame" x="20" y="418" width="34" height="50"/>
@@ -474,11 +472,13 @@
                         <outlet property="additionalButtonsView" destination="ztE-Ww-FT8" id="Gqa-p5-Boc"/>
                         <outlet property="brushSizeCircleView" destination="TeO-kz-kZs" id="iDo-eI-h9G"/>
                         <outlet property="brushSizeSlider" destination="R91-9C-B0Z" id="I9L-Lk-irN"/>
+                        <outlet property="colorSelectionView" destination="weL-Sq-ZRD" id="as8-WN-6OI"/>
                         <outlet property="loadButton" destination="15U-nj-cup" id="3Zv-uQ-gbm"/>
                         <outlet property="preparingDrawingAreaLabel" destination="ARL-xf-Wk9" id="Gpp-ns-77e"/>
                         <outlet property="preparingDrawingAreaView" destination="yk9-Su-vmP" id="5IH-Q6-DQ7"/>
                         <outlet property="saveButton" destination="EDR-zj-9zM" id="teH-xE-ybk"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
+                        <outlet property="sizeSelectionView" destination="Pbp-XI-byA" id="keC-oP-U9u"/>
                         <outlet property="trackingStateLabel" destination="GFZ-Qz-sR2" id="aeE-dc-1NZ"/>
                         <outlet property="worldMappingStateLabel" destination="ZX3-Xu-q8s" id="XGd-uZ-gyx"/>
                     </connections>
