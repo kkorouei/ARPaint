@@ -397,7 +397,7 @@
                                             <constraint firstAttribute="bottom" secondItem="7Ed-be-qT2" secondAttribute="bottom" id="xRZ-ZJ-5zh"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qbj-12-P8c">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qbj-12-P8c">
                                         <rect key="frame" x="67.5" y="0.0" width="240" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wte-GR-uzC" userLabel="Ignore Touches Button">
@@ -478,11 +478,6 @@
                                     <constraint firstAttribute="height" constant="50" id="xQo-zf-wqQ"/>
                                     <constraint firstItem="xCS-LF-N2e" firstAttribute="leading" secondItem="ztE-Ww-FT8" secondAttribute="leading" id="yp3-GD-j4U"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="subviews">
-                                        <exclude reference="weL-Sq-ZRD"/>
-                                    </mask>
-                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
