@@ -218,6 +218,7 @@ class ViewController: UIViewController {
         // TODO: show label saying it's unavailable
             print("Move around your phone a bit")
         case .extending, .mapped:
+            additionalButtonsView.isHidden = true
             saveCurrentDrawingToCoreData(forSceneView: sceneView) { (success, message) in
                 if success {
                 } else {
@@ -228,6 +229,10 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func loadButtonPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "showAllDrawingsVC", sender: self)
+        additionalButtonsView.isHidden = true
+    }
     @IBAction func changeColorButtonPressed(_ sender: UIButton) {
         if additionalButtonsView.isHidden {
             BrushColorSelectionView.isHidden = false

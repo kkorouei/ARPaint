@@ -440,7 +440,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <segue destination="tyM-wF-X4B" kind="show" identifier="showAllDrawingsVC" id="ijN-oq-gCf"/>
+                                                    <action selector="loadButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Qp2-I7-hJ8"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -517,6 +517,7 @@
                         <outlet property="trackingStateLabel" destination="GFZ-Qz-sR2" id="aeE-dc-1NZ"/>
                         <outlet property="undoButton" destination="bfL-VD-TjD" id="Bz3-UV-wei"/>
                         <outlet property="worldMappingStateLabel" destination="ZX3-Xu-q8s" id="XGd-uZ-gyx"/>
+                        <segue destination="tyM-wF-X4B" kind="show" identifier="showAllDrawingsVC" id="WzN-88-eco"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
