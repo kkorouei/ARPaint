@@ -75,39 +75,6 @@
                                 <color key="textColor" red="1" green="0.16884363859885576" blue="0.18614286856481599" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KBr-Oo-0dY">
-                                <rect key="frame" x="305" y="40" width="50" height="50"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="2Qu-xq-F8n">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pkq-Hk-dEg" userLabel="Refresh Button">
-                                            <rect key="frame" x="7.5" y="7.5" width="35" height="35"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="35" id="gS5-6t-OlJ"/>
-                                                <constraint firstAttribute="width" constant="35" id="kUr-d0-8Cr"/>
-                                            </constraints>
-                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <inset key="imageEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
-                                            <state key="normal" image="refresh-page-option"/>
-                                        </button>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="pkq-Hk-dEg" firstAttribute="centerY" secondItem="2Qu-xq-F8n" secondAttribute="centerY" id="oBn-cL-cli"/>
-                                        <constraint firstItem="pkq-Hk-dEg" firstAttribute="centerX" secondItem="2Qu-xq-F8n" secondAttribute="centerX" id="poD-wL-TdX"/>
-                                    </constraints>
-                                </view>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="9l2-ie-ngw"/>
-                                    <constraint firstAttribute="height" constant="50" id="OVi-KH-fjr"/>
-                                </constraints>
-                                <blurEffect style="dark"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </visualEffectView>
                             <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yk9-Su-vmP">
                                 <rect key="frame" x="77" y="314.5" width="221" height="38"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="qAu-E5-20H">
@@ -440,7 +407,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <segue destination="tyM-wF-X4B" kind="show" identifier="showAllDrawingsVC" id="ijN-oq-gCf"/>
+                                                    <action selector="loadButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Qp2-I7-hJ8"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -479,6 +446,71 @@
                                     <constraint firstItem="xCS-LF-N2e" firstAttribute="leading" secondItem="ztE-Ww-FT8" secondAttribute="leading" id="yp3-GD-j4U"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C5R-XE-HFI" userLabel="Reset Tracking View">
+                                <rect key="frame" x="295" y="40" width="60" height="60"/>
+                                <subviews>
+                                    <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KBr-Oo-0dY">
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="2Qu-xq-F8n">
+                                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pkq-Hk-dEg" userLabel="Refresh Button">
+                                                    <rect key="frame" x="8" y="8" width="44" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="44" id="gS5-6t-OlJ"/>
+                                                        <constraint firstAttribute="width" constant="44" id="kUr-d0-8Cr"/>
+                                                    </constraints>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <inset key="imageEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
+                                                    <state key="normal" image="refresh-page-option"/>
+                                                    <connections>
+                                                        <action selector="resetTrackingButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Dc3-yt-N5b"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="pkq-Hk-dEg" firstAttribute="centerY" secondItem="2Qu-xq-F8n" secondAttribute="centerY" id="oBn-cL-cli"/>
+                                                <constraint firstItem="pkq-Hk-dEg" firstAttribute="centerX" secondItem="2Qu-xq-F8n" secondAttribute="centerX" id="poD-wL-TdX"/>
+                                            </constraints>
+                                        </view>
+                                        <blurEffect style="dark"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.opacity">
+                                                <real key="value" value="0.40000000000000002"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </visualEffectView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s1W-f0-YSW" userLabel="Refresh Button">
+                                        <rect key="frame" x="8" y="8" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="4hr-Qv-Wna"/>
+                                            <constraint firstAttribute="width" constant="44" id="Bsc-Qx-61x"/>
+                                        </constraints>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="imageEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
+                                        <state key="normal" image="refresh-page-option"/>
+                                        <connections>
+                                            <action selector="resetTrackingButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="QGq-Vs-2UZ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="s1W-f0-YSW" firstAttribute="centerX" secondItem="C5R-XE-HFI" secondAttribute="centerX" id="1EH-DY-FAq"/>
+                                    <constraint firstItem="KBr-Oo-0dY" firstAttribute="leading" secondItem="C5R-XE-HFI" secondAttribute="leading" id="67h-Ie-b67"/>
+                                    <constraint firstAttribute="trailing" secondItem="KBr-Oo-0dY" secondAttribute="trailing" id="6eR-yI-KiA"/>
+                                    <constraint firstItem="KBr-Oo-0dY" firstAttribute="top" secondItem="C5R-XE-HFI" secondAttribute="top" id="AZC-xP-rya"/>
+                                    <constraint firstItem="s1W-f0-YSW" firstAttribute="centerY" secondItem="C5R-XE-HFI" secondAttribute="centerY" id="EjI-w2-PLh"/>
+                                    <constraint firstAttribute="bottom" secondItem="KBr-Oo-0dY" secondAttribute="bottom" id="a3g-9n-fba"/>
+                                    <constraint firstAttribute="width" constant="60" id="lA2-FG-QjC"/>
+                                    <constraint firstAttribute="height" constant="60" id="ziI-fd-yVs"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -493,15 +525,15 @@
                             <constraint firstItem="yk9-Su-vmP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="20" id="Nwo-Jc-a1Q"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="bottom" secondItem="fQZ-KI-GVf" secondAttribute="bottom" id="VpT-BR-CcM"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="trailing" secondItem="fQZ-KI-GVf" secondAttribute="trailing" id="XyZ-9z-H8e"/>
-                            <constraint firstItem="KBr-Oo-0dY" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="20" id="Yll-iM-5JK"/>
                             <constraint firstItem="ZX3-Xu-q8s" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="16" id="bnB-Qh-Eb8"/>
-                            <constraint firstAttribute="trailing" secondItem="KBr-Oo-0dY" secondAttribute="trailing" constant="20" id="eJA-j8-D4c"/>
                             <constraint firstItem="ztE-Ww-FT8" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="flC-Ae-ksw"/>
+                            <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="C5R-XE-HFI" secondAttribute="trailing" constant="20" id="hJV-Un-aH4"/>
                             <constraint firstItem="GFZ-Qz-sR2" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="16" id="hiy-zX-ebB"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="itw-ME-As5" secondAttribute="trailing" id="idV-9q-1S3"/>
                             <constraint firstItem="ZX3-Xu-q8s" firstAttribute="top" secondItem="GFZ-Qz-sR2" secondAttribute="bottom" constant="8" id="qGj-am-iQJ"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="top" secondItem="U0K-SW-4ec" secondAttribute="top" id="rJc-2c-zQA"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="ztE-Ww-FT8" secondAttribute="trailing" id="uro-cd-fFY"/>
+                            <constraint firstItem="C5R-XE-HFI" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="20" id="xkp-gd-HMd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fQZ-KI-GVf"/>
                     </view>
@@ -517,6 +549,7 @@
                         <outlet property="trackingStateLabel" destination="GFZ-Qz-sR2" id="aeE-dc-1NZ"/>
                         <outlet property="undoButton" destination="bfL-VD-TjD" id="Bz3-UV-wei"/>
                         <outlet property="worldMappingStateLabel" destination="ZX3-Xu-q8s" id="XGd-uZ-gyx"/>
+                        <segue destination="tyM-wF-X4B" kind="show" identifier="showAllDrawingsVC" id="WzN-88-eco"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
@@ -578,7 +611,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dyZ-RV-iH6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2028" y="134.48275862068968"/>
+            <point key="canvasLocation" x="1836" y="134"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="BuB-eP-bud">
@@ -596,7 +629,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BuO-Po-q8M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1088.8" y="134.48275862068968"/>
+            <point key="canvasLocation" x="897" y="134"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qfk-MW-wQD">

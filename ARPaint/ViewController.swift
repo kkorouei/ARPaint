@@ -98,12 +98,16 @@ class ViewController: UIViewController {
     }
     
     
-    func reStartSession(withWorldMap worldMap: ARWorldMap) {
+    func reStartSession(withWorldMap worldMap: ARWorldMap?) {
         let configuration = ARWorldTrackingConfiguration()
-        configuration.initialWorldMap = worldMap
-        sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+        if let worldMap = worldMap {
+            configuration.initialWorldMap = worldMap
+            sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+            isLoadingSavedWorldMap = true
+        } else {
+            sceneView.session.run(configuration, options: [.resetTracking])
+        }
         currentStrokeAnchorNode = nil
-        isLoadingSavedWorldMap = true
     }
     
     // MARK:- Drawing
@@ -196,6 +200,10 @@ class ViewController: UIViewController {
         currentStrokeAnchorNode = nil
     }
     
+    @IBAction func resetTrackingButtonPressed(_ sender: UIButton) {
+        reStartSession(withWorldMap: nil)
+    }
+    
     @IBAction func undoButtonPressed(_ sender: UIButton) {
         
         sortStrokeAnchorIDsInOrderOfDateCreated()
@@ -218,6 +226,7 @@ class ViewController: UIViewController {
         // TODO: show label saying it's unavailable
             print("Move around your phone a bit")
         case .extending, .mapped:
+            additionalButtonsView.isHidden = true
             saveCurrentDrawingToCoreData(forSceneView: sceneView) { (success, message) in
                 if success {
                 } else {
@@ -228,6 +237,10 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func loadButtonPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "showAllDrawingsVC", sender: self)
+        additionalButtonsView.isHidden = true
+    }
     @IBAction func changeColorButtonPressed(_ sender: UIButton) {
         if additionalButtonsView.isHidden {
             BrushColorSelectionView.isHidden = false
