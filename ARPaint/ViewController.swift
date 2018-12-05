@@ -35,7 +35,7 @@ class ViewController: UIViewController {
     
     var isLoadingSavedWorldMap = false
     
-    var currentSphereNodeType: SphereNodeType = .red
+    var currentStrokeColor: StrokeColor = .red
     
     // MARK:- View Lifecycle
     override func viewDidLoad() {
@@ -117,7 +117,8 @@ class ViewController: UIViewController {
     func createSphereAndInsert(atPosition position: SCNVector3, andAddToStrokeAnchor strokeAnchor: StrokeAnchor) {
         guard let currentStrokeNode = currentStrokeAnchorNode else { return }
         // Get the sphere node
-        let x = getSphereNode(forType: SphereNodeType(rawValue: strokeAnchor.sphereNodeType)!)
+        let x = getReferenceSphereNode(forStrokeColor: StrokeColor(rawValue: strokeAnchor.color)!)
+//        let x = getReferenceSphereNode(forType: SphereNodeType(rawValue: strokeAnchor.sphereNodeType)!)
         let newSphereNode = x.clone()
         // Convert the position from world transform to local transform (relative to the anchors default node)
         let localPosition = currentStrokeNode.convertPosition(position, from: nil)
@@ -142,7 +143,7 @@ class ViewController: UIViewController {
                                                                                          touchPositionInFrontOfCamera.y,
                                                                                          touchPositionInFrontOfCamera.z,
                                                                                          1)))
-        strokeAnchor.sphereNodeType = currentSphereNodeType.rawValue
+        strokeAnchor.color = currentStrokeColor.rawValue
         sceneView.session.add(anchor: strokeAnchor)
         currentFingerPosition = touch.location(in: sceneView)
     }
@@ -232,15 +233,15 @@ class ViewController: UIViewController {
     // Brush Colors changed
     // TODO: Make them into action outlet
     @IBAction func greenColorButtonPressed(_ sender: Any) {
-        currentSphereNodeType = .green
+        currentStrokeColor = .green
     }
     
     @IBAction func blueColorButtonPressed(_ sender: Any) {
-        currentSphereNodeType = .white
+        currentStrokeColor = .white
     }
     
     @IBAction func redColorButtonPressed(_ sender: Any) {
-        currentSphereNodeType = .red
+        currentStrokeColor = .red
     }
     
     @IBAction func takePhotoButtonPressed(_ sender: UIButton) {

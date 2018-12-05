@@ -8,14 +8,14 @@
 
 import SceneKit
 
-enum SphereNodeType: String {
+enum StrokeColor: String {
     case white = "white"
     case green = "green"
     case red = "red"
 }
 
-func getSphereNode(forType type: SphereNodeType) -> SCNNode {
-    switch type {
+func getReferenceSphereNode(forStrokeColor color: StrokeColor) -> SCNNode {
+    switch color {
     case .white:
         return whiteSphereNode
     case .green:
