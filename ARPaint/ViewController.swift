@@ -282,21 +282,27 @@ class ViewController: UIViewController {
         present(screenShotNavigationController, animated: true, completion: nil)
     }
     
+    func changeSaveButtonStyle(withStatus status: ARFrame.WorldMappingStatus) {
+        switch status {
+        case .notAvailable, .limited:
+            saveButton.backgroundColor = UIColor.gray
+        case .extending, .mapped:
+            saveButton.backgroundColor = UIColor.white
+        }
+    }
+    
     private func updateWorldMappingStatusInfoLabel(forframe frame: ARFrame) {
+        changeSaveButtonStyle(withStatus: frame.worldMappingStatus)
         
         switch frame.worldMappingStatus {
         case .notAvailable:
             worldMappingStateLabel.text = "Mapping status: notAvailable"
-            saveButton.isHidden = true
         case .limited:
             worldMappingStateLabel.text = "Mapping status: limited"
-            saveButton.isHidden = true
         case .extending:
             worldMappingStateLabel.text = "Mapping status: extending"
-            saveButton.isHidden = false
         case .mapped:
             worldMappingStateLabel.text = "Mapping status: mapped"
-            saveButton.isHidden = false
         }
     }
     

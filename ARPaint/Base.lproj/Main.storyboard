@@ -397,31 +397,48 @@
                                             <constraint firstAttribute="bottom" secondItem="7Ed-be-qT2" secondAttribute="bottom" id="xRZ-ZJ-5zh"/>
                                         </constraints>
                                     </view>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qbj-12-P8c">
-                                        <rect key="frame" x="87.5" y="0.0" width="200" height="50"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qbj-12-P8c">
+                                        <rect key="frame" x="67.5" y="0.0" width="240" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wte-GR-uzC" userLabel="Ignore Touches Button">
-                                                <rect key="frame" x="0.0" y="0.0" width="200" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="50"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kag-6t-886">
-                                                <rect key="frame" x="0.0" y="10" width="80" height="30"/>
+                                                <rect key="frame" x="0.0" y="10" width="110" height="30"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="80" id="EMX-vv-Tlf"/>
+                                                    <constraint firstAttribute="width" constant="110" id="EMX-vv-Tlf"/>
                                                 </constraints>
-                                                <state key="normal" title="Save"/>
+                                                <state key="normal" title="Save">
+                                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="saveButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="4wq-pn-ENB"/>
                                                 </connections>
                                             </button>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="m5k-AI-0FJ">
+                                                <rect key="frame" x="80" y="15" width="20" height="20"/>
+                                            </activityIndicatorView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gYR-E9-wCX">
-                                                <rect key="frame" x="120" y="10" width="80" height="30"/>
+                                                <rect key="frame" x="130" y="10" width="110" height="30"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="80" id="M6F-gq-Bde"/>
+                                                    <constraint firstAttribute="width" constant="110" id="M6F-gq-Bde"/>
                                                 </constraints>
-                                                <state key="normal" title="Load"/>
+                                                <state key="normal" title="Load">
+                                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <segue destination="tyM-wF-X4B" kind="show" identifier="showAllDrawingsVC" id="ijN-oq-gCf"/>
                                                 </connections>
@@ -430,12 +447,14 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="gYR-E9-wCX" firstAttribute="centerY" secondItem="qbj-12-P8c" secondAttribute="centerY" id="1F4-pR-eME"/>
+                                            <constraint firstItem="m5k-AI-0FJ" firstAttribute="centerY" secondItem="Kag-6t-886" secondAttribute="centerY" id="6il-i5-9uS"/>
                                             <constraint firstItem="Kag-6t-886" firstAttribute="centerY" secondItem="qbj-12-P8c" secondAttribute="centerY" id="C0A-fL-Yhm"/>
                                             <constraint firstItem="wte-GR-uzC" firstAttribute="top" secondItem="qbj-12-P8c" secondAttribute="top" id="FI8-L4-xxP"/>
                                             <constraint firstAttribute="bottom" secondItem="wte-GR-uzC" secondAttribute="bottom" id="IUD-C6-aUr"/>
                                             <constraint firstAttribute="trailing" secondItem="wte-GR-uzC" secondAttribute="trailing" id="Q3X-YO-sxI"/>
-                                            <constraint firstItem="gYR-E9-wCX" firstAttribute="leading" secondItem="Kag-6t-886" secondAttribute="trailing" constant="40" id="VaV-j9-GP0"/>
+                                            <constraint firstItem="gYR-E9-wCX" firstAttribute="leading" secondItem="Kag-6t-886" secondAttribute="trailing" constant="20" id="VaV-j9-GP0"/>
                                             <constraint firstItem="Kag-6t-886" firstAttribute="leading" secondItem="qbj-12-P8c" secondAttribute="leading" id="bH2-Cw-erP"/>
+                                            <constraint firstItem="m5k-AI-0FJ" firstAttribute="trailing" secondItem="Kag-6t-886" secondAttribute="trailing" constant="-10" id="gEd-TO-d5D"/>
                                             <constraint firstItem="wte-GR-uzC" firstAttribute="leading" secondItem="qbj-12-P8c" secondAttribute="leading" id="gvQ-ju-dPK"/>
                                             <constraint firstAttribute="trailing" secondItem="gYR-E9-wCX" secondAttribute="trailing" id="pUG-eL-RpE"/>
                                         </constraints>
@@ -459,6 +478,11 @@
                                     <constraint firstAttribute="height" constant="50" id="xQo-zf-wqQ"/>
                                     <constraint firstItem="xCS-LF-N2e" firstAttribute="leading" secondItem="ztE-Ww-FT8" secondAttribute="leading" id="yp3-GD-j4U"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="weL-Sq-ZRD"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
