@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		720124A621B6A26A00E25F52 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720124A521B6A26A00E25F52 /* UIColor+Extensions.swift */; };
 		720F91CE21AFB1880052CDF4 /* CGImagePropertyOrientation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720F91CD21AFB1880052CDF4 /* CGImagePropertyOrientation+Extensions.swift */; };
 		7228C15921AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7228C15721AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodeld */; };
 		726ACECC21B53E3D00C949E2 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726ACECB21B53E3D00C949E2 /* CircleView.swift */; };
@@ -31,7 +30,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		720124A521B6A26A00E25F52 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		720F91CD21AFB1880052CDF4 /* CGImagePropertyOrientation+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImagePropertyOrientation+Extensions.swift"; sourceTree = "<group>"; };
 		7228C15821AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ARPaintCoreData.xcdatamodel; sourceTree = "<group>"; };
 		726ACECB21B53E3D00C949E2 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
@@ -77,11 +75,19 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		728496BD2193FB4200FD2C26 = {
+		723EA82121B7961D002B088B /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
 				72B3016E21AC130B003D0FD4 /* Drawing+CoreDataClass.swift */,
+				7228C15721AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodeld */,
 				72B3016F21AC130C003D0FD4 /* Drawing+CoreDataProperties.swift */,
+			);
+			path = "Core Data";
+			sourceTree = "<group>";
+		};
+		728496BD2193FB4200FD2C26 = {
+			isa = PBXGroup;
+			children = (
 				728496C82193FB4200FD2C26 /* ARPaint */,
 				728496C72193FB4200FD2C26 /* Products */,
 			);
@@ -98,13 +104,13 @@
 		728496C82193FB4200FD2C26 /* ARPaint */ = {
 			isa = PBXGroup;
 			children = (
+				723EA82121B7961D002B088B /* Core Data */,
 				728496C92193FB4200FD2C26 /* AppDelegate.swift */,
 				728496CD2193FB4200FD2C26 /* ViewController.swift */,
-				7272C2BF21B401BE00D6FC48 /* ScreenShotViewController.swift */,
 				72B5213B21AFCACC0025CF4A /* ViewController+AllDrawingsViewControllerDelegate.swift */,
+				7272C2BF21B401BE00D6FC48 /* ScreenShotViewController.swift */,
 				72B8A80F21AD24C900DDC018 /* AllDrawingsViewController.swift */,
 				728E699621AABACF0085B045 /* PersistenceManager.swift */,
-				7228C15721AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodeld */,
 				72B8A60321A69AEF00B6F814 /* StrokeAnchor.swift */,
 				72E4FF9C21AA909500DEA2C6 /* Utilities.swift */,
 				720124A421B6967B00E25F52 /* Views */,
@@ -121,7 +127,6 @@
 			isa = PBXGroup;
 			children = (
 				728630002199477900922B63 /* SCNVector3+Extensions.swift */,
-				720124A521B6A26A00E25F52 /* UIColor+Extensions.swift */,
 				72E20F7621ABE42C0080A854 /* Float4x4+Extensions.swift */,
 				720F91CD21AFB1880052CDF4 /* CGImagePropertyOrientation+Extensions.swift */,
 			);
@@ -206,7 +211,6 @@
 				728630012199477900922B63 /* SCNVector3+Extensions.swift in Sources */,
 				720F91CE21AFB1880052CDF4 /* CGImagePropertyOrientation+Extensions.swift in Sources */,
 				726ACECC21B53E3D00C949E2 /* CircleView.swift in Sources */,
-				720124A621B6A26A00E25F52 /* UIColor+Extensions.swift in Sources */,
 				72B3017021AC130C003D0FD4 /* Drawing+CoreDataClass.swift in Sources */,
 				72B8A81021AD24C900DDC018 /* AllDrawingsViewController.swift in Sources */,
 				72E20F7721ABE42C0080A854 /* Float4x4+Extensions.swift in Sources */,
