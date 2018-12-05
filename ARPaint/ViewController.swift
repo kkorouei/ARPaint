@@ -231,16 +231,24 @@ class ViewController: UIViewController {
     
     // Brush Colors changed
     // TODO: Make them into action outlet
+    @IBAction func redColorButtonPressed(_ sender: Any) {
+        currentStrokeColor = .red
+    }
+    
     @IBAction func greenColorButtonPressed(_ sender: Any) {
         currentStrokeColor = .green
     }
     
     @IBAction func blueColorButtonPressed(_ sender: Any) {
-        currentStrokeColor = .white
+        currentStrokeColor = .blue
     }
     
-    @IBAction func redColorButtonPressed(_ sender: Any) {
-        currentStrokeColor = .red
+    @IBAction func blackColorButtonPressed(_ sender: Any) {
+        currentStrokeColor = .black
+    }
+    
+    @IBAction func whiteColorButtonPressed(_ sender: Any) {
+        currentStrokeColor = .white
     }
     
     @IBAction func takePhotoButtonPressed(_ sender: UIButton) {

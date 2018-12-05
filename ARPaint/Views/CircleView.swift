@@ -68,8 +68,8 @@ class CircleView: UIView {
     }
 
     func drawRainbowColorCircle() {
-        let rainbowColors: [UIColor] = [.red, .blue, .green, .yellow, .black, .white, .orange, .purple, .gray]
-        let count: Int = 6
+        let rainbowColors: [UIColor] = [.red, .green, .blue, .black, .white, .orange, .purple, .gray]
+        let count: Int = 5
         let gapSize: CGFloat = 0.0
         let segmentAngleSize: CGFloat = (2.0 * CGFloat(Double.pi) - CGFloat(count) * gapSize) / CGFloat(count)
         let center = CGPoint(x: width / 2.0, y: height / 2.0)
