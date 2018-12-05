@@ -21,7 +21,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var preparingDrawingAreaView: UIVisualEffectView!
     @IBOutlet weak var preparingDrawingAreaLabel: UILabel!
     @IBOutlet weak var additionalButtonsView: UIView!
-    @IBOutlet weak var colorSelectionView: UIView!
+    @IBOutlet weak var BrushColorSelectionView: UIView!
+    @IBOutlet weak var saveLoadSelectionView: UIView!
     
     var previousPoint: SCNVector3?
     var currentFingerPosition: CGPoint?
@@ -65,13 +66,6 @@ class ViewController: UIViewController {
         // Add long press gesture to undo button
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressUndoButton))
         undoButton.addGestureRecognizer(longPressGesture)
-        
-        // Check to see if any previous maps have been saved
-        if fetchAllDrawingsFromCoreData().count > 0 {
-            loadButton.isHidden = false
-        } else {
-            print("No previous drawings exists")
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -136,6 +130,8 @@ class ViewController: UIViewController {
     
     // MARK: Touches
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // Hide the additional buttons view if it's showing
+        additionalButtonsView.isHidden = true
         // Create a StrokeAnchor and add it to the Scene (One Anchor will be added to the exaction position of the first sphere for every new stroke)
         guard let touch = touches.first else { return }
         guard let touchPositionInFrontOfCamera = getPosition(ofPoint: touch.location(in: sceneView), atDistanceFromCamera: 0.2, inView: sceneView) else { return }
@@ -216,41 +212,69 @@ class ViewController: UIViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
-        saveCurrentDrawingToCoreData(forSceneView: sceneView) { (success, message) in
-            if success {
-                self.loadButton.isHidden = false
-            } else {
-                // TODO:- Show alert
+        guard let currentFrame = sceneView.session.currentFrame else { return }
+        switch currentFrame.worldMappingStatus {
+        case .notAvailable, .limited:
+        // TODO: show label saying it's unavailable
+            print("Move around your phone a bit")
+        case .extending, .mapped:
+            saveCurrentDrawingToCoreData(forSceneView: sceneView) { (success, message) in
+                if success {
+                } else {
+                    // TODO:- Show alert
+                }
+                print(message)
             }
-            print(message)
         }
     }
     
     @IBAction func changeColorButtonPressed(_ sender: UIButton) {
-        additionalButtonsView.isHidden = !additionalButtonsView.isHidden
-        colorSelectionView.isHidden = false
+        if additionalButtonsView.isHidden {
+            BrushColorSelectionView.isHidden = false
+            saveLoadSelectionView.isHidden = true
+            additionalButtonsView.isHidden = false
+        } else {
+            saveLoadSelectionView.isHidden = true
+            BrushColorSelectionView.isHidden = false
+        }
     }
     
     // Brush Colors changed
     // TODO: Make them into action outlet
     @IBAction func redColorButtonPressed(_ sender: Any) {
         currentStrokeColor = .red
+        additionalButtonsView.isHidden = true
     }
     
     @IBAction func greenColorButtonPressed(_ sender: Any) {
         currentStrokeColor = .green
+        additionalButtonsView.isHidden = true
     }
     
     @IBAction func blueColorButtonPressed(_ sender: Any) {
         currentStrokeColor = .blue
+        additionalButtonsView.isHidden = true
     }
     
     @IBAction func blackColorButtonPressed(_ sender: Any) {
         currentStrokeColor = .black
+        additionalButtonsView.isHidden = true
     }
     
     @IBAction func whiteColorButtonPressed(_ sender: Any) {
         currentStrokeColor = .white
+        additionalButtonsView.isHidden = true
+    }
+    
+    @IBAction func saveLoadButtonPressed(_ sender: UIButton) {
+        if additionalButtonsView.isHidden {
+            saveLoadSelectionView.isHidden = false
+            BrushColorSelectionView.isHidden = true
+            additionalButtonsView.isHidden = false
+        } else {
+            BrushColorSelectionView.isHidden = true
+            saveLoadSelectionView.isHidden = false
+        }
     }
     
     @IBAction func takePhotoButtonPressed(_ sender: UIButton) {
@@ -265,21 +289,27 @@ class ViewController: UIViewController {
         present(screenShotNavigationController, animated: true, completion: nil)
     }
     
+    func changeSaveButtonStyle(withStatus status: ARFrame.WorldMappingStatus) {
+        switch status {
+        case .notAvailable, .limited:
+            saveButton.backgroundColor = UIColor.gray
+        case .extending, .mapped:
+            saveButton.backgroundColor = UIColor.white
+        }
+    }
+    
     private func updateWorldMappingStatusInfoLabel(forframe frame: ARFrame) {
+        changeSaveButtonStyle(withStatus: frame.worldMappingStatus)
         
         switch frame.worldMappingStatus {
         case .notAvailable:
             worldMappingStateLabel.text = "Mapping status: notAvailable"
-            saveButton.isHidden = true
         case .limited:
             worldMappingStateLabel.text = "Mapping status: limited"
-            saveButton.isHidden = true
         case .extending:
             worldMappingStateLabel.text = "Mapping status: extending"
-            saveButton.isHidden = false
         case .mapped:
             worldMappingStateLabel.text = "Mapping status: mapped"
-            saveButton.isHidden = false
         }
     }
     
