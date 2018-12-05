@@ -25,10 +25,6 @@ class StrokeAnchor: ARAnchor {
         super.init(anchor: anchor)
     }
     
-    override class var supportsSecureCoding: Bool {
-        return true
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         if let sphereLocations = aDecoder.decodeObject(forKey: "array") as? [[Float]],
             let dateCreated = aDecoder.decodeObject(forKey: "dateCreated") as? NSNumber{
@@ -45,6 +41,10 @@ class StrokeAnchor: ARAnchor {
         super.encode(with: aCoder)
         aCoder.encode(sphereLocations, forKey: "array")
         aCoder.encode(NSNumber(value: dateCreated), forKey: "dateCreated")
+    }
+    
+    override class var supportsSecureCoding: Bool {
+        return true
     }
     
 }

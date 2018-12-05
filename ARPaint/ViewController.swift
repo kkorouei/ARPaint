@@ -52,7 +52,7 @@ class ViewController: UIViewController {
         
         sceneView.delegate = self
         sceneView.session.delegate = self
-        sceneView.showsStatistics = false
+        sceneView.showsStatistics = true
         let scene = SCNScene()
         sceneView.scene = scene
 
@@ -222,6 +222,17 @@ class ViewController: UIViewController {
     
     @IBAction func changeColorButtonPressed(_ sender: UIButton) {
         additionalButtonsView.isHidden = !additionalButtonsView.isHidden
+    }
+    
+    // Brush Colors changed
+    // TODO: Make them into action outlet
+    @IBAction func greenColorButtonPressed(_ sender: Any) {
+    }
+    
+    @IBAction func blueColorButtonPressed(_ sender: Any) {
+    }
+    
+    @IBAction func redColorButtonPressed(_ sender: Any) {
     }
     
     @IBAction func takePhotoButtonPressed(_ sender: UIButton) {
