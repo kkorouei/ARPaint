@@ -212,12 +212,19 @@ class ViewController: UIViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
-        saveCurrentDrawingToCoreData(forSceneView: sceneView) { (success, message) in
-            if success {
-            } else {
-                // TODO:- Show alert
+        guard let currentFrame = sceneView.session.currentFrame else { return }
+        switch currentFrame.worldMappingStatus {
+        case .notAvailable, .limited:
+        // TODO: show label saying it's unavailable
+            print("Move around your phone a bit")
+        case .extending, .mapped:
+            saveCurrentDrawingToCoreData(forSceneView: sceneView) { (success, message) in
+                if success {
+                } else {
+                    // TODO:- Show alert
+                }
+                print(message)
             }
-            print(message)
         }
     }
     
