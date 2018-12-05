@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		720F91CE21AFB1880052CDF4 /* CGImagePropertyOrientation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720F91CD21AFB1880052CDF4 /* CGImagePropertyOrientation+Extensions.swift */; };
 		7228C15921AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7228C15721AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodeld */; };
+		723EA82321B79759002B088B /* SphereNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723EA82221B79759002B088B /* SphereNodes.swift */; };
 		726ACECC21B53E3D00C949E2 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726ACECB21B53E3D00C949E2 /* CircleView.swift */; };
 		726ACECE21B5481B00C949E2 /* SingleColorCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726ACECD21B5481B00C949E2 /* SingleColorCircleButton.swift */; };
 		7272C2C021B401BE00D6FC48 /* ScreenShotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7272C2BF21B401BE00D6FC48 /* ScreenShotViewController.swift */; };
@@ -32,6 +33,7 @@
 /* Begin PBXFileReference section */
 		720F91CD21AFB1880052CDF4 /* CGImagePropertyOrientation+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImagePropertyOrientation+Extensions.swift"; sourceTree = "<group>"; };
 		7228C15821AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ARPaintCoreData.xcdatamodel; sourceTree = "<group>"; };
+		723EA82221B79759002B088B /* SphereNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphereNodes.swift; sourceTree = "<group>"; };
 		726ACECB21B53E3D00C949E2 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		726ACECD21B5481B00C949E2 /* SingleColorCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleColorCircleButton.swift; sourceTree = "<group>"; };
 		7272C2BF21B401BE00D6FC48 /* ScreenShotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenShotViewController.swift; sourceTree = "<group>"; };
@@ -65,11 +67,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		728496BD2193FB4200FD2C26 = {
+		720124A421B6967B00E25F52 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				726ACECB21B53E3D00C949E2 /* CircleView.swift */,
+				726ACECD21B5481B00C949E2 /* SingleColorCircleButton.swift */,
+				72C3DF7021B671DC008CA213 /* RainbowColorCircleButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		723EA82121B7961D002B088B /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
 				72B3016E21AC130B003D0FD4 /* Drawing+CoreDataClass.swift */,
+				7228C15721AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodeld */,
 				72B3016F21AC130C003D0FD4 /* Drawing+CoreDataProperties.swift */,
+			);
+			path = "Core Data";
+			sourceTree = "<group>";
+		};
+		728496BD2193FB4200FD2C26 = {
+			isa = PBXGroup;
+			children = (
 				728496C82193FB4200FD2C26 /* ARPaint */,
 				728496C72193FB4200FD2C26 /* Products */,
 			);
@@ -86,18 +106,17 @@
 		728496C82193FB4200FD2C26 /* ARPaint */ = {
 			isa = PBXGroup;
 			children = (
+				723EA82121B7961D002B088B /* Core Data */,
 				728496C92193FB4200FD2C26 /* AppDelegate.swift */,
 				728496CD2193FB4200FD2C26 /* ViewController.swift */,
-				7272C2BF21B401BE00D6FC48 /* ScreenShotViewController.swift */,
 				72B5213B21AFCACC0025CF4A /* ViewController+AllDrawingsViewControllerDelegate.swift */,
+				7272C2BF21B401BE00D6FC48 /* ScreenShotViewController.swift */,
 				72B8A80F21AD24C900DDC018 /* AllDrawingsViewController.swift */,
 				728E699621AABACF0085B045 /* PersistenceManager.swift */,
-				7228C15721AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodeld */,
 				72B8A60321A69AEF00B6F814 /* StrokeAnchor.swift */,
 				72E4FF9C21AA909500DEA2C6 /* Utilities.swift */,
-				726ACECB21B53E3D00C949E2 /* CircleView.swift */,
-				726ACECD21B5481B00C949E2 /* SingleColorCircleButton.swift */,
-				72C3DF7021B671DC008CA213 /* RainbowColorCircleButton.swift */,
+				723EA82221B79759002B088B /* SphereNodes.swift */,
+				720124A421B6967B00E25F52 /* Views */,
 				72AF7BE021A8158700F11B68 /* Extensions */,
 				728496CF2193FB4200FD2C26 /* Main.storyboard */,
 				728496D22193FB4400FD2C26 /* Assets.xcassets */,
@@ -200,6 +219,7 @@
 				72E20F7721ABE42C0080A854 /* Float4x4+Extensions.swift in Sources */,
 				726ACECE21B5481B00C949E2 /* SingleColorCircleButton.swift in Sources */,
 				728E699721AABACF0085B045 /* PersistenceManager.swift in Sources */,
+				723EA82321B79759002B088B /* SphereNodes.swift in Sources */,
 				72B3017121AC130C003D0FD4 /* Drawing+CoreDataProperties.swift in Sources */,
 				72E4FF9D21AA909500DEA2C6 /* Utilities.swift in Sources */,
 				7228C15921AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodeld in Sources */,

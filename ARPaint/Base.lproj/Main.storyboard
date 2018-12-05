@@ -288,6 +288,9 @@
                                                         <color key="value" red="0.1145173654" green="1" blue="0.039683754809999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="greenColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="HDm-Lx-BR7"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2OC-hf-oqB" customClass="SingleColorCircleButton" customModule="ARPaint" customModuleProvider="target">
                                                 <rect key="frame" x="85" y="7.5" width="35" height="35"/>
@@ -298,6 +301,9 @@
                                                 <color key="tintColor" red="0.1145173654" green="1" blue="0.039683754809999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <inset key="imageEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
                                                 <state key="normal" title="Button"/>
+                                                <connections>
+                                                    <action selector="blueColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="cH9-aB-Dvn"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gQ-Qu-H54" customClass="SingleColorCircleButton" customModule="ARPaint" customModuleProvider="target">
                                                 <rect key="frame" x="170" y="7.5" width="35" height="35"/>
@@ -310,9 +316,12 @@
                                                 <state key="normal" title="Button"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
-                                                        <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="value" red="1" green="0.32156862749999998" blue="0.1764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="redColorButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="ZMf-NA-2RN"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BDH-QJ-5KQ" customClass="SingleColorCircleButton" customModule="ARPaint" customModuleProvider="target">
                                                 <rect key="frame" x="255" y="7.5" width="35" height="35"/>
