@@ -21,7 +21,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var preparingDrawingAreaView: UIVisualEffectView!
     @IBOutlet weak var preparingDrawingAreaLabel: UILabel!
     @IBOutlet weak var additionalButtonsView: UIView!
-    @IBOutlet weak var colorSelectionView: UIView!
+    @IBOutlet weak var BrushColorSelectionView: UIView!
+    @IBOutlet weak var saveLoadSelectionView: UIView!
     
     var previousPoint: SCNVector3?
     var currentFingerPosition: CGPoint?
@@ -227,8 +228,14 @@ class ViewController: UIViewController {
     }
     
     @IBAction func changeColorButtonPressed(_ sender: UIButton) {
-        additionalButtonsView.isHidden = !additionalButtonsView.isHidden
-        colorSelectionView.isHidden = false
+        if additionalButtonsView.isHidden {
+            BrushColorSelectionView.isHidden = false
+            saveLoadSelectionView.isHidden = true
+            additionalButtonsView.isHidden = false
+        } else {
+            saveLoadSelectionView.isHidden = true
+            BrushColorSelectionView.isHidden = false
+        }
     }
     
     // Brush Colors changed
@@ -251,6 +258,17 @@ class ViewController: UIViewController {
     
     @IBAction func whiteColorButtonPressed(_ sender: Any) {
         currentStrokeColor = .white
+    }
+    
+    @IBAction func saveLoadButtonPressed(_ sender: UIButton) {
+        if additionalButtonsView.isHidden {
+            saveLoadSelectionView.isHidden = false
+            BrushColorSelectionView.isHidden = true
+            additionalButtonsView.isHidden = false
+        } else {
+            BrushColorSelectionView.isHidden = true
+            saveLoadSelectionView.isHidden = false
+        }
     }
     
     @IBAction func takePhotoButtonPressed(_ sender: UIButton) {
