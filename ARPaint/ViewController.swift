@@ -30,16 +30,13 @@ class ViewController: UIViewController {
     
     var whiteBallCount = 0
     var label: UILabel!
-    lazy var sphereNode: SCNNode = {
-        let sphere = SCNSphere(radius: 0.005)
-        sphere.firstMaterial?.diffuse.contents = UIColor.white
-        return SCNNode(geometry: sphere)
-    }()
     
     var strokeAnchorIDs: [UUID] = []
     var currentStrokeAnchorNode: SCNNode?
     
     var isLoadingSavedWorldMap = false
+    
+    var currentSphereNodeType: SphereNodeType = .red
     
     // MARK:- View Lifecycle
     override func viewDidLoad() {
@@ -120,7 +117,9 @@ class ViewController: UIViewController {
     
     func createSphereAndInsert(atPosition position: SCNVector3, andAddToStrokeAnchor strokeAnchor: StrokeAnchor) {
         guard let currentStrokeNode = currentStrokeAnchorNode else { return }
-        let newSphereNode = sphereNode.clone()
+        // Get the sphere node
+        let x = getSphereNode(forType: SphereNodeType(rawValue: strokeAnchor.sphereNodeType)!)
+        let newSphereNode = x.clone()
         // Convert the position from world transform to local transform (relative to the anchors default node)
         let localPosition = currentStrokeNode.convertPosition(position, from: nil)
         newSphereNode.position = localPosition
@@ -144,6 +143,7 @@ class ViewController: UIViewController {
                                                                                          touchPositionInFrontOfCamera.y,
                                                                                          touchPositionInFrontOfCamera.z,
                                                                                          1)))
+        strokeAnchor.sphereNodeType = currentSphereNodeType.rawValue
         sceneView.session.add(anchor: strokeAnchor)
         currentFingerPosition = touch.location(in: sceneView)
     }
@@ -227,12 +227,15 @@ class ViewController: UIViewController {
     // Brush Colors changed
     // TODO: Make them into action outlet
     @IBAction func greenColorButtonPressed(_ sender: Any) {
+        currentSphereNodeType = .green
     }
     
     @IBAction func blueColorButtonPressed(_ sender: Any) {
+        currentSphereNodeType = .white
     }
     
     @IBAction func redColorButtonPressed(_ sender: Any) {
+        currentSphereNodeType = .red
     }
     
     @IBAction func takePhotoButtonPressed(_ sender: UIButton) {
@@ -371,10 +374,8 @@ extension ViewController: ARSessionDelegate {
 extension ViewController: ARSCNViewDelegate {
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        print("Anchor ADDED *****")
         // This is only used when loading a worldMap
         if let strokeAnchor = anchor as? StrokeAnchor {
-            print("This is a stroke anchor")
             currentStrokeAnchorNode = node
             strokeAnchorIDs.append(strokeAnchor.identifier)
             for sphereLocation in strokeAnchor.sphereLocations {
