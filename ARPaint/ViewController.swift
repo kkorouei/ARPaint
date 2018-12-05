@@ -66,13 +66,6 @@ class ViewController: UIViewController {
         // Add long press gesture to undo button
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressUndoButton))
         undoButton.addGestureRecognizer(longPressGesture)
-        
-        // Check to see if any previous maps have been saved
-        if fetchAllDrawingsFromCoreData().count > 0 {
-            loadButton.isHidden = false
-        } else {
-            print("No previous drawings exists")
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -137,6 +130,8 @@ class ViewController: UIViewController {
     
     // MARK: Touches
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // Hide the additional buttons view if it's showing
+        additionalButtonsView.isHidden = true
         // Create a StrokeAnchor and add it to the Scene (One Anchor will be added to the exaction position of the first sphere for every new stroke)
         guard let touch = touches.first else { return }
         guard let touchPositionInFrontOfCamera = getPosition(ofPoint: touch.location(in: sceneView), atDistanceFromCamera: 0.2, inView: sceneView) else { return }
@@ -219,7 +214,6 @@ class ViewController: UIViewController {
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         saveCurrentDrawingToCoreData(forSceneView: sceneView) { (success, message) in
             if success {
-                self.loadButton.isHidden = false
             } else {
                 // TODO:- Show alert
             }
@@ -242,22 +236,27 @@ class ViewController: UIViewController {
     // TODO: Make them into action outlet
     @IBAction func redColorButtonPressed(_ sender: Any) {
         currentStrokeColor = .red
+        additionalButtonsView.isHidden = true
     }
     
     @IBAction func greenColorButtonPressed(_ sender: Any) {
         currentStrokeColor = .green
+        additionalButtonsView.isHidden = true
     }
     
     @IBAction func blueColorButtonPressed(_ sender: Any) {
         currentStrokeColor = .blue
+        additionalButtonsView.isHidden = true
     }
     
     @IBAction func blackColorButtonPressed(_ sender: Any) {
         currentStrokeColor = .black
+        additionalButtonsView.isHidden = true
     }
     
     @IBAction func whiteColorButtonPressed(_ sender: Any) {
         currentStrokeColor = .white
+        additionalButtonsView.isHidden = true
     }
     
     @IBAction func saveLoadButtonPressed(_ sender: UIButton) {
