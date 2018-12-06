@@ -219,11 +219,12 @@ class ViewController: UIViewController {
     }
     
     @IBAction func resetTrackingButtonPressed(_ sender: UIButton) {
+        additionalButtonsView.isHidden = true
         reStartSession(withWorldMap: nil)
     }
     
     @IBAction func undoButtonPressed(_ sender: UIButton) {
-        
+        additionalButtonsView.isHidden = true
         sortStrokeAnchorIDsInOrderOfDateCreated()
         
         guard let currentStrokeAnchorID = strokeAnchorIDs.last, let curentStrokeAnchor = anchorForID(currentStrokeAnchorID) else {
@@ -265,8 +266,13 @@ class ViewController: UIViewController {
             saveLoadSelectionView.isHidden = true
             additionalButtonsView.isHidden = false
         } else {
-            saveLoadSelectionView.isHidden = true
-            BrushColorSelectionView.isHidden = false
+            // Hide the additionalButtonsView if the color buttons are already showing
+            if saveLoadSelectionView.isHidden {
+                additionalButtonsView.isHidden = true
+            } else {
+                BrushColorSelectionView.isHidden = false
+                saveLoadSelectionView.isHidden = true
+            }
         }
     }
     
@@ -303,16 +309,19 @@ class ViewController: UIViewController {
             BrushColorSelectionView.isHidden = true
             additionalButtonsView.isHidden = false
         } else {
-            BrushColorSelectionView.isHidden = true
-            saveLoadSelectionView.isHidden = false
+            // Hide the additionalButtonsView if the save/load buttons are already showing
+            if BrushColorSelectionView.isHidden {
+                additionalButtonsView.isHidden = true
+            } else {
+                BrushColorSelectionView.isHidden = true
+                saveLoadSelectionView.isHidden = false
+            }
         }
     }
     
     @IBAction func takePhotoButtonPressed(_ sender: UIButton) {
-
-        
+        additionalButtonsView.isHidden = true
         let image = sceneView.snapshot()
-        
         
         let screenShotNavigationController = storyboard?.instantiateViewController(withIdentifier: "screenShotNav") as! UINavigationController
         let screenShotViewController = screenShotNavigationController.viewControllers[0] as! ScreenShotViewController
