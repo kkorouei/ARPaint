@@ -23,6 +23,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var additionalButtonsView: UIView!
     @IBOutlet weak var BrushColorSelectionView: UIView!
     @IBOutlet weak var saveLoadSelectionView: UIView!
+    @IBOutlet weak var menuButtonsView: UIView!
+    @IBOutlet weak var resetTrackingView: UIView!
     
     var previousPoint: SCNVector3?
     var currentFingerPosition: CGPoint?
@@ -82,6 +84,21 @@ class ViewController: UIViewController {
         return true
     }
     
+    func hideAllUI() {
+        DispatchQueue.main.async {
+            self.menuButtonsView.isHidden = true
+            self.resetTrackingView.isHidden = true
+            self.additionalButtonsView.isHidden = true
+        }
+    }
+    
+    func showAllUI() {
+        DispatchQueue.main.async {
+            self.menuButtonsView.isHidden = false
+            self.resetTrackingView.isHidden = false
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showAllDrawingsVC" {
             let navigationController = segue.destination as! UINavigationController
@@ -104,6 +121,7 @@ class ViewController: UIViewController {
             configuration.initialWorldMap = worldMap
             sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
             isLoadingSavedWorldMap = true
+            hideAllUI()
         } else {
             sceneView.session.run(configuration, options: [.resetTracking])
         }
@@ -201,11 +219,12 @@ class ViewController: UIViewController {
     }
     
     @IBAction func resetTrackingButtonPressed(_ sender: UIButton) {
+        additionalButtonsView.isHidden = true
         reStartSession(withWorldMap: nil)
     }
     
     @IBAction func undoButtonPressed(_ sender: UIButton) {
-        
+        additionalButtonsView.isHidden = true
         sortStrokeAnchorIDsInOrderOfDateCreated()
         
         guard let currentStrokeAnchorID = strokeAnchorIDs.last, let curentStrokeAnchor = anchorForID(currentStrokeAnchorID) else {
@@ -247,8 +266,13 @@ class ViewController: UIViewController {
             saveLoadSelectionView.isHidden = true
             additionalButtonsView.isHidden = false
         } else {
-            saveLoadSelectionView.isHidden = true
-            BrushColorSelectionView.isHidden = false
+            // Hide the additionalButtonsView if the color buttons are already showing
+            if saveLoadSelectionView.isHidden {
+                additionalButtonsView.isHidden = true
+            } else {
+                BrushColorSelectionView.isHidden = false
+                saveLoadSelectionView.isHidden = true
+            }
         }
     }
     
@@ -285,20 +309,24 @@ class ViewController: UIViewController {
             BrushColorSelectionView.isHidden = true
             additionalButtonsView.isHidden = false
         } else {
-            BrushColorSelectionView.isHidden = true
-            saveLoadSelectionView.isHidden = false
+            // Hide the additionalButtonsView if the save/load buttons are already showing
+            if BrushColorSelectionView.isHidden {
+                additionalButtonsView.isHidden = true
+            } else {
+                BrushColorSelectionView.isHidden = true
+                saveLoadSelectionView.isHidden = false
+            }
         }
     }
     
     @IBAction func takePhotoButtonPressed(_ sender: UIButton) {
-
-        
+        additionalButtonsView.isHidden = true
         let image = sceneView.snapshot()
-        
         
         let screenShotNavigationController = storyboard?.instantiateViewController(withIdentifier: "screenShotNav") as! UINavigationController
         let screenShotViewController = screenShotNavigationController.viewControllers[0] as! ScreenShotViewController
         screenShotViewController.screenShotImage = image
+        screenShotNavigationController.modalPresentationStyle = .overCurrentContext
         present(screenShotNavigationController, animated: true, completion: nil)
     }
     
@@ -357,6 +385,7 @@ class ViewController: UIViewController {
         case .normal:
             if isLoadingSavedWorldMap {
                 isLoadingSavedWorldMap = false
+                showAllUI()
                 removeScreenShotFromView()
             }
             print("Tracking state normal")
