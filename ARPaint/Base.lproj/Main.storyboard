@@ -543,8 +543,10 @@
                         <outlet property="BrushColorSelectionView" destination="weL-Sq-ZRD" id="as8-WN-6OI"/>
                         <outlet property="additionalButtonsView" destination="ztE-Ww-FT8" id="Gqa-p5-Boc"/>
                         <outlet property="loadButton" destination="gYR-E9-wCX" id="tgr-r4-tpU"/>
+                        <outlet property="menuButtonsView" destination="itw-ME-As5" id="BFc-vs-jIK"/>
                         <outlet property="preparingDrawingAreaLabel" destination="ARL-xf-Wk9" id="Gpp-ns-77e"/>
                         <outlet property="preparingDrawingAreaView" destination="yk9-Su-vmP" id="5IH-Q6-DQ7"/>
+                        <outlet property="resetTrackingView" destination="C5R-XE-HFI" id="zn5-qu-9V1"/>
                         <outlet property="saveButton" destination="Kag-6t-886" id="gvE-Up-37k"/>
                         <outlet property="saveLoadSelectionView" destination="qbj-12-P8c" id="Cdl-Bq-WGS"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
