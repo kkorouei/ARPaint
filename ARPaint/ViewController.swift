@@ -514,26 +514,30 @@ class ViewController: UIViewController {
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
-        print("code: \((error as NSError).code)")
+        let message = UILabel()
+        message.backgroundColor = UIColor.white
+        message.layer.cornerRadius = 7
+        message.layer.masksToBounds = true
+        message.translatesAutoresizingMaskIntoConstraints = false
+        message.lineBreakMode = .byWordWrapping
+        message.textAlignment = .center
+        self.sceneView.addSubview(message)
+        message.translatesAutoresizingMaskIntoConstraints = false
+        let horizontalConstraint = NSLayoutConstraint(item: message, attribute: NSLayoutConstraint.Attribute.centerX, relatedBy: NSLayoutConstraint.Relation.equal, toItem: sceneView, attribute: NSLayoutConstraint.Attribute.centerX, multiplier: 1, constant: 0)
+        let verticalConstraint = NSLayoutConstraint(item: message, attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: NSLayoutConstraint.Relation.equal, toItem: sceneView, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant: 0)
+        let widthConstraint = NSLayoutConstraint(item: message, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 320)
+        let heightConstraint = NSLayoutConstraint(item: message, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 60)
+        view.addConstraints([horizontalConstraint, verticalConstraint, widthConstraint, heightConstraint])
+        
         if (error as NSError).code == 103 {
             // The user has denied your app permission to use the device camera.
-            hideAllUI()
-            let message = UILabel()
             message.text = "Camera access required. \nPlease allow access in settings."
-            message.backgroundColor = UIColor.white
-            message.layer.cornerRadius = 7
-            message.layer.masksToBounds = true
-            message.translatesAutoresizingMaskIntoConstraints = false
-            message.lineBreakMode = .byWordWrapping
             message.numberOfLines = 2
-            message.textAlignment = .center
-            self.sceneView.addSubview(message)
-            message.translatesAutoresizingMaskIntoConstraints = false
-            let horizontalConstraint = NSLayoutConstraint(item: message, attribute: NSLayoutConstraint.Attribute.centerX, relatedBy: NSLayoutConstraint.Relation.equal, toItem: sceneView, attribute: NSLayoutConstraint.Attribute.centerX, multiplier: 1, constant: 0)
-            let verticalConstraint = NSLayoutConstraint(item: message, attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: NSLayoutConstraint.Relation.equal, toItem: sceneView, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant: 0)
-            let widthConstraint = NSLayoutConstraint(item: message, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 320)
-            let heightConstraint = NSLayoutConstraint(item: message, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 60)
-            view.addConstraints([horizontalConstraint, verticalConstraint, widthConstraint, heightConstraint])
+            hideAllUI()
+        } else {
+            // Either worldTrackingFailed, sensorUnavailable, sensorFailed or unsupportedConfiguration
+            message.text = error.localizedDescription
+            message.numberOfLines = 0
         }
         // TODO:- Handle the different types of error
         print("*****Session did fail with Error: \(error.localizedDescription)*****")
