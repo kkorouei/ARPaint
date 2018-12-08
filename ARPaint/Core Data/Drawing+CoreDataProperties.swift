@@ -20,5 +20,6 @@ extension Drawing {
     @NSManaged public var worldMap: NSData
     @NSManaged public var screenShot: NSData
     @NSManaged public var dateCreated: NSDate
+    @NSManaged public var name: String
 
 }

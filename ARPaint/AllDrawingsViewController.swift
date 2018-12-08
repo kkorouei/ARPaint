@@ -31,7 +31,7 @@ extension AllDrawingsViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let drawing = drawings[indexPath.row]
-        cell.textLabel?.text = "date: \(drawing.dateCreated)"
+        cell.textLabel?.text = drawing.name
         return cell
     }
     

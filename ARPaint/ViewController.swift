@@ -294,11 +294,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
+        // TODO:- Clean up and refactor
         guard let currentFrame = sceneView.session.currentFrame else { return }
         switch currentFrame.worldMappingStatus {
         case .notAvailable, .limited:
-            // TODO: show label saying it's unavailable
-            print("Move around your device a bit")
             saveErrorLabel.isHidden = false
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.saveErrorLabel.isHidden = true
@@ -306,30 +305,44 @@ class ViewController: UIViewController {
         case .extending, .mapped:
             additionalButtonsView.isHidden = true
             hideAllUI(includingResetButton: true)
-            let alertController = UIAlertController(title: "Save", message: "Enter a name for the saved scenes", preferredStyle: .alert)
-            let saveAction = UIAlertAction(title: "Save", style: .default, handler: { (action) in
-                saveCurrentDrawingToCoreData(forSceneView: self.sceneView) { (success, message) in
-                    if success {
-                        self.showSimpleAlert(withTitle: "Scene Successfully Saved", andMessage: nil, completionHandler: {
-                            self.showAllUI()
-                        })
-                    } else {
-                        self.showSimpleAlert(withTitle: "Error", andMessage: "Unable To Save Scene", completionHandler: {
-                            self.showAllUI()
-                        })
-                    }
-                    print(message)
+            
+            getCurrentWorldMapAndScreenShot(forSceneView: sceneView) { (worldMap, screenShot, errorMessage) in
+                if errorMessage != nil {
+                    // Some error happened
+                    self.showSimpleAlert(withTitle: "Error", andMessage: errorMessage, completionHandler: {
+                        self.showAllUI()
+                    })
+                    return
                 }
-            })
-            let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) in
-                self.showAllUI()
-            })
-            alertController.addTextField { (textField) in
-                textField.placeholder = "Drawing1"
+                
+                let alertController = UIAlertController(title: "Save", message: "Enter a name for the saved scenes", preferredStyle: .alert)
+                let saveAction = UIAlertAction(title: "Save", style: .default, handler: { (_) in
+                    let nameTextField = alertController.textFields![0]
+                    let name = (nameTextField.text ?? "").isEmpty ? "My Drawing" : nameTextField.text!
+                    saveDrawingToCoreData(withWorldMap: worldMap!, name: name, screenShot: screenShot!, completion: { (success, message) in
+                        if success {
+                            self.showSimpleAlert(withTitle: "Scene Successfully Saved", andMessage: nil, completionHandler: {
+                                self.showAllUI()
+                            })
+                        } else {
+                            self.showSimpleAlert(withTitle: "Error", andMessage: "Unable To Save Scene", completionHandler: {
+                                self.showAllUI()
+                            })
+                        }
+                        print(message)
+                    })
+                })
+                let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (_) in
+                    self.showAllUI()
+                    // Delete the temp world map
+                })
+                alertController.addTextField { (textField) in
+                    textField.placeholder = "My Drawing"
+                }
+                alertController.addAction(saveAction)
+                alertController.addAction(cancelAction)
+                self.present(alertController, animated: true, completion: nil)
             }
-            alertController.addAction(saveAction)
-            alertController.addAction(cancelAction)
-            present(alertController, animated: true, completion: nil)
         }
     }
     
