@@ -26,6 +26,10 @@ class ScreenShotViewController: UIViewController {
     @IBAction func activityButtonPressed(_ sender: Any) {
         let activityViewController = UIActivityViewController(activityItems: [screenShotImage], applicationActivities: nil)
         present(activityViewController, animated: true, completion: nil)
+        // Dismiss the viewController after activity action is finished
+        activityViewController.completionWithItemsHandler = { activity, success, items, error in
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
 }

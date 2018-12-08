@@ -543,7 +543,7 @@ class ViewController: UIViewController {
         
         if (error as NSError).code == 103 {
             // The user has denied your app permission to use the device camera.
-            message.text = "Camera access required. \nPlease allow access in settings."
+            message.text = "Camera access required \nPlease allow access in settings"
             message.numberOfLines = 2
             hideAllUI(includingResetButton: true)
         } else {
