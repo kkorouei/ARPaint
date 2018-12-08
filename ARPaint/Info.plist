@@ -47,6 +47,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>wanna add a pic</string>
+	<string>Photo library access needed to save screenshots</string>
 </dict>
 </plist>
