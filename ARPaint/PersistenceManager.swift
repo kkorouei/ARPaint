@@ -38,33 +38,40 @@ func fetchAllDrawingsFromCoreData() -> [Drawing] {
     }
 }
 
-func saveCurrentDrawingToCoreData(forSceneView sceneView: ARSCNView, completion: @escaping (Bool, String) ->Void ) {
+func getCurrentWorldMapAndScreenShot(forSceneView sceneView: ARSCNView, completion: @escaping (_ wordlMap: ARWorldMap?, _ screenShot: NSData?, _ errorMessage: String?) -> Void) {
     sceneView.session.getCurrentWorldMap { (worldMap, error) in
-        guard let map = worldMap else {
-            let message = ("Can't get world map: \(error!.localizedDescription)")
-            completion(false, message)
+        let message: String
+        guard let worldMap = worldMap  else {
+            message = ("Can't get world map: \(error!.localizedDescription)")
+            completion(nil, nil, message)
             return
         }
+        guard let screenShot = takeSnapShot(ofFrame: sceneView.session.currentFrame) as NSData? else {
+            message = "Could not convert screenshot to data"
+            completion(nil, nil, message)
+            return
+        }
+        completion(worldMap, screenShot, nil)
+    }
+}
+
+func saveDrawingToCoreData(withWorldMap worldMap: ARWorldMap, name: String, screenShot: NSData, completion: @escaping (Bool, String) ->Void ) {
+
         let managedObjectContext = getManagedObjectContext()
         
         let drawing = Drawing(context: managedObjectContext)
         do {
             // Convert the ARWorldMap to data format
-            let worldMapData = try NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true) as NSData
+            let worldMapData = try NSKeyedArchiver.archivedData(withRootObject: worldMap, requiringSecureCoding: true) as NSData
             drawing.worldMap = worldMapData
         } catch {
             let message = ("Could not convert the worldMap into data. \(error.localizedDescription)")
             completion(false, message)
         }
         
-        guard let screenShot = takeSnapShot(ofFrame: sceneView.session.currentFrame) as NSData? else {
-            let message = "Could not convert screenshot to data"
-            completion(false, message)
-            return
-        }
-        
         drawing.screenShot = screenShot
         drawing.dateCreated = Date() as NSDate
+        drawing.name = name
         
         do {
             // Save
@@ -76,7 +83,6 @@ func saveCurrentDrawingToCoreData(forSceneView sceneView: ARSCNView, completion:
             completion(false, message)
         }
     }
-}
 
 func deleteDrawingFromCoreData(drawing: Drawing, completion: (Bool, String) -> Void ) {
     let managedObjectContext = getManagedObjectContext()
