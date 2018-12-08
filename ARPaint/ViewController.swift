@@ -25,6 +25,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var saveLoadSelectionView: UIView!
     @IBOutlet weak var menuButtonsView: UIView!
     @IBOutlet weak var resetTrackingView: UIView!
+    @IBOutlet weak var tempSaveLabel: UILabel!
     // Tracking State View
     @IBOutlet weak var trackingStateView: UIView!
     @IBOutlet weak var trackingStateImageView: UIImageView!
@@ -97,6 +98,7 @@ class ViewController: UIViewController {
             self.menuButtonsView.isHidden = true
             self.resetTrackingView.isHidden = true
             self.additionalButtonsView.isHidden = true
+            self.tempSaveLabel.isHidden = true
         }
     }
     
@@ -131,7 +133,7 @@ class ViewController: UIViewController {
             trackingStateView.isHidden = false
             trackingStateImageView.image = UIImage(named: "move-phone")
             trackingStateTitleLabel.text = "Detecting world"
-            trackingStateMessageLabel.text = "Move your phone around slowly"
+            trackingStateMessageLabel.text = "Move your device around slowly"
             addPhoneMovingAnimation()
         case .limited(.relocalizing):
             // Recovering: Move your phone around the area shown in the image
@@ -268,36 +270,60 @@ class ViewController: UIViewController {
         reStartSession(withWorldMap: nil)
     }
     
-    @IBAction func undoButtonPressed(_ sender: UIButton) {
-        additionalButtonsView.isHidden = true
-        sortStrokeAnchorIDsInOrderOfDateCreated()
-        
-        guard let currentStrokeAnchorID = strokeAnchorIDs.last, let curentStrokeAnchor = anchorForID(currentStrokeAnchorID) else {
-            print("No stroke to remove")
-            return
+    @IBAction func saveLoadButtonPressed(_ sender: UIButton) {
+        if additionalButtonsView.isHidden {
+            saveLoadSelectionView.isHidden = false
+            BrushColorSelectionView.isHidden = true
+            additionalButtonsView.isHidden = false
+        } else {
+            // Hide the additionalButtonsView if the save/load buttons are already showing
+            if BrushColorSelectionView.isHidden {
+                additionalButtonsView.isHidden = true
+                tempSaveLabel.isHidden = true
+            } else {
+                BrushColorSelectionView.isHidden = true
+                saveLoadSelectionView.isHidden = false
+            }
         }
-        sceneView.session.remove(anchor: curentStrokeAnchor)
-
-        // add this?
-        currentStrokeAnchorNode = nil
-
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         guard let currentFrame = sceneView.session.currentFrame else { return }
         switch currentFrame.worldMappingStatus {
         case .notAvailable, .limited:
-        // TODO: show label saying it's unavailable
-            print("Move around your phone a bit")
+            // TODO: show label saying it's unavailable
+            print("Move around your device a bit")
+            tempSaveLabel.isHidden = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.tempSaveLabel.isHidden = true
+            }
         case .extending, .mapped:
             additionalButtonsView.isHidden = true
-            saveCurrentDrawingToCoreData(forSceneView: sceneView) { (success, message) in
-                if success {
-                } else {
-                    // TODO:- Show alert
+            hideAllUI()
+            let alertController = UIAlertController(title: "Save", message: "Enter a name for the saved scenes", preferredStyle: .alert)
+            let saveAction = UIAlertAction(title: "Save", style: .default, handler: { (action) in
+                saveCurrentDrawingToCoreData(forSceneView: self.sceneView) { (success, message) in
+                    if success {
+                        self.showSimpleAlert(withTitle: "Scene Successfully Saved", andMessage: nil, completionHandler: {
+                            self.showAllUI()
+                        })
+                    } else {
+                        self.showSimpleAlert(withTitle: "Error", andMessage: "Unable To Save Scene", completionHandler: {
+                            self.showAllUI()
+                        })
+                    }
+                    print(message)
                 }
-                print(message)
+            })
+            let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) in
+                self.showAllUI()
+            })
+            alertController.addTextField { (textField) in
+                textField.placeholder = "Drawing1"
             }
+            alertController.addAction(saveAction)
+            alertController.addAction(cancelAction)
+            present(alertController, animated: true, completion: nil)
         }
     }
     
@@ -305,7 +331,21 @@ class ViewController: UIViewController {
         performSegue(withIdentifier: "showAllDrawingsVC", sender: self)
         additionalButtonsView.isHidden = true
     }
+    
+    @IBAction func takePhotoButtonPressed(_ sender: UIButton) {
+        additionalButtonsView.isHidden = true
+        tempSaveLabel.isHidden = true
+        let image = sceneView.snapshot()
+        
+        let screenShotNavigationController = storyboard?.instantiateViewController(withIdentifier: "screenShotNav") as! UINavigationController
+        let screenShotViewController = screenShotNavigationController.viewControllers[0] as! ScreenShotViewController
+        screenShotViewController.screenShotImage = image
+        screenShotNavigationController.modalPresentationStyle = .overCurrentContext
+        present(screenShotNavigationController, animated: true, completion: nil)
+    }
+    
     @IBAction func changeColorButtonPressed(_ sender: UIButton) {
+        tempSaveLabel.isHidden = true
         if additionalButtonsView.isHidden {
             BrushColorSelectionView.isHidden = false
             saveLoadSelectionView.isHidden = true
@@ -319,6 +359,22 @@ class ViewController: UIViewController {
                 saveLoadSelectionView.isHidden = true
             }
         }
+    }
+    
+    @IBAction func undoButtonPressed(_ sender: UIButton) {
+        additionalButtonsView.isHidden = true
+        tempSaveLabel.isHidden = true
+        sortStrokeAnchorIDsInOrderOfDateCreated()
+        
+        guard let currentStrokeAnchorID = strokeAnchorIDs.last, let curentStrokeAnchor = anchorForID(currentStrokeAnchorID) else {
+            print("No stroke to remove")
+            return
+        }
+        sceneView.session.remove(anchor: curentStrokeAnchor)
+
+        // add this?
+        currentStrokeAnchorNode = nil
+
     }
     
     // Brush Colors changed
@@ -346,33 +402,6 @@ class ViewController: UIViewController {
     @IBAction func whiteColorButtonPressed(_ sender: Any) {
         currentStrokeColor = .white
         additionalButtonsView.isHidden = true
-    }
-    
-    @IBAction func saveLoadButtonPressed(_ sender: UIButton) {
-        if additionalButtonsView.isHidden {
-            saveLoadSelectionView.isHidden = false
-            BrushColorSelectionView.isHidden = true
-            additionalButtonsView.isHidden = false
-        } else {
-            // Hide the additionalButtonsView if the save/load buttons are already showing
-            if BrushColorSelectionView.isHidden {
-                additionalButtonsView.isHidden = true
-            } else {
-                BrushColorSelectionView.isHidden = true
-                saveLoadSelectionView.isHidden = false
-            }
-        }
-    }
-    
-    @IBAction func takePhotoButtonPressed(_ sender: UIButton) {
-        additionalButtonsView.isHidden = true
-        let image = sceneView.snapshot()
-        
-        let screenShotNavigationController = storyboard?.instantiateViewController(withIdentifier: "screenShotNav") as! UINavigationController
-        let screenShotViewController = screenShotNavigationController.viewControllers[0] as! ScreenShotViewController
-        screenShotViewController.screenShotImage = image
-        screenShotNavigationController.modalPresentationStyle = .overCurrentContext
-        present(screenShotNavigationController, animated: true, completion: nil)
     }
     
     func changeSaveButtonStyle(withStatus status: ARFrame.WorldMappingStatus) {
@@ -410,9 +439,9 @@ class ViewController: UIViewController {
             // "Initializing AR session."
             trackingStateLabel.text = "Tracking state limited(initializing)"
             preparingDrawingAreaView.isHidden = false
-            preparingDrawingAreaLabel.text = "Move your phone around slowly"
+            preparingDrawingAreaLabel.text = "Move your device around slowly"
         case .limited(.relocalizing):
-            // Recovering: Move your phone around the area shown in the image
+            // Recovering: Move your device around the area shown in the image
             if isLoadingSavedWorldMap{
                 preparingDrawingAreaLabel.text = "Move your device to the location shown in the image."
             } else {
@@ -451,6 +480,19 @@ class ViewController: UIViewController {
         trackingStateImageView.layer.removeAllAnimations()
         // Reset the imageView position
         trackingStateImageView.frame.origin.x = 90
+    }
+    
+    // MARK:- Alerts
+    
+    func showSimpleAlert(withTitle title: String, andMessage message: String?, completionHandler: (() -> ())? = nil) {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "OK", style: .cancel) { (_) in
+                completionHandler?()
+            }
+            alertController.addAction(alertAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
     // MARK:- ARSessionObserver Protocols
