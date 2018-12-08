@@ -546,10 +546,13 @@
                                 </constraints>
                             </view>
                             <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Move your device to a more detailed environment and try again" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6tS-qx-Caz">
-                                <rect key="frame" x="8" y="497" width="359" height="41"/>
+                                <rect key="frame" x="8" y="488" width="359" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="QeH-2d-Jk3"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -594,9 +597,9 @@
                         <outlet property="relocalizingLabelView" destination="yk9-Su-vmP" id="5IH-Q6-DQ7"/>
                         <outlet property="resetTrackingView" destination="C5R-XE-HFI" id="zn5-qu-9V1"/>
                         <outlet property="saveButton" destination="Kag-6t-886" id="gvE-Up-37k"/>
+                        <outlet property="saveErrorLabel" destination="6tS-qx-Caz" id="ciN-3F-Pum"/>
                         <outlet property="saveLoadSelectionView" destination="qbj-12-P8c" id="Cdl-Bq-WGS"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
-                        <outlet property="tempSaveLabel" destination="6tS-qx-Caz" id="ciN-3F-Pum"/>
                         <outlet property="trackingStateImageView" destination="M2u-MU-YUc" id="USE-gx-KAQ"/>
                         <outlet property="trackingStateLabel" destination="GFZ-Qz-sR2" id="4mk-Gp-0h7"/>
                         <outlet property="trackingStateMessageLabel" destination="KZS-Og-23R" id="XZ8-ls-Zpg"/>

@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var saveLoadSelectionView: UIView!
     @IBOutlet weak var menuButtonsView: UIView!
     @IBOutlet weak var resetTrackingView: UIView!
-    @IBOutlet weak var tempSaveLabel: UILabel!
+    @IBOutlet weak var saveErrorLabel: UILabel!
     // Tracking State View
     @IBOutlet weak var trackingStateView: UIView!
     @IBOutlet weak var trackingStateImageView: UIImageView!
@@ -96,7 +96,7 @@ class ViewController: UIViewController {
         DispatchQueue.main.async {
             self.menuButtonsView.isHidden = true
             self.additionalButtonsView.isHidden = true
-            self.tempSaveLabel.isHidden = true
+            self.saveErrorLabel.isHidden = true
             if includingResetButton {
                 self.resetTrackingView.isHidden = true
             }
@@ -285,7 +285,7 @@ class ViewController: UIViewController {
             // Hide the additionalButtonsView if the save/load buttons are already showing
             if BrushColorSelectionView.isHidden {
                 additionalButtonsView.isHidden = true
-                tempSaveLabel.isHidden = true
+                saveErrorLabel.isHidden = true
             } else {
                 BrushColorSelectionView.isHidden = true
                 saveLoadSelectionView.isHidden = false
@@ -299,9 +299,9 @@ class ViewController: UIViewController {
         case .notAvailable, .limited:
             // TODO: show label saying it's unavailable
             print("Move around your device a bit")
-            tempSaveLabel.isHidden = false
+            saveErrorLabel.isHidden = false
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                self.tempSaveLabel.isHidden = true
+                self.saveErrorLabel.isHidden = true
             }
         case .extending, .mapped:
             additionalButtonsView.isHidden = true
@@ -340,7 +340,7 @@ class ViewController: UIViewController {
     
     @IBAction func takePhotoButtonPressed(_ sender: UIButton) {
         additionalButtonsView.isHidden = true
-        tempSaveLabel.isHidden = true
+        saveErrorLabel.isHidden = true
         let image = sceneView.snapshot()
         
         let screenShotNavigationController = storyboard?.instantiateViewController(withIdentifier: "screenShotNav") as! UINavigationController
@@ -351,7 +351,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func changeColorButtonPressed(_ sender: UIButton) {
-        tempSaveLabel.isHidden = true
+        saveErrorLabel.isHidden = true
         if additionalButtonsView.isHidden {
             BrushColorSelectionView.isHidden = false
             saveLoadSelectionView.isHidden = true
@@ -369,7 +369,7 @@ class ViewController: UIViewController {
     
     @IBAction func undoButtonPressed(_ sender: UIButton) {
         additionalButtonsView.isHidden = true
-        tempSaveLabel.isHidden = true
+        saveErrorLabel.isHidden = true
         sortStrokeAnchorIDsInOrderOfDateCreated()
         
         guard let currentStrokeAnchorID = strokeAnchorIDs.last, let curentStrokeAnchor = anchorForID(currentStrokeAnchorID) else {
