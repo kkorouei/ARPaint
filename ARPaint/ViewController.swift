@@ -291,13 +291,31 @@ class ViewController: UIViewController {
             print("Move around your phone a bit")
         case .extending, .mapped:
             additionalButtonsView.isHidden = true
-            saveCurrentDrawingToCoreData(forSceneView: sceneView) { (success, message) in
-                if success {
-                } else {
-                    // TODO:- Show alert
+            hideAllUI()
+            let alertController = UIAlertController(title: "Save", message: "Enter a name for the saved scenes", preferredStyle: .alert)
+            let saveAction = UIAlertAction(title: "Save", style: .default, handler: { (action) in
+                saveCurrentDrawingToCoreData(forSceneView: self.sceneView) { (success, message) in
+                    if success {
+                        self.showSimpleAlert(withTitle: "Scene Successfully Saved", andMessage: nil, completionHandler: {
+                            self.showAllUI()
+                        })
+                    } else {
+                        self.showSimpleAlert(withTitle: "Error", andMessage: "Unable To Save Scene", completionHandler: {
+                            self.showAllUI()
+                        })
+                    }
+                    print(message)
                 }
-                print(message)
+            })
+            let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) in
+                self.showAllUI()
+            })
+            alertController.addTextField { (textField) in
+                textField.placeholder = "Drawing1"
             }
+            alertController.addAction(saveAction)
+            alertController.addAction(cancelAction)
+            present(alertController, animated: true, completion: nil)
         }
     }
     
@@ -451,6 +469,19 @@ class ViewController: UIViewController {
         trackingStateImageView.layer.removeAllAnimations()
         // Reset the imageView position
         trackingStateImageView.frame.origin.x = 90
+    }
+    
+    // MARK:- Alerts
+    
+    func showSimpleAlert(withTitle title: String, andMessage message: String?, completionHandler: (() -> ())? = nil) {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "OK", style: .cancel) { (_) in
+                completionHandler?()
+            }
+            alertController.addAction(alertAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
     // MARK:- ARSessionObserver Protocols
