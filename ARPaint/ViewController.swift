@@ -25,6 +25,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var saveLoadSelectionView: UIView!
     @IBOutlet weak var menuButtonsView: UIView!
     @IBOutlet weak var resetTrackingView: UIView!
+    @IBOutlet weak var tempSaveLabel: UILabel!
     // Tracking State View
     @IBOutlet weak var trackingStateView: UIView!
     @IBOutlet weak var trackingStateImageView: UIImageView!
@@ -97,6 +98,7 @@ class ViewController: UIViewController {
             self.menuButtonsView.isHidden = true
             self.resetTrackingView.isHidden = true
             self.additionalButtonsView.isHidden = true
+            self.tempSaveLabel.isHidden = true
         }
     }
     
@@ -131,7 +133,7 @@ class ViewController: UIViewController {
             trackingStateView.isHidden = false
             trackingStateImageView.image = UIImage(named: "move-phone")
             trackingStateTitleLabel.text = "Detecting world"
-            trackingStateMessageLabel.text = "Move your phone around slowly"
+            trackingStateMessageLabel.text = "Move your device around slowly"
             addPhoneMovingAnimation()
         case .limited(.relocalizing):
             // Recovering: Move your phone around the area shown in the image
@@ -270,6 +272,7 @@ class ViewController: UIViewController {
     
     @IBAction func undoButtonPressed(_ sender: UIButton) {
         additionalButtonsView.isHidden = true
+        tempSaveLabel.isHidden = true
         sortStrokeAnchorIDsInOrderOfDateCreated()
         
         guard let currentStrokeAnchorID = strokeAnchorIDs.last, let curentStrokeAnchor = anchorForID(currentStrokeAnchorID) else {
@@ -288,7 +291,11 @@ class ViewController: UIViewController {
         switch currentFrame.worldMappingStatus {
         case .notAvailable, .limited:
         // TODO: show label saying it's unavailable
-            print("Move around your phone a bit")
+            print("Move around your device a bit")
+            tempSaveLabel.isHidden = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.tempSaveLabel.isHidden = true
+            }
         case .extending, .mapped:
             additionalButtonsView.isHidden = true
             hideAllUI()
@@ -324,6 +331,7 @@ class ViewController: UIViewController {
         additionalButtonsView.isHidden = true
     }
     @IBAction func changeColorButtonPressed(_ sender: UIButton) {
+        tempSaveLabel.isHidden = true
         if additionalButtonsView.isHidden {
             BrushColorSelectionView.isHidden = false
             saveLoadSelectionView.isHidden = true
@@ -375,6 +383,7 @@ class ViewController: UIViewController {
             // Hide the additionalButtonsView if the save/load buttons are already showing
             if BrushColorSelectionView.isHidden {
                 additionalButtonsView.isHidden = true
+                tempSaveLabel.isHidden = true
             } else {
                 BrushColorSelectionView.isHidden = true
                 saveLoadSelectionView.isHidden = false
@@ -384,6 +393,7 @@ class ViewController: UIViewController {
     
     @IBAction func takePhotoButtonPressed(_ sender: UIButton) {
         additionalButtonsView.isHidden = true
+        tempSaveLabel.isHidden = true
         let image = sceneView.snapshot()
         
         let screenShotNavigationController = storyboard?.instantiateViewController(withIdentifier: "screenShotNav") as! UINavigationController
@@ -428,9 +438,9 @@ class ViewController: UIViewController {
             // "Initializing AR session."
             trackingStateLabel.text = "Tracking state limited(initializing)"
             preparingDrawingAreaView.isHidden = false
-            preparingDrawingAreaLabel.text = "Move your phone around slowly"
+            preparingDrawingAreaLabel.text = "Move your device around slowly"
         case .limited(.relocalizing):
-            // Recovering: Move your phone around the area shown in the image
+            // Recovering: Move your device around the area shown in the image
             if isLoadingSavedWorldMap{
                 preparingDrawingAreaLabel.text = "Move your device to the location shown in the image."
             } else {
