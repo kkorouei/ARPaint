@@ -25,6 +25,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var saveLoadSelectionView: UIView!
     @IBOutlet weak var menuButtonsView: UIView!
     @IBOutlet weak var resetTrackingView: UIView!
+    // Tracking State View
+    @IBOutlet weak var trackingStateView: UIView!
+    @IBOutlet weak var trackingStateImageView: UIImageView!
+    @IBOutlet weak var trackingStateTitleLabel: UILabel!
+    @IBOutlet weak var trackingStateMessageLabel: UILabel!
     
     var previousPoint: SCNVector3?
     var currentFingerPosition: CGPoint?
@@ -68,6 +73,9 @@ class ViewController: UIViewController {
         // Add long press gesture to undo button
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressUndoButton))
         undoButton.addGestureRecognizer(longPressGesture)
+
+        // Setup trackingStateImageView tint color
+        trackingStateImageView.tintColor = UIColor.white
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -111,6 +119,43 @@ class ViewController: UIViewController {
                 screenShotOverlayImageView!.removeFromSuperview()
                 screenShotOverlayImageView = nil
             }
+        }
+    }
+    
+    func changeTrackingStateView(forCamera camera: ARCamera) {
+        switch camera.trackingState {
+        case .notAvailable:
+            // "Tracking unavailable."
+            break
+        case .limited(.initializing):
+            trackingStateView.isHidden = false
+            trackingStateImageView.image = UIImage(named: "move-phone")
+            trackingStateTitleLabel.text = "Detecting world"
+            trackingStateMessageLabel.text = "Move your phone around slowly"
+            addPhoneMovingAnimation()
+        case .limited(.relocalizing):
+            // Recovering: Move your phone around the area shown in the image
+            if isLoadingSavedWorldMap{
+            } else {
+            }
+            trackingStateLabel.text = "Tracking state limited(relocalizing)"
+            removePhoneMovingAnimation()
+        case .limited(.excessiveMotion):
+            trackingStateView.isHidden = false
+            trackingStateImageView.image = UIImage(named: "exclamation")
+            trackingStateTitleLabel.text = "Too much movement"
+            trackingStateMessageLabel.text = "Move your device more slowly"
+            removePhoneMovingAnimation()
+        case .limited(.insufficientFeatures):
+            trackingStateView.isHidden = false
+            trackingStateImageView.image = UIImage(named: "light-bulb")
+            trackingStateTitleLabel.text = "Not enough detail"
+            trackingStateMessageLabel.text = "Move around or find a better lit place"
+            removePhoneMovingAnimation()
+        case .normal:
+            trackingStateView.isHidden = true
+            removePhoneMovingAnimation()
+            break
         }
     }
     
@@ -365,6 +410,7 @@ class ViewController: UIViewController {
             // "Initializing AR session."
             trackingStateLabel.text = "Tracking state limited(initializing)"
             preparingDrawingAreaView.isHidden = false
+            preparingDrawingAreaLabel.text = "Move your phone around slowly"
         case .limited(.relocalizing):
             // Recovering: Move your phone around the area shown in the image
             if isLoadingSavedWorldMap{
@@ -394,12 +440,26 @@ class ViewController: UIViewController {
         }
     }
     
+    func addPhoneMovingAnimation() {
+        self.trackingStateImageView.frame.origin.x -= 50
+        UIView.animate(withDuration: 1.0, delay: 0, options: [.repeat, .autoreverse], animations: {
+            self.trackingStateImageView.frame.origin.x += 100
+        })
+    }
+    
+    func removePhoneMovingAnimation() {
+        trackingStateImageView.layer.removeAllAnimations()
+        // Reset the imageView position
+        trackingStateImageView.frame.origin.x = 90
+    }
+    
     // MARK:- ARSessionObserver Protocols
     
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
         guard let currentFrame = session.currentFrame else { return }
         updateWorldMappingStatusInfoLabel(forframe: currentFrame)
         updateTrackingStatusLabel(forCamera: camera)
+        changeTrackingStateView(forCamera: camera)
     }
     
     func sessionWasInterrupted(_ session: ARSession) {
