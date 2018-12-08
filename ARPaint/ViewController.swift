@@ -572,11 +572,11 @@ extension ViewController: ARSessionDelegate {
             if let previousPoint = previousPoint {
                 // Do not create any new spheres if the distance hasn't changed much
                 let distance = abs(previousPoint.distance(vector: currentPointPosition))
-                if distance > 0.00026 {
+                if distance > 0.00104 {
                     createSphereAndInsert(atPosition: currentPointPosition, andAddToStrokeAnchor: currentStrokeAnchor!)
                     // Draw spheres between the currentPoint and previous point if they are further than the specified distance (Otherwise fast movement will make the line blocky)
                     // TODO: The spacing should depend on the brush size
-                    let positions = getPositionsOnLineBetween(point1: previousPoint, andPoint2: currentPointPosition, withSpacing: 0.00025)
+                    let positions = getPositionsOnLineBetween(point1: previousPoint, andPoint2: currentPointPosition, withSpacing: 0.001)
                     createSphereAndInsert(atPositions: positions, andAddToStrokeAnchor: currentStrokeAnchor!)
                     self.previousPoint = currentPointPosition
                 }

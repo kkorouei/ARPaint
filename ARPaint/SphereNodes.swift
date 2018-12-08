@@ -32,31 +32,31 @@ func getReferenceSphereNode(forStrokeColor color: StrokeColor) -> SCNNode {
 }
 
 var redSphereNode: SCNNode = {
-    let sphere = SCNSphere(radius: 0.005)
+    let sphere = SCNSphere(radius: 0.004)
     sphere.firstMaterial?.diffuse.contents = UIColor.red
     return SCNNode(geometry: sphere)
 }()
 
 var greenSphereNode: SCNNode = {
-    let sphere = SCNSphere(radius: 0.005)
+    let sphere = SCNSphere(radius: 0.004)
     sphere.firstMaterial?.diffuse.contents = UIColor.green
     return SCNNode(geometry: sphere)
 }()
 
 var blueSphereNode: SCNNode = {
-    let sphere = SCNSphere(radius: 0.005)
+    let sphere = SCNSphere(radius: 0.004)
     sphere.firstMaterial?.diffuse.contents = UIColor.blue
     return SCNNode(geometry: sphere)
 }()
 
 var whiteSphereNode: SCNNode = {
-    let sphere = SCNSphere(radius: 0.005)
+    let sphere = SCNSphere(radius: 0.004)
     sphere.firstMaterial?.diffuse.contents = UIColor.white
     return SCNNode(geometry: sphere)
 }()
 
 var blackSphereNode: SCNNode = {
-    let sphere = SCNSphere(radius: 0.005)
+    let sphere = SCNSphere(radius: 0.004)
     sphere.firstMaterial?.diffuse.contents = UIColor.black
     return SCNNode(geometry: sphere)
 }()
