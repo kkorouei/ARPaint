@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var BrushColorSelectionView: UIView!
     @IBOutlet weak var saveLoadSelectionView: UIView!
     @IBOutlet weak var menuButtonsView: UIView!
-    @IBOutlet weak var resetTrackingView: UIView!
+    @IBOutlet weak var resetView: UIView!
     @IBOutlet weak var saveErrorLabel: UILabel!
     // Tracking State View
     @IBOutlet weak var trackingStateView: UIView!
@@ -98,7 +98,7 @@ class ViewController: UIViewController {
             self.additionalButtonsView.isHidden = true
             self.saveErrorLabel.isHidden = true
             if includingResetButton {
-                self.resetTrackingView.isHidden = true
+                self.resetView.isHidden = true
             }
         }
     }
@@ -106,7 +106,7 @@ class ViewController: UIViewController {
     func showAllUI() {
         DispatchQueue.main.async {
             self.menuButtonsView.isHidden = false
-            self.resetTrackingView.isHidden = false
+            self.resetView.isHidden = false
         }
     }
     
@@ -172,7 +172,7 @@ class ViewController: UIViewController {
             isLoadingSavedWorldMap = true
             hideAllUI(includingResetButton: false)
         } else {
-            sceneView.session.run(configuration, options: [.resetTracking])
+            sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
         }
         currentStrokeAnchorNode = nil
     }
@@ -271,7 +271,7 @@ class ViewController: UIViewController {
         currentStrokeAnchorNode = nil
     }
     
-    @IBAction func resetTrackingButtonPressed(_ sender: UIButton) {
+    @IBAction func resetButtonPressed(_ sender: UIButton) {
         additionalButtonsView.isHidden = true
         reStartSession(withWorldMap: nil)
     }
