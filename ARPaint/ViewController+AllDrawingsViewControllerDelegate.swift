@@ -17,7 +17,7 @@ extension ViewController: AllDrawingsViewControllerDelegate {
             reStartSession(withWorldMap: worldMap)
             print("Map successfuly loaded")
             
-            addScreenShotToView(screenShot: screenShot, fullSize: true)
+            addScreenShotToView(screenShot: screenShot, fullSize: false)
             
         } catch {
             print("Could not load worldMap. Error: \(error)")
@@ -26,12 +26,6 @@ extension ViewController: AllDrawingsViewControllerDelegate {
     
     func allDrawingsViewControllerDidPressCancel(_ controller: AllDrawingsViewController) {
         dismiss(animated: true, completion: nil)
-        
-        // FIX:- When the user has loaded a preivous drawing, presses Undo/delete, then presses load and then cancels,
-        // the previous drawing gets relocalized, this is becuase the previous session is restarted. Kapich?
-        // This is probably becuase its using the old world map since the new one is not saved
-        // The best way to fix this is to probably make the allDrawingsViewController into a view and just add it as a subview.
-        // No more pausing og the session will occur
     }
     
     func addScreenShotToView(screenShot: UIImage?, fullSize: Bool) {
@@ -43,10 +37,12 @@ extension ViewController: AllDrawingsViewControllerDelegate {
         } else {
             // Create a small thumbNail imageView and add it to the top left corner
             screenShotOverlayImageView = UIImageView(frame: CGRect(x: 20,
-                                                                   y: 130,
+                                                                   y: 20,
                                                                    width: UIScreen.main.bounds.width / CGFloat(3),
                                                                    height: UIScreen.main.bounds.height / CGFloat(3)))
-            screenShotOverlayImageView!.contentMode = .scaleAspectFit
+            screenShotOverlayImageView!.contentMode = .scaleAspectFill
+            screenShotOverlayImageView?.layer.cornerRadius = 7
+            screenShotOverlayImageView?.clipsToBounds = true
         }
         screenShotOverlayImageView!.image = screenShot
         sceneView.addSubview(screenShotOverlayImageView!)

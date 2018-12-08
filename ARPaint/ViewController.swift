@@ -18,14 +18,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var loadButton: UIButton!
     @IBOutlet weak var undoButton: UIButton!
-    @IBOutlet weak var preparingDrawingAreaView: UIVisualEffectView!
-    @IBOutlet weak var preparingDrawingAreaLabel: UILabel!
+    @IBOutlet weak var relocalizingLabelView: UIVisualEffectView!
     @IBOutlet weak var additionalButtonsView: UIView!
     @IBOutlet weak var BrushColorSelectionView: UIView!
     @IBOutlet weak var saveLoadSelectionView: UIView!
     @IBOutlet weak var menuButtonsView: UIView!
     @IBOutlet weak var resetTrackingView: UIView!
-    @IBOutlet weak var tempSaveLabel: UILabel!
+    @IBOutlet weak var saveErrorLabel: UILabel!
     // Tracking State View
     @IBOutlet weak var trackingStateView: UIView!
     @IBOutlet weak var trackingStateImageView: UIImageView!
@@ -93,12 +92,14 @@ class ViewController: UIViewController {
         return true
     }
     
-    func hideAllUI() {
+    func hideAllUI(includingResetButton: Bool) {
         DispatchQueue.main.async {
             self.menuButtonsView.isHidden = true
-            self.resetTrackingView.isHidden = true
             self.additionalButtonsView.isHidden = true
-            self.tempSaveLabel.isHidden = true
+            self.saveErrorLabel.isHidden = true
+            if includingResetButton {
+                self.resetTrackingView.isHidden = true
+            }
         }
     }
     
@@ -136,6 +137,7 @@ class ViewController: UIViewController {
             trackingStateMessageLabel.text = "Move your device around slowly"
             addPhoneMovingAnimation()
         case .limited(.relocalizing):
+            trackingStateView.isHidden = true
             // Recovering: Move your phone around the area shown in the image
             if isLoadingSavedWorldMap{
             } else {
@@ -168,7 +170,7 @@ class ViewController: UIViewController {
             configuration.initialWorldMap = worldMap
             sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
             isLoadingSavedWorldMap = true
-            hideAllUI()
+            hideAllUI(includingResetButton: false)
         } else {
             sceneView.session.run(configuration, options: [.resetTracking])
         }
@@ -199,6 +201,10 @@ class ViewController: UIViewController {
     
     // MARK: Touches
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // Do not let the user draw if the world map is relocalizing
+        if isLoadingSavedWorldMap {
+            return
+        }
         // Hide the additional buttons view if it's showing
         additionalButtonsView.isHidden = true
         // Create a StrokeAnchor and add it to the Scene (One Anchor will be added to the exaction position of the first sphere for every new stroke)
@@ -279,7 +285,7 @@ class ViewController: UIViewController {
             // Hide the additionalButtonsView if the save/load buttons are already showing
             if BrushColorSelectionView.isHidden {
                 additionalButtonsView.isHidden = true
-                tempSaveLabel.isHidden = true
+                saveErrorLabel.isHidden = true
             } else {
                 BrushColorSelectionView.isHidden = true
                 saveLoadSelectionView.isHidden = false
@@ -293,13 +299,13 @@ class ViewController: UIViewController {
         case .notAvailable, .limited:
             // TODO: show label saying it's unavailable
             print("Move around your device a bit")
-            tempSaveLabel.isHidden = false
+            saveErrorLabel.isHidden = false
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                self.tempSaveLabel.isHidden = true
+                self.saveErrorLabel.isHidden = true
             }
         case .extending, .mapped:
             additionalButtonsView.isHidden = true
-            hideAllUI()
+            hideAllUI(includingResetButton: true)
             let alertController = UIAlertController(title: "Save", message: "Enter a name for the saved scenes", preferredStyle: .alert)
             let saveAction = UIAlertAction(title: "Save", style: .default, handler: { (action) in
                 saveCurrentDrawingToCoreData(forSceneView: self.sceneView) { (success, message) in
@@ -334,7 +340,7 @@ class ViewController: UIViewController {
     
     @IBAction func takePhotoButtonPressed(_ sender: UIButton) {
         additionalButtonsView.isHidden = true
-        tempSaveLabel.isHidden = true
+        saveErrorLabel.isHidden = true
         let image = sceneView.snapshot()
         
         let screenShotNavigationController = storyboard?.instantiateViewController(withIdentifier: "screenShotNav") as! UINavigationController
@@ -345,7 +351,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func changeColorButtonPressed(_ sender: UIButton) {
-        tempSaveLabel.isHidden = true
+        saveErrorLabel.isHidden = true
         if additionalButtonsView.isHidden {
             BrushColorSelectionView.isHidden = false
             saveLoadSelectionView.isHidden = true
@@ -363,7 +369,7 @@ class ViewController: UIViewController {
     
     @IBAction func undoButtonPressed(_ sender: UIButton) {
         additionalButtonsView.isHidden = true
-        tempSaveLabel.isHidden = true
+        saveErrorLabel.isHidden = true
         sortStrokeAnchorIDsInOrderOfDateCreated()
         
         guard let currentStrokeAnchorID = strokeAnchorIDs.last, let curentStrokeAnchor = anchorForID(currentStrokeAnchorID) else {
@@ -434,29 +440,22 @@ class ViewController: UIViewController {
             // "Tracking unavailable."
             print("-------Tracking state notAvailable")
             trackingStateLabel.text = "Tracking state notAvailable"
-            preparingDrawingAreaView.isHidden = false
+            relocalizingLabelView.isHidden = true
         case .limited(.initializing):
             // "Initializing AR session."
             trackingStateLabel.text = "Tracking state limited(initializing)"
-            preparingDrawingAreaView.isHidden = false
-            preparingDrawingAreaLabel.text = "Move your device around slowly"
+            relocalizingLabelView.isHidden = true
         case .limited(.relocalizing):
-            // Recovering: Move your device around the area shown in the image
-            if isLoadingSavedWorldMap{
-                preparingDrawingAreaLabel.text = "Move your device to the location shown in the image."
-            } else {
-                
-            }
             trackingStateLabel.text = "Tracking state limited(relocalizing)"
-            preparingDrawingAreaView.isHidden = false
+            relocalizingLabelView.isHidden = false
         case .limited(.excessiveMotion):
             // "Tracking limited - Move the device more slowly."
             trackingStateLabel.text = "Tracking state limited(excessiveMotion)"
-            preparingDrawingAreaView.isHidden = false
+            relocalizingLabelView.isHidden = true
         case .limited(.insufficientFeatures):
             // Tracking limited - Point the device at an area with visible surface detail, or improve lighting conditions.
             trackingStateLabel.text = "Tracking state limited(insufficientFeatures)"
-            preparingDrawingAreaView.isHidden = false
+            relocalizingLabelView.isHidden = true
         case .normal:
             if isLoadingSavedWorldMap {
                 isLoadingSavedWorldMap = false
@@ -465,7 +464,7 @@ class ViewController: UIViewController {
             }
             print("Tracking state normal")
             trackingStateLabel.text = "Tracking state normal"
-            preparingDrawingAreaView.isHidden = true
+            relocalizingLabelView.isHidden = true
         }
     }
     
@@ -533,7 +532,7 @@ class ViewController: UIViewController {
             // The user has denied your app permission to use the device camera.
             message.text = "Camera access required. \nPlease allow access in settings."
             message.numberOfLines = 2
-            hideAllUI()
+            hideAllUI(includingResetButton: true)
         } else {
             // Either worldTrackingFailed, sensorUnavailable, sensorFailed or unsupportedConfiguration
             message.text = error.localizedDescription
