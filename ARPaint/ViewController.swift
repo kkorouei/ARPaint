@@ -45,7 +45,7 @@ class ViewController: UIViewController {
     
     var isLoadingSavedWorldMap = false
     
-    var currentStrokeColor: StrokeColor = .red
+    var currentStrokeColor: StrokeColor = .white
     
     // MARK:- View Lifecycle
     override func viewDidLoad() {
