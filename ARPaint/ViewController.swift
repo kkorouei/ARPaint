@@ -62,11 +62,11 @@ class ViewController: UIViewController {
         let scene = SCNScene()
         sceneView.scene = scene
 
-        // Add label
+        // Add Ball count label
         label = UILabel(frame: CGRect(x: 20, y: 20, width: 100, height: 40))
         label.textColor = UIColor.orange
+        label.isHidden = true
         sceneView.addSubview(label)
-        
         
         let configuration = ARWorldTrackingConfiguration()
         sceneView.session.run(configuration)
