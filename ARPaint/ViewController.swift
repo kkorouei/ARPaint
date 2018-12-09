@@ -38,14 +38,14 @@ class ViewController: UIViewController {
     var screenShotOverlayImageView: UIImageView?
     
     var whiteBallCount = 0
-    var label: UILabel!
+    var sphereCountLabel: UILabel!
     
     var strokeAnchorIDs: [UUID] = []
     var currentStrokeAnchorNode: SCNNode?
+    var currentStrokeColor: StrokeColor = .white
     
     var isLoadingSavedWorldMap = false
     
-    var currentStrokeColor: StrokeColor = .white
     
     // MARK:- View Lifecycle
     override func viewDidLoad() {
@@ -62,16 +62,16 @@ class ViewController: UIViewController {
         let scene = SCNScene()
         sceneView.scene = scene
 
-        // Add Ball count label
-        label = UILabel(frame: CGRect(x: 20, y: 20, width: 100, height: 40))
-        label.textColor = UIColor.orange
-        label.isHidden = true
-        sceneView.addSubview(label)
+        // Add sphere count label
+        sphereCountLabel = UILabel(frame: CGRect(x: 20, y: 20, width: 100, height: 40))
+        sphereCountLabel.textColor = UIColor.orange
+        sphereCountLabel.isHidden = true
+        sceneView.addSubview(sphereCountLabel)
         
         let configuration = ARWorldTrackingConfiguration()
         sceneView.session.run(configuration)
         
-        // Add long press gesture to undo button
+        // Add long press gesture to undo button for deleting all anchors
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressUndoButton))
         undoButton.addGestureRecognizer(longPressGesture)
 
@@ -147,10 +147,6 @@ class ViewController: UIViewController {
             addPhoneMovingAnimation()
         case .limited(.relocalizing):
             trackingStateView.isHidden = true
-            // Recovering: Move your phone around the area shown in the image
-            if isLoadingSavedWorldMap{
-            } else {
-            }
             trackingStateLabel.text = "Tracking state limited(relocalizing)"
             removePhoneMovingAnimation()
         case .limited(.excessiveMotion):
@@ -209,6 +205,7 @@ class ViewController: UIViewController {
     }
     
     // MARK: Touches
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Do not let the user draw if the world map is relocalizing
         if isLoadingSavedWorldMap {
@@ -343,7 +340,6 @@ class ViewController: UIViewController {
                 })
                 let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (_) in
                     self.showAllUI()
-                    // Delete the temp world map
                 })
                 alertController.addTextField { (textField) in
                     textField.placeholder = "My Drawing"
@@ -402,11 +398,10 @@ class ViewController: UIViewController {
 
         // add this?
         currentStrokeAnchorNode = nil
-
     }
     
     // Brush Colors changed
-    // TODO: Make them into action outlet
+    // TODO: Make them into one action outlet
     @IBAction func redColorButtonPressed(_ sender: Any) {
         currentStrokeColor = .red
         additionalButtonsView.isHidden = true
@@ -595,7 +590,7 @@ extension ViewController: ARSessionDelegate {
             }
             
             DispatchQueue.main.async {
-                self.label.text = "\(self.whiteBallCount)"
+                self.sphereCountLabel.text = "\(self.whiteBallCount)"
             }
         }
     }
