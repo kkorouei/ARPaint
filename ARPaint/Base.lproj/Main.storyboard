@@ -499,7 +499,7 @@
                                                     <inset key="imageEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
                                                     <state key="normal" image="refresh-page-option"/>
                                                     <connections>
-                                                        <action selector="resetTrackingButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Dc3-yt-N5b"/>
+                                                        <action selector="resetButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Dc3-yt-N5b"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -529,7 +529,7 @@
                                         <inset key="imageEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
                                         <state key="normal" image="refresh-page-option"/>
                                         <connections>
-                                            <action selector="resetTrackingButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="QGq-Vs-2UZ"/>
+                                            <action selector="resetButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="QGq-Vs-2UZ"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -595,7 +595,7 @@
                         <outlet property="loadButton" destination="gYR-E9-wCX" id="tgr-r4-tpU"/>
                         <outlet property="menuButtonsView" destination="itw-ME-As5" id="BFc-vs-jIK"/>
                         <outlet property="relocalizingLabelView" destination="yk9-Su-vmP" id="5IH-Q6-DQ7"/>
-                        <outlet property="resetTrackingView" destination="C5R-XE-HFI" id="zn5-qu-9V1"/>
+                        <outlet property="resetView" destination="C5R-XE-HFI" id="zn5-qu-9V1"/>
                         <outlet property="saveButton" destination="Kag-6t-886" id="gvE-Up-37k"/>
                         <outlet property="saveErrorLabel" destination="6tS-qx-Caz" id="ciN-3F-Pum"/>
                         <outlet property="saveLoadSelectionView" destination="qbj-12-P8c" id="Cdl-Bq-WGS"/>
