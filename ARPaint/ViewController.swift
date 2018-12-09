@@ -23,6 +23,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var BrushColorSelectionView: UIView!
     @IBOutlet weak var saveLoadSelectionView: UIView!
     @IBOutlet weak var menuButtonsView: UIView!
+    @IBOutlet weak var menuButtonsViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var resetView: UIView!
     @IBOutlet weak var saveErrorLabel: UILabel!
     // Tracking State View
@@ -76,6 +77,14 @@ class ViewController: UIViewController {
 
         // Setup trackingStateImageView tint color
         trackingStateImageView.tintColor = UIColor.white
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        // Make the menuButtonsView height taller for iPhoneX,XS,XR
+        let menuButtonsViewHeight: CGFloat = 70
+        let bottomPadding = view.safeAreaInsets.bottom
+        menuButtonsViewHeightConstraint.constant = menuButtonsViewHeight + bottomPadding
     }
     
     override func viewWillAppear(_ animated: Bool) {
