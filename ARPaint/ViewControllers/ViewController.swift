@@ -13,8 +13,8 @@ import ARKit
 class ViewController: UIViewController {
     
     @IBOutlet var sceneView: ARSCNView!
-    @IBOutlet weak var trackingStateLabel: UILabel!
-    @IBOutlet weak var worldMappingStateLabel: UILabel!
+    @IBOutlet weak var debugTrackingStateLabel: UILabel!
+    @IBOutlet weak var debugWorldMappingStateLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var loadButton: UIButton!
     @IBOutlet weak var undoButton: UIButton!
@@ -38,14 +38,14 @@ class ViewController: UIViewController {
     var screenShotOverlayImageView: UIImageView?
     
     var whiteBallCount = 0
-    var label: UILabel!
+    var sphereCountLabel: UILabel!
     
     var strokeAnchorIDs: [UUID] = []
     var currentStrokeAnchorNode: SCNNode?
+    var currentStrokeColor: StrokeColor = .white
     
     var isLoadingSavedWorldMap = false
     
-    var currentStrokeColor: StrokeColor = .white
     
     // MARK:- View Lifecycle
     override func viewDidLoad() {
@@ -62,16 +62,16 @@ class ViewController: UIViewController {
         let scene = SCNScene()
         sceneView.scene = scene
 
-        // Add Ball count label
-        label = UILabel(frame: CGRect(x: 20, y: 20, width: 100, height: 40))
-        label.textColor = UIColor.orange
-        label.isHidden = true
-        sceneView.addSubview(label)
+        // Add sphere count label
+        sphereCountLabel = UILabel(frame: CGRect(x: 20, y: 20, width: 100, height: 40))
+        sphereCountLabel.textColor = UIColor.orange
+        sphereCountLabel.isHidden = true
+        sceneView.addSubview(sphereCountLabel)
         
         let configuration = ARWorldTrackingConfiguration()
         sceneView.session.run(configuration)
         
-        // Add long press gesture to undo button
+        // Add long press gesture to undo button for deleting all anchors
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressUndoButton))
         undoButton.addGestureRecognizer(longPressGesture)
 
@@ -134,45 +134,6 @@ class ViewController: UIViewController {
         }
     }
     
-    func changeTrackingStateView(forCamera camera: ARCamera) {
-        switch camera.trackingState {
-        case .notAvailable:
-            // "Tracking unavailable."
-            break
-        case .limited(.initializing):
-            trackingStateView.isHidden = false
-            trackingStateImageView.image = UIImage(named: "move-phone")
-            trackingStateTitleLabel.text = "Detecting world"
-            trackingStateMessageLabel.text = "Move your device around slowly"
-            addPhoneMovingAnimation()
-        case .limited(.relocalizing):
-            trackingStateView.isHidden = true
-            // Recovering: Move your phone around the area shown in the image
-            if isLoadingSavedWorldMap{
-            } else {
-            }
-            trackingStateLabel.text = "Tracking state limited(relocalizing)"
-            removePhoneMovingAnimation()
-        case .limited(.excessiveMotion):
-            trackingStateView.isHidden = false
-            trackingStateImageView.image = UIImage(named: "exclamation")
-            trackingStateTitleLabel.text = "Too much movement"
-            trackingStateMessageLabel.text = "Move your device more slowly"
-            removePhoneMovingAnimation()
-        case .limited(.insufficientFeatures):
-            trackingStateView.isHidden = false
-            trackingStateImageView.image = UIImage(named: "light-bulb")
-            trackingStateTitleLabel.text = "Not enough detail"
-            trackingStateMessageLabel.text = "Move around or find a better lit place"
-            removePhoneMovingAnimation()
-        case .normal:
-            trackingStateView.isHidden = true
-            removePhoneMovingAnimation()
-            break
-        }
-    }
-    
-    
     func reStartSession(withWorldMap worldMap: ARWorldMap?) {
         let configuration = ARWorldTrackingConfiguration()
         if let worldMap = worldMap {
@@ -209,6 +170,7 @@ class ViewController: UIViewController {
     }
     
     // MARK: Touches
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Do not let the user draw if the world map is relocalizing
         if isLoadingSavedWorldMap {
@@ -343,7 +305,6 @@ class ViewController: UIViewController {
                 })
                 let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (_) in
                     self.showAllUI()
-                    // Delete the temp world map
                 })
                 alertController.addTextField { (textField) in
                     textField.placeholder = "My Drawing"
@@ -402,11 +363,10 @@ class ViewController: UIViewController {
 
         // add this?
         currentStrokeAnchorNode = nil
-
     }
     
     // Brush Colors changed
-    // TODO: Make them into action outlet
+    // TODO: Make them into one action outlet
     @IBAction func redColorButtonPressed(_ sender: Any) {
         currentStrokeColor = .red
         additionalButtonsView.isHidden = true
@@ -441,42 +401,41 @@ class ViewController: UIViewController {
         }
     }
     
-    private func updateWorldMappingStatusInfoLabel(forframe frame: ARFrame) {
+    func updateDebugWorldMappingStatusInfoLabel(forframe frame: ARFrame) {
         changeSaveButtonStyle(withStatus: frame.worldMappingStatus)
         
         switch frame.worldMappingStatus {
         case .notAvailable:
-            worldMappingStateLabel.text = "Mapping status: notAvailable"
+            debugWorldMappingStateLabel.text = "Mapping status: notAvailable"
         case .limited:
-            worldMappingStateLabel.text = "Mapping status: limited"
+            debugWorldMappingStateLabel.text = "Mapping status: limited"
         case .extending:
-            worldMappingStateLabel.text = "Mapping status: extending"
+            debugWorldMappingStateLabel.text = "Mapping status: extending"
         case .mapped:
-            worldMappingStateLabel.text = "Mapping status: mapped"
+            debugWorldMappingStateLabel.text = "Mapping status: mapped"
         }
     }
     
-    private func updateTrackingStatusLabel(forCamera camera: ARCamera) {
+    func updateDebugTrackingStatusLabel(forCamera camera: ARCamera) {
         switch camera.trackingState {
         case .notAvailable:
             // "Tracking unavailable."
-            print("-------Tracking state notAvailable")
-            trackingStateLabel.text = "Tracking state notAvailable"
+            debugTrackingStateLabel.text = "Tracking state notAvailable"
             relocalizingLabelView.isHidden = true
         case .limited(.initializing):
             // "Initializing AR session."
-            trackingStateLabel.text = "Tracking state limited(initializing)"
+            debugTrackingStateLabel.text = "Tracking state limited(initializing)"
             relocalizingLabelView.isHidden = true
         case .limited(.relocalizing):
-            trackingStateLabel.text = "Tracking state limited(relocalizing)"
+            debugTrackingStateLabel.text = "Tracking state limited(relocalizing)"
             relocalizingLabelView.isHidden = false
         case .limited(.excessiveMotion):
             // "Tracking limited - Move the device more slowly."
-            trackingStateLabel.text = "Tracking state limited(excessiveMotion)"
+            debugTrackingStateLabel.text = "Tracking state limited(excessiveMotion)"
             relocalizingLabelView.isHidden = true
         case .limited(.insufficientFeatures):
             // Tracking limited - Point the device at an area with visible surface detail, or improve lighting conditions.
-            trackingStateLabel.text = "Tracking state limited(insufficientFeatures)"
+            debugTrackingStateLabel.text = "Tracking state limited(insufficientFeatures)"
             relocalizingLabelView.isHidden = true
         case .normal:
             if isLoadingSavedWorldMap {
@@ -484,11 +443,47 @@ class ViewController: UIViewController {
                 showAllUI()
                 removeScreenShotFromView()
             }
-            print("Tracking state normal")
-            trackingStateLabel.text = "Tracking state normal"
+            debugTrackingStateLabel.text = "Tracking state normal"
             relocalizingLabelView.isHidden = true
         }
     }
+    
+    func changeTrackingStateView(forCamera camera: ARCamera) {
+        switch camera.trackingState {
+        case .notAvailable:
+            // "Tracking unavailable."
+            trackingStateView.isHidden = true
+            break
+        case .limited(.initializing):
+            trackingStateView.isHidden = false
+            trackingStateImageView.image = UIImage(named: "move-phone")
+            trackingStateTitleLabel.text = "Detecting world"
+            trackingStateMessageLabel.text = "Move your device around slowly"
+            addPhoneMovingAnimation()
+        case .limited(.relocalizing):
+            trackingStateView.isHidden = true
+            debugTrackingStateLabel.text = "Tracking state limited(relocalizing)"
+            removePhoneMovingAnimation()
+        case .limited(.excessiveMotion):
+            trackingStateView.isHidden = false
+            trackingStateImageView.image = UIImage(named: "exclamation")
+            trackingStateTitleLabel.text = "Too much movement"
+            trackingStateMessageLabel.text = "Move your device more slowly"
+            removePhoneMovingAnimation()
+        case .limited(.insufficientFeatures):
+            trackingStateView.isHidden = false
+            trackingStateImageView.image = UIImage(named: "light-bulb")
+            trackingStateTitleLabel.text = "Not enough detail"
+            trackingStateMessageLabel.text = "Move around or find a better lit place"
+            removePhoneMovingAnimation()
+        case .normal:
+            trackingStateView.isHidden = true
+            removePhoneMovingAnimation()
+            break
+        }
+    }
+    
+    // MARK:- Phone icon moving animation
     
     func addPhoneMovingAnimation() {
         self.trackingStateImageView.frame.origin.x -= 50
@@ -515,62 +510,14 @@ class ViewController: UIViewController {
             self.present(alertController, animated: true, completion: nil)
         }
     }
-    
-    // MARK:- ARSessionObserver Protocols
-    
-    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
-        guard let currentFrame = session.currentFrame else { return }
-        updateWorldMappingStatusInfoLabel(forframe: currentFrame)
-        updateTrackingStatusLabel(forCamera: camera)
-        changeTrackingStateView(forCamera: camera)
-    }
-    
-    func sessionWasInterrupted(_ session: ARSession) {
-        print("*****Session was interrupted*****")
-    }
-    
-    func sessionInterruptionEnded(_ session: ARSession) {
-        print("*****Session interruption ended*****")
-        // "Resuming session — move to where you were when the session was interrupted."
-    }
-    
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        let message = UILabel()
-        message.backgroundColor = UIColor.white
-        message.layer.cornerRadius = 7
-        message.layer.masksToBounds = true
-        message.translatesAutoresizingMaskIntoConstraints = false
-        message.lineBreakMode = .byWordWrapping
-        message.textAlignment = .center
-        self.sceneView.addSubview(message)
-        message.translatesAutoresizingMaskIntoConstraints = false
-        let horizontalConstraint = NSLayoutConstraint(item: message, attribute: NSLayoutConstraint.Attribute.centerX, relatedBy: NSLayoutConstraint.Relation.equal, toItem: sceneView, attribute: NSLayoutConstraint.Attribute.centerX, multiplier: 1, constant: 0)
-        let verticalConstraint = NSLayoutConstraint(item: message, attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: NSLayoutConstraint.Relation.equal, toItem: sceneView, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant: 0)
-        let widthConstraint = NSLayoutConstraint(item: message, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 320)
-        let heightConstraint = NSLayoutConstraint(item: message, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 60)
-        view.addConstraints([horizontalConstraint, verticalConstraint, widthConstraint, heightConstraint])
-        
-        if (error as NSError).code == 103 {
-            // The user has denied your app permission to use the device camera.
-            message.text = "Camera access required \nPlease allow access in settings"
-            message.numberOfLines = 2
-            hideAllUI(includingResetButton: true)
-        } else {
-            // Either worldTrackingFailed, sensorUnavailable, sensorFailed or unsupportedConfiguration
-            message.text = error.localizedDescription
-            message.numberOfLines = 0
-        }
-        // TODO:- Handle the different types of error
-        print("*****Session did fail with Error: \(error.localizedDescription)*****")
-    }
-
 }
 
 // MARK:- ARSessionDelegate
+
 extension ViewController: ARSessionDelegate {
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
         
-        updateWorldMappingStatusInfoLabel(forframe: frame)
+        updateDebugWorldMappingStatusInfoLabel(forframe: frame)
         
         // Draw the spheres
         guard let currentStrokeAnchorID = strokeAnchorIDs.last else { return }
@@ -595,7 +542,7 @@ extension ViewController: ARSessionDelegate {
             }
             
             DispatchQueue.main.async {
-                self.label.text = "\(self.whiteBallCount)"
+                self.sphereCountLabel.text = "\(self.whiteBallCount)"
             }
         }
     }

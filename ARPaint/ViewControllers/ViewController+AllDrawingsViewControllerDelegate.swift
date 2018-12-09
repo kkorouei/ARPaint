@@ -9,6 +9,7 @@
 import UIKit
 
 extension ViewController: AllDrawingsViewControllerDelegate {
+    
     func allDrawingsViewController(_ controller: AllDrawingsViewController, didSelectDrawing drawing: Drawing) {
         let screenShot = UIImage(data: drawing.screenShot as Data)
         dismiss(animated: true, completion: nil)

@@ -37,7 +37,6 @@ class StrokeAnchor: ARAnchor {
         } else {
             return nil
         }
-        
         super.init(coder: aDecoder)
     }
     

@@ -26,7 +26,7 @@ func getCameraPosition(in view: ARSCNView) -> SCNVector3? {
     return camera
 }
 
-// Gets the real world position of the touch point x distance away from the camera
+// Gets the real world position of the touch point at x distance away from the camera
 func getPosition(ofPoint point: CGPoint, atDistanceFromCamera distance: Float, inView view: ARSCNView) -> SCNVector3? {
     guard let cameraPosition = getCameraPosition(in: view) else { return nil}
     let directionOfPoint = getDirection(for: point, in: view).normalized()
@@ -43,12 +43,13 @@ func getDirection(for point: CGPoint, in view: SCNView) -> SCNVector3 {
 }
 
 // MARK:- Drawing
+
 // Gets the positions of the points on the line between point1 and point2 with the given spacing
 func getPositionsOnLineBetween(point1: SCNVector3, andPoint2 point2: SCNVector3, withSpacing spacing: Float) -> [SCNVector3]{
     var positions: [SCNVector3] = []
     // Calculate the distance between previous point and current point
     let distance = point1.distance(vector: point2)
-//    let distanceBetweenEachCircle: Float = 0.00025
+    // let distanceBetweenEachCircle: Float = 0.00025
     let numberOfCirclesToCreate = Int(distance / spacing)
     
     // https://math.stackexchange.com/a/83419
@@ -65,6 +66,7 @@ func getPositionsOnLineBetween(point1: SCNVector3, andPoint2 point2: SCNVector3,
 }
 
 // MARK:- SnapShots
+
 func takeSnapShot(ofFrame frame: ARFrame?) -> Data?{
     guard let frame = frame else {
         return nil
@@ -92,26 +94,4 @@ func takeSnapShot(ofSceneview sceneView: ARSCNView?) -> Data?{
                                                 options: [kCGImageDestinationLossyCompressionQuality as CIImageRepresentationOption: 0.7])
         else { return nil}
     return data
-}
-
-func hexStringToUIColor (hex:String) -> UIColor {
-    var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-    
-    if (cString.hasPrefix("#")) {
-        cString.remove(at: cString.startIndex)
-    }
-    
-    if ((cString.count) != 6) {
-        return UIColor.gray
-    }
-    
-    var rgbValue:UInt32 = 0
-    Scanner(string: cString).scanHexInt32(&rgbValue)
-    
-    return UIColor(
-        red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-        green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-        blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-        alpha: CGFloat(1.0)
-    )
 }
