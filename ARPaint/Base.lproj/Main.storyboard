@@ -592,6 +592,8 @@
                     <connections>
                         <outlet property="BrushColorSelectionView" destination="weL-Sq-ZRD" id="as8-WN-6OI"/>
                         <outlet property="additionalButtonsView" destination="ztE-Ww-FT8" id="Gqa-p5-Boc"/>
+                        <outlet property="debugTrackingStateLabel" destination="GFZ-Qz-sR2" id="4mk-Gp-0h7"/>
+                        <outlet property="debugWorldMappingStateLabel" destination="ZX3-Xu-q8s" id="XGd-uZ-gyx"/>
                         <outlet property="loadButton" destination="gYR-E9-wCX" id="tgr-r4-tpU"/>
                         <outlet property="menuButtonsView" destination="itw-ME-As5" id="BFc-vs-jIK"/>
                         <outlet property="menuButtonsViewHeightConstraint" destination="3T3-w3-f5T" id="LJF-Bt-ysA"/>
@@ -602,12 +604,10 @@
                         <outlet property="saveLoadSelectionView" destination="qbj-12-P8c" id="Cdl-Bq-WGS"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
                         <outlet property="trackingStateImageView" destination="M2u-MU-YUc" id="USE-gx-KAQ"/>
-                        <outlet property="trackingStateLabel" destination="GFZ-Qz-sR2" id="4mk-Gp-0h7"/>
                         <outlet property="trackingStateMessageLabel" destination="KZS-Og-23R" id="XZ8-ls-Zpg"/>
                         <outlet property="trackingStateTitleLabel" destination="kvj-IQ-NDG" id="9Ku-EQ-sIj"/>
                         <outlet property="trackingStateView" destination="HDC-b9-tMc" id="dWr-qk-DUI"/>
                         <outlet property="undoButton" destination="bfL-VD-TjD" id="Bz3-UV-wei"/>
-                        <outlet property="worldMappingStateLabel" destination="ZX3-Xu-q8s" id="XGd-uZ-gyx"/>
                         <segue destination="tyM-wF-X4B" kind="show" identifier="showAllDrawingsVC" id="WzN-88-eco"/>
                     </connections>
                 </viewController>
