@@ -17,16 +17,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jbZ-33-qHd">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jbZ-33-qHd">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="jbZ-33-qHd" firstAttribute="leading" secondItem="GE4-qH-aQx" secondAttribute="leading" id="JCm-e4-ZRc"/>
-                            <constraint firstItem="GE4-qH-aQx" firstAttribute="bottom" secondItem="jbZ-33-qHd" secondAttribute="bottom" id="eze-Up-mX4"/>
+                            <constraint firstItem="jbZ-33-qHd" firstAttribute="leading" secondItem="tp9-I6-dAx" secondAttribute="leading" id="JCm-e4-ZRc"/>
+                            <constraint firstAttribute="bottom" secondItem="jbZ-33-qHd" secondAttribute="bottom" id="eze-Up-mX4"/>
                             <constraint firstItem="jbZ-33-qHd" firstAttribute="top" secondItem="GE4-qH-aQx" secondAttribute="top" id="r7F-aT-vKf"/>
-                            <constraint firstItem="GE4-qH-aQx" firstAttribute="trailing" secondItem="jbZ-33-qHd" secondAttribute="trailing" id="xaY-d0-9T2"/>
+                            <constraint firstAttribute="trailing" secondItem="jbZ-33-qHd" secondAttribute="trailing" id="xaY-d0-9T2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="GE4-qH-aQx"/>
                     </view>
