@@ -4,9 +4,9 @@ Augmented Reality drawing app that lets users save and load their drawings in th
 
 [![Everything Is AWESOME](https://i.imgur.com/gZzeB3s.png)](https://www.youtube.com/watch?v=OZCFj-rOpYw "AR Paint")
 
-An explanation about the process of loading and saving world maps:
+A brief explanation about the process of loading and saving world maps:
 
-The worldMap as well as a snapShot of the current view is returned using the following method:
+The worldMap, as well as a snapshot of the current view is returned using the following method:
 
 ``` swift
 func getCurrentWorldMapAndScreenShot(forSceneView sceneView: ARSCNView, completion: @escaping (_ wordlMap: ARWorldMap?, _ screenShot: NSData?, _ errorMessage: String?) -> Void) {
@@ -27,7 +27,7 @@ func getCurrentWorldMapAndScreenShot(forSceneView sceneView: ARSCNView, completi
 }
 ```
 
-The worldMap and screenShot are then saved inside a CoreData Entity named "Drawing".
+The worldMap and snapshot are then saved inside a CoreData Entity named "Drawing".
 
 The worldMap is later retrieved from the Drawing entity using the following method:
 
@@ -42,7 +42,7 @@ func loadWorldMap(from drawing: Drawing) throws -> ARWorldMap {
 }
 ```
 
-To relocalize to the saved map, we create a new session configuration and set the inialWorldMap property, and then run the session:
+To relocalize to the saved map, we create a new session configuration, set the inialWorldMap property to the map we just loaded, and then run the session:
 
 ``` swift
 let configuration = ARWorldTrackingConfiguration()
@@ -50,7 +50,7 @@ configuration.initialWorldMap = worldMap
 sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
 ```
 
-The snapShot of the where the map was localized is shown in the top left corner of the screen so the user knows where to point their device towards. If the map is relocalized successfully, the tracking state changes to ARCamera.TrackingState.normal and all the ARAnchors that were saved inside our worldMap are added to the scene. 
+The snapshot of where the map was saved is shown in the top left corner of the screen so the user knows where to point their device towards. If the map is relocalized successfully, the tracking state changes to ARCamera.TrackingState.normal and all the ARAnchors that were saved inside the worldMap are added to the scene. 
 
 ![alt-text](https://github.com/kkorouei/ARPaint/blob/22d88d063bcf5f494fbdffe6193edb9dda7c4b5a/load.gif)
 
