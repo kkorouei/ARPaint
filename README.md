@@ -4,7 +4,7 @@ Augmented Reality drawing app that lets users save and load their drawings in th
 
 [![Everything Is AWESOME](https://i.imgur.com/gZzeB3s.png)](https://www.youtube.com/watch?v=OZCFj-rOpYw "AR Paint")
 
-A brief explanation about the process of loading and saving world maps:
+# A brief explanation about saving and loading world maps
 
 The worldMap, as well as a snapshot of the current view is returned using the following method:
 
