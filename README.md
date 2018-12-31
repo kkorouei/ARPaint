@@ -4,11 +4,7 @@ Augmented Reality drawing app that lets users save and load their drawings in th
 
 [![Everything Is AWESOME](https://i.imgur.com/gZzeB3s.png)](https://www.youtube.com/watch?v=OZCFj-rOpYw "AR Paint")
 
-An explanation about loading and saving world maps in ARKit:
-
-A CoreData Entity has been used for the persistence. 
-
-ARWorldMap is used to create a persistent AR experience.
+An explanation about the process of loading and saving world maps:
 
 The worldMap as well as a snapShot of the current view is returned using the following method:
 
@@ -33,7 +29,7 @@ func getCurrentWorldMapAndScreenShot(forSceneView sceneView: ARSCNView, completi
 
 The worldMap and screenShot are then saved inside a CoreData Entity named "Drawing".
 
-The worldMap is later retrieved from the Drawing entity:
+The worldMap is later retrieved from the Drawing entity using the following method:
 
 ``` swift
 func loadWorldMap(from drawing: Drawing) throws -> ARWorldMap {
@@ -46,8 +42,7 @@ func loadWorldMap(from drawing: Drawing) throws -> ARWorldMap {
 }
 ```
 
-Once the worldMap has been succesfully retrieved, a new ARWorldTrackingConfiguration is created, initialWorldMap is set  and the session is restarted.
-To relocalize to the saved map, we create a new session configuration and set the inialWorldMap property and run the session:
+To relocalize to the saved map, we create a new session configuration and set the inialWorldMap property, and then run the session:
 
 ``` swift
 let configuration = ARWorldTrackingConfiguration()
@@ -57,5 +52,5 @@ sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAn
 
 The snapShot of the where the map was localized is shown in the top left corner of the screen so the user knows where to point their device towards. If the map is relocalized successfully, the tracking state changes to ARCamera.TrackingState.normal and all the ARAnchors that were saved inside our worldMap are added to the scene. 
 
-https://media.giphy.com/media/5WlydllucnF7VUDa8D/giphy.gif
+![alt-text](https://github.com/kkorouei/ARPaint/blob/22d88d063bcf5f494fbdffe6193edb9dda7c4b5a/load.gif)
 
