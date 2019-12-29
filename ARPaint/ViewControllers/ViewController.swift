@@ -13,8 +13,6 @@ import ARKit
 class ViewController: UIViewController {
     
     @IBOutlet var sceneView: ARSCNView!
-    @IBOutlet weak var debugTrackingStateLabel: UILabel!
-    @IBOutlet weak var debugWorldMappingStateLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var loadButton: UIButton!
     @IBOutlet weak var undoButton: UIButton!
@@ -405,39 +403,23 @@ class ViewController: UIViewController {
     
     func updateDebugWorldMappingStatusInfoLabel(forframe frame: ARFrame) {
         changeSaveButtonStyle(withStatus: frame.worldMappingStatus)
-        
-        switch frame.worldMappingStatus {
-        case .notAvailable:
-            debugWorldMappingStateLabel.text = "Mapping status: notAvailable"
-        case .limited:
-            debugWorldMappingStateLabel.text = "Mapping status: limited"
-        case .extending:
-            debugWorldMappingStateLabel.text = "Mapping status: extending"
-        case .mapped:
-            debugWorldMappingStateLabel.text = "Mapping status: mapped"
-        }
     }
     
     func updateDebugTrackingStatusLabel(forCamera camera: ARCamera) {
         switch camera.trackingState {
         case .notAvailable:
             // "Tracking unavailable."
-            debugTrackingStateLabel.text = "Tracking state notAvailable"
             relocalizingLabelView.isHidden = true
         case .limited(.initializing):
             // "Initializing AR session."
-            debugTrackingStateLabel.text = "Tracking state limited(initializing)"
             relocalizingLabelView.isHidden = true
         case .limited(.relocalizing):
-            debugTrackingStateLabel.text = "Tracking state limited(relocalizing)"
             relocalizingLabelView.isHidden = false
         case .limited(.excessiveMotion):
             // "Tracking limited - Move the device more slowly."
-            debugTrackingStateLabel.text = "Tracking state limited(excessiveMotion)"
             relocalizingLabelView.isHidden = true
         case .limited(.insufficientFeatures):
             // Tracking limited - Point the device at an area with visible surface detail, or improve lighting conditions.
-            debugTrackingStateLabel.text = "Tracking state limited(insufficientFeatures)"
             relocalizingLabelView.isHidden = true
         case .normal:
             if isLoadingSavedWorldMap {
@@ -445,7 +427,6 @@ class ViewController: UIViewController {
                 showAllUI()
                 removeScreenShotFromView()
             }
-            debugTrackingStateLabel.text = "Tracking state normal"
             relocalizingLabelView.isHidden = true
         }
     }
@@ -464,7 +445,6 @@ class ViewController: UIViewController {
             addPhoneMovingAnimation()
         case .limited(.relocalizing):
             trackingStateView.isHidden = true
-            debugTrackingStateLabel.text = "Tracking state limited(relocalizing)"
             removePhoneMovingAnimation()
         case .limited(.excessiveMotion):
             trackingStateView.isHidden = false

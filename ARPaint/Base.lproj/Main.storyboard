@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jbZ-33-qHd">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -61,20 +60,6 @@
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-h1-WRS">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </arscnView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZX3-Xu-q8s">
-                                <rect key="frame" x="16" y="516.5" width="49.5" height="20.5"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.11451736543814517" green="1" blue="0.03968375480556241" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GFZ-Qz-sR2">
-                                <rect key="frame" x="16" y="488" width="49.5" height="20.5"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="0.16884363859885576" blue="0.18614286856481599" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HDC-b9-tMc">
                                 <rect key="frame" x="37.5" y="243.5" width="300" height="180"/>
                                 <subviews>
@@ -481,7 +466,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C5R-XE-HFI" userLabel="Reset Tracking View">
-                                <rect key="frame" x="295" y="40" width="60" height="60"/>
+                                <rect key="frame" x="295" y="20" width="60" height="60"/>
                                 <subviews>
                                     <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KBr-Oo-0dY">
                                         <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
@@ -567,7 +552,6 @@
                             <constraint firstItem="yk9-Su-vmP" firstAttribute="centerX" secondItem="U0K-SW-4ec" secondAttribute="centerX" id="1Ko-4N-EH7"/>
                             <constraint firstAttribute="trailing" secondItem="ztE-Ww-FT8" secondAttribute="trailing" id="3L8-HL-Cjq"/>
                             <constraint firstItem="itw-ME-As5" firstAttribute="top" secondItem="ztE-Ww-FT8" secondAttribute="bottom" constant="1" id="3t5-pY-3ql"/>
-                            <constraint firstItem="itw-ME-As5" firstAttribute="top" secondItem="ZX3-Xu-q8s" secondAttribute="bottom" constant="60" id="5hd-Pt-APN"/>
                             <constraint firstItem="HDC-b9-tMc" firstAttribute="centerX" secondItem="U0K-SW-4ec" secondAttribute="centerX" id="ADy-Tj-bEP"/>
                             <constraint firstItem="itw-ME-As5" firstAttribute="leading" secondItem="U0K-SW-4ec" secondAttribute="leading" id="F8B-hO-CSk"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="leading" secondItem="U0K-SW-4ec" secondAttribute="leading" id="GsS-dJ-CKf"/>
@@ -576,14 +560,11 @@
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="bottom" secondItem="U0K-SW-4ec" secondAttribute="bottom" id="VpT-BR-CcM"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="trailing" secondItem="U0K-SW-4ec" secondAttribute="trailing" id="XyZ-9z-H8e"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="top" secondItem="U0K-SW-4ec" secondAttribute="top" id="bN4-Wy-0OK"/>
-                            <constraint firstItem="ZX3-Xu-q8s" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="16" id="bnB-Qh-Eb8"/>
                             <constraint firstItem="ztE-Ww-FT8" firstAttribute="leading" secondItem="U0K-SW-4ec" secondAttribute="leading" id="flC-Ae-ksw"/>
                             <constraint firstItem="yk9-Su-vmP" firstAttribute="centerY" secondItem="U0K-SW-4ec" secondAttribute="centerY" id="ft7-0g-NTz"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="C5R-XE-HFI" secondAttribute="trailing" constant="20" id="hJV-Un-aH4"/>
-                            <constraint firstItem="GFZ-Qz-sR2" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="16" id="hiy-zX-ebB"/>
                             <constraint firstAttribute="trailing" secondItem="itw-ME-As5" secondAttribute="trailing" id="idV-9q-1S3"/>
                             <constraint firstItem="6tS-qx-Caz" firstAttribute="centerX" secondItem="U0K-SW-4ec" secondAttribute="centerX" id="lVt-IU-Jc5"/>
-                            <constraint firstItem="ZX3-Xu-q8s" firstAttribute="top" secondItem="GFZ-Qz-sR2" secondAttribute="bottom" constant="8" id="qGj-am-iQJ"/>
                             <constraint firstItem="itw-ME-As5" firstAttribute="bottom" secondItem="U0K-SW-4ec" secondAttribute="bottom" id="vWb-Il-HXr"/>
                             <constraint firstItem="C5R-XE-HFI" firstAttribute="top" secondItem="fQZ-KI-GVf" secondAttribute="top" constant="20" id="xkp-gd-HMd"/>
                         </constraints>
@@ -592,8 +573,6 @@
                     <connections>
                         <outlet property="BrushColorSelectionView" destination="weL-Sq-ZRD" id="as8-WN-6OI"/>
                         <outlet property="additionalButtonsView" destination="ztE-Ww-FT8" id="Gqa-p5-Boc"/>
-                        <outlet property="debugTrackingStateLabel" destination="GFZ-Qz-sR2" id="4mk-Gp-0h7"/>
-                        <outlet property="debugWorldMappingStateLabel" destination="ZX3-Xu-q8s" id="XGd-uZ-gyx"/>
                         <outlet property="loadButton" destination="gYR-E9-wCX" id="tgr-r4-tpU"/>
                         <outlet property="menuButtonsView" destination="itw-ME-As5" id="BFc-vs-jIK"/>
                         <outlet property="menuButtonsViewHeightConstraint" destination="3T3-w3-f5T" id="LJF-Bt-ysA"/>
@@ -620,22 +599,22 @@
             <objects>
                 <viewController id="hmn-ga-WXT" customClass="AllDrawingsViewController" customModule="ARPaint" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YY5-Ce-ifY">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gu1-0k-BEQ">
-                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                                <rect key="frame" x="0.0" y="56" width="375" height="591"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="Tjw-Hi-NfM" style="IBUITableViewCellStyleDefault" id="3eo-rS-gqY">
                                         <rect key="frame" x="0.0" y="28" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3eo-rS-gqY" id="FOc-C4-ne7">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Tjw-Hi-NfM">
-                                                    <rect key="frame" x="15" y="0.0" width="345" height="59.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="345" height="60"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -678,7 +657,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="overCurrentContext" id="tyM-wF-X4B" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="kdR-Wv-fyY">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -696,7 +675,7 @@
                 <navigationController storyboardIdentifier="screenShotNav" automaticallyAdjustsScrollViewInsets="NO" id="uE8-tG-n3i" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3iP-HU-T2b">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -711,9 +690,9 @@
     </scenes>
     <resources>
         <image name="move-phone" width="512" height="460"/>
-        <image name="photo-camera" width="438.85714721679688" height="438.85714721679688"/>
-        <image name="refresh-page-option" width="351.08572387695312" height="351.08572387695312"/>
-        <image name="reply" width="409.60000610351562" height="409.60000610351562"/>
-        <image name="save-file-option" width="351.08572387695312" height="351.08572387695312"/>
+        <image name="photo-camera" width="512" height="512"/>
+        <image name="refresh-page-option" width="512" height="512"/>
+        <image name="reply" width="512" height="512"/>
+        <image name="save-file-option" width="512" height="512"/>
     </resources>
 </document>
