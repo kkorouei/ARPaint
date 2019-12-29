@@ -53,15 +53,13 @@ class SingleColorCircleButton: UIButton {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // TODO:- Make the button color darker 
-        // Make the button white when touched
         super.touchesBegan(touches, with: event)
-        circle.color = .white
+        circle.layer.opacity = 0.3
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-        circle.color = circleColor
+        circle.layer.opacity = 1.0
     }
 
 }

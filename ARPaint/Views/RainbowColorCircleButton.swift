@@ -43,14 +43,13 @@ class RainbowColorCircleButton: UIButton {
         addSubview(circle)
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // TODO:- Change the color of the button on touch
-        super.touchesBegan(touches, with: event)
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {        super.touchesBegan(touches, with: event)
+        circle.layer.opacity = 0.3
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // TODO:- Change the color of the button on touch
         super.touchesEnded(touches, with: event)
+        circle.layer.opacity = 1.0
     }
 
 }
