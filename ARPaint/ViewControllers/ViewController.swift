@@ -24,11 +24,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var menuButtonsViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var resetView: UIView!
     @IBOutlet weak var saveErrorLabel: UILabel!
-    // Tracking State View
-    @IBOutlet weak var trackingStateView: UIView!
-    @IBOutlet weak var trackingStateImageView: UIImageView!
-    @IBOutlet weak var trackingStateTitleLabel: UILabel!
-    @IBOutlet weak var trackingStateMessageLabel: UILabel!
+    @IBOutlet weak var trackingStateView: TrackingStateView!
     
     var previousPoint: SCNVector3?
     var currentFingerPosition: CGPoint?
@@ -74,9 +70,6 @@ class ViewController: UIViewController {
         // Add long press gesture to undo button for deleting all anchors
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressUndoButton))
         undoButton.addGestureRecognizer(longPressGesture)
-
-        // Setup trackingStateImageView tint color
-        trackingStateImageView.tintColor = UIColor.white
     }
     
     override func viewWillLayoutSubviews() {
@@ -366,7 +359,6 @@ class ViewController: UIViewController {
     }
     
     // Brush Colors changed
-    // TODO: Make them into one action outlet
     @IBAction func redColorButtonPressed(_ sender: Any) {
         currentStrokeColor = .red
         additionalButtonsView.isHidden = true
@@ -431,55 +423,6 @@ class ViewController: UIViewController {
         }
     }
     
-    func changeTrackingStateView(forCamera camera: ARCamera) {
-        switch camera.trackingState {
-        case .notAvailable:
-            // "Tracking unavailable."
-            trackingStateView.isHidden = true
-            break
-        case .limited(.initializing):
-            trackingStateView.isHidden = false
-            trackingStateImageView.image = UIImage(named: "move-phone")
-            trackingStateTitleLabel.text = "Detecting world"
-            trackingStateMessageLabel.text = "Move your device around slowly"
-            addPhoneMovingAnimation()
-        case .limited(.relocalizing):
-            trackingStateView.isHidden = true
-            removePhoneMovingAnimation()
-        case .limited(.excessiveMotion):
-            trackingStateView.isHidden = false
-            trackingStateImageView.image = UIImage(named: "exclamation")
-            trackingStateTitleLabel.text = "Too much movement"
-            trackingStateMessageLabel.text = "Move your device more slowly"
-            removePhoneMovingAnimation()
-        case .limited(.insufficientFeatures):
-            trackingStateView.isHidden = false
-            trackingStateImageView.image = UIImage(named: "light-bulb")
-            trackingStateTitleLabel.text = "Not enough detail"
-            trackingStateMessageLabel.text = "Move around or find a better lit place"
-            removePhoneMovingAnimation()
-        case .normal:
-            trackingStateView.isHidden = true
-            removePhoneMovingAnimation()
-            break
-        }
-    }
-    
-    // MARK:- Phone icon moving animation
-    
-    func addPhoneMovingAnimation() {
-        self.trackingStateImageView.frame.origin.x -= 50
-        UIView.animate(withDuration: 1.0, delay: 0, options: [.repeat, .autoreverse], animations: {
-            self.trackingStateImageView.frame.origin.x += 100
-        })
-    }
-    
-    func removePhoneMovingAnimation() {
-        trackingStateImageView.layer.removeAllAnimations()
-        // Reset the imageView position
-        trackingStateImageView.frame.origin.x = 90
-    }
-    
     // MARK:- Alerts
     
     func showSimpleAlert(withTitle title: String, andMessage message: String?, completionHandler: (() -> ())? = nil) {
@@ -531,6 +474,7 @@ extension ViewController: ARSessionDelegate {
 }
 
 // MARK:- ARSCNViewDelegate
+
 extension ViewController: ARSCNViewDelegate {
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {

@@ -60,44 +60,12 @@
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-h1-WRS">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </arscnView>
-                            <view hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HDC-b9-tMc">
-                                <rect key="frame" x="37.5" y="243.5" width="300" height="180"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="move-phone" translatesAutoresizingMaskIntoConstraints="NO" id="M2u-MU-YUc">
-                                        <rect key="frame" x="100" y="8" width="100" height="100"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="CPv-Hh-9n0"/>
-                                            <constraint firstAttribute="height" constant="100" id="bnx-Qc-wk8"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detecting World" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kvj-IQ-NDG">
-                                        <rect key="frame" x="8" y="124" width="284" height="21"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Move your device around slowly" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KZS-Og-23R">
-                                        <rect key="frame" x="8" y="142" width="284" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="9rs-VM-OK0"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
+                            <view hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HDC-b9-tMc" customClass="TrackingStateView" customModule="ARPaint" customModuleProvider="target">
+                                <rect key="frame" x="37.5" y="233.5" width="300" height="200"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="M2u-MU-YUc" firstAttribute="top" secondItem="HDC-b9-tMc" secondAttribute="top" constant="8" id="0kE-Ga-cka"/>
                                     <constraint firstAttribute="width" constant="300" id="5TH-2O-Zyb"/>
-                                    <constraint firstItem="M2u-MU-YUc" firstAttribute="centerX" secondItem="HDC-b9-tMc" secondAttribute="centerX" id="G5b-Dd-SvX"/>
-                                    <constraint firstAttribute="trailing" secondItem="kvj-IQ-NDG" secondAttribute="trailing" constant="8" id="ILx-c0-fls"/>
-                                    <constraint firstAttribute="trailing" secondItem="KZS-Og-23R" secondAttribute="trailing" constant="8" id="ItQ-mV-IFz"/>
-                                    <constraint firstAttribute="bottom" secondItem="KZS-Og-23R" secondAttribute="bottom" constant="8" id="YZb-fO-9rU"/>
-                                    <constraint firstItem="kvj-IQ-NDG" firstAttribute="top" secondItem="M2u-MU-YUc" secondAttribute="bottom" constant="16" id="YjH-Kf-kGe"/>
-                                    <constraint firstItem="KZS-Og-23R" firstAttribute="leading" secondItem="HDC-b9-tMc" secondAttribute="leading" constant="8" id="kLC-xi-lt6"/>
-                                    <constraint firstItem="kvj-IQ-NDG" firstAttribute="leading" secondItem="HDC-b9-tMc" secondAttribute="leading" constant="8" id="lrV-jh-kHZ"/>
-                                    <constraint firstAttribute="height" constant="180" id="zFw-9P-P2s"/>
+                                    <constraint firstAttribute="height" constant="200" id="zFw-9P-P2s"/>
                                 </constraints>
                             </view>
                             <visualEffectView hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yk9-Su-vmP">
@@ -582,9 +550,6 @@
                         <outlet property="saveErrorLabel" destination="6tS-qx-Caz" id="ciN-3F-Pum"/>
                         <outlet property="saveLoadSelectionView" destination="qbj-12-P8c" id="Cdl-Bq-WGS"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
-                        <outlet property="trackingStateImageView" destination="M2u-MU-YUc" id="USE-gx-KAQ"/>
-                        <outlet property="trackingStateMessageLabel" destination="KZS-Og-23R" id="XZ8-ls-Zpg"/>
-                        <outlet property="trackingStateTitleLabel" destination="kvj-IQ-NDG" id="9Ku-EQ-sIj"/>
                         <outlet property="trackingStateView" destination="HDC-b9-tMc" id="dWr-qk-DUI"/>
                         <outlet property="undoButton" destination="bfL-VD-TjD" id="Bz3-UV-wei"/>
                         <segue destination="tyM-wF-X4B" kind="show" identifier="showAllDrawingsVC" id="WzN-88-eco"/>
@@ -689,7 +654,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="move-phone" width="512" height="460"/>
         <image name="photo-camera" width="512" height="512"/>
         <image name="refresh-page-option" width="512" height="512"/>
         <image name="reply" width="512" height="512"/>

@@ -15,16 +15,7 @@ extension ViewController {
         guard let currentFrame = session.currentFrame else { return }
         updateDebugWorldMappingStatusInfoLabel(forframe: currentFrame)
         updateDebugTrackingStatusLabel(forCamera: camera)
-        changeTrackingStateView(forCamera: camera)
-    }
-    
-    func sessionWasInterrupted(_ session: ARSession) {
-        print("*****Session was interrupted*****")
-    }
-    
-    func sessionInterruptionEnded(_ session: ARSession) {
-        print("*****Session interruption ended*****")
-        // "Resuming session — move to where you were when the session was interrupted."
+        trackingStateView.update(forCamera: camera)
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {

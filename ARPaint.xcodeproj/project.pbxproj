@@ -30,6 +30,8 @@
 		72E20F7721ABE42C0080A854 /* Float4x4+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E20F7621ABE42C0080A854 /* Float4x4+Extensions.swift */; };
 		BF780C5423B8EDAA0047280C /* Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF780C5323B8EDAA0047280C /* Snapshot.swift */; };
 		BF780C5623B8EE800047280C /* Maths.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF780C5523B8EE800047280C /* Maths.swift */; };
+		BF780C5A23B8FC760047280C /* TrackingStateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF780C5923B8FC760047280C /* TrackingStateView.xib */; };
+		BF780C5C23B8FC980047280C /* TrackingStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF780C5B23B8FC980047280C /* TrackingStateView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +60,8 @@
 		72E20F7621ABE42C0080A854 /* Float4x4+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Float4x4+Extensions.swift"; sourceTree = "<group>"; };
 		BF780C5323B8EDAA0047280C /* Snapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Snapshot.swift; sourceTree = "<group>"; };
 		BF780C5523B8EE800047280C /* Maths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maths.swift; sourceTree = "<group>"; };
+		BF780C5923B8FC760047280C /* TrackingStateView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrackingStateView.xib; sourceTree = "<group>"; };
+		BF780C5B23B8FC980047280C /* TrackingStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingStateView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +78,8 @@
 		720124A421B6967B00E25F52 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BF780C5923B8FC760047280C /* TrackingStateView.xib */,
+				BF780C5B23B8FC980047280C /* TrackingStateView.swift */,
 				726ACECB21B53E3D00C949E2 /* CircleView.swift */,
 				BF780C5823B8F3B30047280C /* Buttons */,
 			);
@@ -225,6 +231,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				728496D62193FB4400FD2C26 /* LaunchScreen.storyboard in Resources */,
+				BF780C5A23B8FC760047280C /* TrackingStateView.xib in Resources */,
 				728496D32193FB4400FD2C26 /* Assets.xcassets in Resources */,
 				728496D12193FB4200FD2C26 /* Main.storyboard in Resources */,
 			);
@@ -249,6 +256,7 @@
 				BF780C5423B8EDAA0047280C /* Snapshot.swift in Sources */,
 				72E20F7721ABE42C0080A854 /* Float4x4+Extensions.swift in Sources */,
 				726ACECE21B5481B00C949E2 /* SingleColorCircleButton.swift in Sources */,
+				BF780C5C23B8FC980047280C /* TrackingStateView.swift in Sources */,
 				72CFEFE021BD2B1D004B2741 /* ViewController+ARSessionObserverProtocols.swift in Sources */,
 				728E699721AABACF0085B045 /* PersistenceManager.swift in Sources */,
 				723EA82321B79759002B088B /* SphereNodesManager.swift in Sources */,
