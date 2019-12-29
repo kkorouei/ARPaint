@@ -28,7 +28,8 @@
 		72C3DF7121B671DC008CA213 /* RainbowColorCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C3DF7021B671DC008CA213 /* RainbowColorCircleButton.swift */; };
 		72CFEFE021BD2B1D004B2741 /* ViewController+ARSessionObserverProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CFEFDF21BD2B1D004B2741 /* ViewController+ARSessionObserverProtocols.swift */; };
 		72E20F7721ABE42C0080A854 /* Float4x4+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E20F7621ABE42C0080A854 /* Float4x4+Extensions.swift */; };
-		72E4FF9D21AA909500DEA2C6 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E4FF9C21AA909500DEA2C6 /* Utilities.swift */; };
+		BF780C5423B8EDAA0047280C /* Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF780C5323B8EDAA0047280C /* Snapshot.swift */; };
+		BF780C5623B8EE800047280C /* Maths.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF780C5523B8EE800047280C /* Maths.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,7 +56,8 @@
 		72C3DF7021B671DC008CA213 /* RainbowColorCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainbowColorCircleButton.swift; sourceTree = "<group>"; };
 		72CFEFDF21BD2B1D004B2741 /* ViewController+ARSessionObserverProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+ARSessionObserverProtocols.swift"; sourceTree = "<group>"; };
 		72E20F7621ABE42C0080A854 /* Float4x4+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Float4x4+Extensions.swift"; sourceTree = "<group>"; };
-		72E4FF9C21AA909500DEA2C6 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		BF780C5323B8EDAA0047280C /* Snapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Snapshot.swift; sourceTree = "<group>"; };
+		BF780C5523B8EE800047280C /* Maths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maths.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +115,7 @@
 				72CFEFE121BD2BA5004B2741 /* ViewControllers */,
 				728E699621AABACF0085B045 /* PersistenceManager.swift */,
 				72B8A60321A69AEF00B6F814 /* StrokeAnchor.swift */,
-				72E4FF9C21AA909500DEA2C6 /* Utilities.swift */,
+				BF780C5223B8ED8E0047280C /* Utilities */,
 				723EA82221B79759002B088B /* SphereNodesManager.swift */,
 				720124A421B6967B00E25F52 /* Views */,
 				72AF7BE021A8158700F11B68 /* Extensions */,
@@ -145,6 +147,15 @@
 				72B8A80F21AD24C900DDC018 /* AllDrawingsViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		BF780C5223B8ED8E0047280C /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				BF780C5323B8EDAA0047280C /* Snapshot.swift */,
+				BF780C5523B8EE800047280C /* Maths.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -227,15 +238,16 @@
 				726ACECC21B53E3D00C949E2 /* CircleView.swift in Sources */,
 				72B3017021AC130C003D0FD4 /* Drawing+CoreDataClass.swift in Sources */,
 				72B8A81021AD24C900DDC018 /* AllDrawingsViewController.swift in Sources */,
+				BF780C5423B8EDAA0047280C /* Snapshot.swift in Sources */,
 				72E20F7721ABE42C0080A854 /* Float4x4+Extensions.swift in Sources */,
 				726ACECE21B5481B00C949E2 /* SingleColorCircleButton.swift in Sources */,
 				72CFEFE021BD2B1D004B2741 /* ViewController+ARSessionObserverProtocols.swift in Sources */,
 				728E699721AABACF0085B045 /* PersistenceManager.swift in Sources */,
 				723EA82321B79759002B088B /* SphereNodesManager.swift in Sources */,
 				72B3017121AC130C003D0FD4 /* Drawing+CoreDataProperties.swift in Sources */,
-				72E4FF9D21AA909500DEA2C6 /* Utilities.swift in Sources */,
 				7228C15921AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodeld in Sources */,
 				72C3DF7121B671DC008CA213 /* RainbowColorCircleButton.swift in Sources */,
+				BF780C5623B8EE800047280C /* Maths.swift in Sources */,
 				728496CA2193FB4200FD2C26 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
