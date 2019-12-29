@@ -158,7 +158,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="296" height="70"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5kb-uQ-I6d">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5kb-uQ-I6d" userLabel="Save Button">
                                                 <rect key="frame" x="0.0" y="13" width="44" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="44" id="OXP-sN-wfz"/>
@@ -166,12 +166,12 @@
                                                 </constraints>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="imageEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
-                                                <state key="normal" title="Button" image="save-file-option"/>
+                                                <state key="normal" image="save-file-option"/>
                                                 <connections>
                                                     <action selector="saveLoadButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="ZXi-Yc-t52"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YDD-oS-Jru">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YDD-oS-Jru" userLabel="Screenshot Button">
                                                 <rect key="frame" x="84" y="13" width="44" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="44" id="V9s-mg-AtU"/>
@@ -179,12 +179,12 @@
                                                 </constraints>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
-                                                <state key="normal" title="Button" image="photo-camera"/>
+                                                <state key="normal" image="photo-camera"/>
                                                 <connections>
                                                     <action selector="takePhotoButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="ArH-pe-Ruc"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJe-9v-2z4" customClass="RainbowColorCircleButton" customModule="ARPaint" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJe-9v-2z4" userLabel="Colors Button" customClass="RainbowColorCircleButton" customModule="ARPaint" customModuleProvider="target">
                                                 <rect key="frame" x="168" y="13" width="44" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="JNu-XY-EhK"/>
@@ -204,7 +204,7 @@
                                                 </constraints>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="imageEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
-                                                <state key="normal" title="Button" image="reply"/>
+                                                <state key="normal" image="reply"/>
                                                 <connections>
                                                     <action selector="undoButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="rZK-Bv-LSi"/>
                                                 </connections>
