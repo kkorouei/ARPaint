@@ -75,8 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				726ACECB21B53E3D00C949E2 /* CircleView.swift */,
-				726ACECD21B5481B00C949E2 /* SingleColorCircleButton.swift */,
-				72C3DF7021B671DC008CA213 /* RainbowColorCircleButton.swift */,
+				BF780C5823B8F3B30047280C /* Buttons */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -84,9 +83,10 @@
 		723EA82121B7961D002B088B /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				728E699621AABACF0085B045 /* PersistenceManager.swift */,
+				72B3016F21AC130C003D0FD4 /* Drawing+CoreDataProperties.swift */,
 				72B3016E21AC130B003D0FD4 /* Drawing+CoreDataClass.swift */,
 				7228C15721AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodeld */,
-				72B3016F21AC130C003D0FD4 /* Drawing+CoreDataProperties.swift */,
 			);
 			path = "Core Data";
 			sourceTree = "<group>";
@@ -111,14 +111,13 @@
 			isa = PBXGroup;
 			children = (
 				723EA82121B7961D002B088B /* Core Data */,
-				728496C92193FB4200FD2C26 /* AppDelegate.swift */,
-				72CFEFE121BD2BA5004B2741 /* ViewControllers */,
-				728E699621AABACF0085B045 /* PersistenceManager.swift */,
-				72B8A60321A69AEF00B6F814 /* StrokeAnchor.swift */,
-				BF780C5223B8ED8E0047280C /* Utilities */,
-				723EA82221B79759002B088B /* SphereNodesManager.swift */,
-				720124A421B6967B00E25F52 /* Views */,
 				72AF7BE021A8158700F11B68 /* Extensions */,
+				72CFEFE121BD2BA5004B2741 /* ViewControllers */,
+				720124A421B6967B00E25F52 /* Views */,
+				BF780C5223B8ED8E0047280C /* Utilities */,
+				72B8A60321A69AEF00B6F814 /* StrokeAnchor.swift */,
+				723EA82221B79759002B088B /* SphereNodesManager.swift */,
+				728496C92193FB4200FD2C26 /* AppDelegate.swift */,
 				728496CF2193FB4200FD2C26 /* Main.storyboard */,
 				728496D22193FB4400FD2C26 /* Assets.xcassets */,
 				728496D42193FB4400FD2C26 /* LaunchScreen.storyboard */,
@@ -156,6 +155,15 @@
 				BF780C5523B8EE800047280C /* Maths.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		BF780C5823B8F3B30047280C /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				726ACECD21B5481B00C949E2 /* SingleColorCircleButton.swift */,
+				72C3DF7021B671DC008CA213 /* RainbowColorCircleButton.swift */,
+			);
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
