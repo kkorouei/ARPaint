@@ -124,7 +124,7 @@ class ViewController: UIViewController {
             let navigationController = segue.destination as! UINavigationController
             let drawingsViewController = navigationController.viewControllers[0] as! AllDrawingsViewController
             drawingsViewController.delegate = self
-            let fetchedDrawings =  fetchAllDrawingsFromCoreData()
+            let fetchedDrawings =  PersistenceManager.shared.fetchAllDrawingsFromCoreData()
             drawingsViewController.drawings = fetchedDrawings
             
             if screenShotOverlayImageView != nil {
@@ -277,7 +277,7 @@ class ViewController: UIViewController {
             additionalButtonsView.isHidden = true
             hideAllUI(includingResetButton: true)
             
-            getCurrentWorldMapAndScreenShot(forSceneView: sceneView) { (worldMap, screenShot, errorMessage) in
+            PersistenceManager.shared.getCurrentWorldMapAndScreenShot(forSceneView: sceneView) { (worldMap, screenShot, errorMessage) in
                 if errorMessage != nil {
                     // Some error happened
                     self.showSimpleAlert(withTitle: "Error", andMessage: errorMessage, completionHandler: {
@@ -290,7 +290,7 @@ class ViewController: UIViewController {
                 let saveAction = UIAlertAction(title: "Save", style: .default, handler: { (_) in
                     let nameTextField = alertController.textFields![0]
                     let name = (nameTextField.text ?? "").isEmpty ? "My Drawing" : nameTextField.text!
-                    saveDrawingToCoreData(withWorldMap: worldMap!, name: name, screenShot: screenShot!, completion: { (success, message) in
+                    PersistenceManager.shared.saveDrawingToCoreData(withWorldMap: worldMap!, name: name, screenShot: screenShot!, completion: { (success, message) in
                         if success {
                             self.showSimpleAlert(withTitle: "Scene Successfully Saved", andMessage: nil, completionHandler: {
                                 self.showAllUI()

@@ -52,7 +52,7 @@ extension AllDrawingsViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let drawing = drawings[indexPath.row]
-            deleteDrawingFromCoreData(drawing: drawing) { (success, message) in
+            PersistenceManager.shared.deleteDrawingFromCoreData(drawing: drawing) { (success, message) in
                 if success {
                     print(message)
                     // Remove the drawing from the drawings array

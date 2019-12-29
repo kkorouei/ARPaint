@@ -14,7 +14,7 @@ extension ViewController: AllDrawingsViewControllerDelegate {
         let screenShot = UIImage(data: drawing.screenShot as Data)
         dismiss(animated: true, completion: nil)
         do {
-            let worldMap = try loadWorldMap(from: drawing)
+            let worldMap = try PersistenceManager.shared.loadWorldMap(from: drawing)
             reStartSession(withWorldMap: worldMap)
             print("Map successfuly loaded")
             
