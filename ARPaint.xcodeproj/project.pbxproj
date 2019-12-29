@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		720F91CE21AFB1880052CDF4 /* CGImagePropertyOrientation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720F91CD21AFB1880052CDF4 /* CGImagePropertyOrientation+Extensions.swift */; };
 		7228C15921AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7228C15721AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodeld */; };
-		723EA82321B79759002B088B /* SphereNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723EA82221B79759002B088B /* SphereNodes.swift */; };
+		723EA82321B79759002B088B /* SphereNodesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723EA82221B79759002B088B /* SphereNodesManager.swift */; };
 		726ACECC21B53E3D00C949E2 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726ACECB21B53E3D00C949E2 /* CircleView.swift */; };
 		726ACECE21B5481B00C949E2 /* SingleColorCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726ACECD21B5481B00C949E2 /* SingleColorCircleButton.swift */; };
 		7272C2C021B401BE00D6FC48 /* ScreenShotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7272C2BF21B401BE00D6FC48 /* ScreenShotViewController.swift */; };
@@ -34,7 +34,7 @@
 /* Begin PBXFileReference section */
 		720F91CD21AFB1880052CDF4 /* CGImagePropertyOrientation+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImagePropertyOrientation+Extensions.swift"; sourceTree = "<group>"; };
 		7228C15821AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ARPaintCoreData.xcdatamodel; sourceTree = "<group>"; };
-		723EA82221B79759002B088B /* SphereNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphereNodes.swift; sourceTree = "<group>"; };
+		723EA82221B79759002B088B /* SphereNodesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphereNodesManager.swift; sourceTree = "<group>"; };
 		726ACECB21B53E3D00C949E2 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		726ACECD21B5481B00C949E2 /* SingleColorCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleColorCircleButton.swift; sourceTree = "<group>"; };
 		7272C2BF21B401BE00D6FC48 /* ScreenShotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenShotViewController.swift; sourceTree = "<group>"; };
@@ -114,7 +114,7 @@
 				728E699621AABACF0085B045 /* PersistenceManager.swift */,
 				72B8A60321A69AEF00B6F814 /* StrokeAnchor.swift */,
 				72E4FF9C21AA909500DEA2C6 /* Utilities.swift */,
-				723EA82221B79759002B088B /* SphereNodes.swift */,
+				723EA82221B79759002B088B /* SphereNodesManager.swift */,
 				720124A421B6967B00E25F52 /* Views */,
 				72AF7BE021A8158700F11B68 /* Extensions */,
 				728496CF2193FB4200FD2C26 /* Main.storyboard */,
@@ -231,7 +231,7 @@
 				726ACECE21B5481B00C949E2 /* SingleColorCircleButton.swift in Sources */,
 				72CFEFE021BD2B1D004B2741 /* ViewController+ARSessionObserverProtocols.swift in Sources */,
 				728E699721AABACF0085B045 /* PersistenceManager.swift in Sources */,
-				723EA82321B79759002B088B /* SphereNodes.swift in Sources */,
+				723EA82321B79759002B088B /* SphereNodesManager.swift in Sources */,
 				72B3017121AC130C003D0FD4 /* Drawing+CoreDataProperties.swift in Sources */,
 				72E4FF9D21AA909500DEA2C6 /* Utilities.swift in Sources */,
 				7228C15921AC0B4000BCC1B1 /* ARPaintCoreData.xcdatamodeld in Sources */,

@@ -45,6 +45,8 @@ class ViewController: UIViewController {
     var currentStrokeColor: StrokeColor = .white
     
     var isLoadingSavedWorldMap = false
+
+    let sphereNodesManager = SphereNodesManager()
     
     
     // MARK:- View Lifecycle
@@ -157,7 +159,7 @@ class ViewController: UIViewController {
     func createSphereAndInsert(atPosition position: SCNVector3, andAddToStrokeAnchor strokeAnchor: StrokeAnchor) {
         guard let currentStrokeNode = currentStrokeAnchorNode else { return }
         // Get the reference sphere node and clone it
-        let referenceSphereNode = getReferenceSphereNode(forStrokeColor: strokeAnchor.color)
+        let referenceSphereNode = sphereNodesManager.getReferenceSphereNode(forStrokeColor: strokeAnchor.color)
         let newSphereNode = referenceSphereNode.clone()
         // Convert the position from world transform to local transform (relative to the anchors default node)
         let localPosition = currentStrokeNode.convertPosition(position, from: nil)
