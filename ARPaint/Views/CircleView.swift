@@ -10,15 +10,16 @@
 import UIKit
 
 class CircleView: UIView {
-    
-    
-    var height: CGFloat {
+
+    // MARK: - Properties
+
+    private var height: CGFloat {
         return self.bounds.height
     }
-    var width: CGFloat {
+    private var width: CGFloat {
         return self.bounds.width
     }
-    var radius: Float = 5 {
+    private var radius: Float = 5 {
         didSet {
             change(radius: radius)
         }
@@ -30,6 +31,8 @@ class CircleView: UIView {
     }
     
     private let shapeLayer = CAShapeLayer()
+
+    // MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -41,10 +44,36 @@ class CircleView: UIView {
         setupView()
     }
 
+    // MARK: - Configuration
+
     private func setupView() {
-        self.isUserInteractionEnabled = false
-        self.backgroundColor = UIColor.clear
+        isUserInteractionEnabled = false
+        backgroundColor = UIColor.clear
         addWhiteCircleBackground()
+    }
+
+    private func addWhiteCircleBackground() {
+        let circlePath = UIBezierPath(arcCenter: CGPoint(x: width / 2,y: height / 2),
+                                      radius: CGFloat(width / 2),
+                                      startAngle: CGFloat(0),
+                                      endAngle:CGFloat(Double.pi * 2),
+                                      clockwise: true)
+
+        shapeLayer.path = circlePath.cgPath
+        shapeLayer.fillColor = UIColor.white.cgColor
+        shapeLayer.strokeColor = UIColor.white.cgColor
+        shapeLayer.lineWidth = 3.0
+
+        layer.addSublayer(shapeLayer)
+    }
+
+    private func change(radius: Float) {
+        let circlePath = UIBezierPath(arcCenter: CGPoint(x: width / 2,y: height / 2),
+                                      radius: CGFloat(radius),
+                                      startAngle: CGFloat(0),
+                                      endAngle:CGFloat(Double.pi * 2),
+                                      clockwise: true)
+        shapeLayer.path = circlePath.cgPath
     }
     
     func drawSingleColorCircle() {
@@ -56,15 +85,8 @@ class CircleView: UIView {
     
         shapeLayer.path = circlePath.cgPath
         shapeLayer.fillColor = UIColor.white.cgColor
-//        shapeLayer.strokeColor = UIColor.white.cgColor
-//        shapeLayer.lineWidth = 3.0
         
         layer.addSublayer(shapeLayer)
-    }
-    
-    private func change(radius: Float) {
-        let circlePath = UIBezierPath(arcCenter: CGPoint(x: width / 2,y: height / 2), radius: CGFloat(radius), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
-        shapeLayer.path = circlePath.cgPath
     }
 
     func drawRainbowColorCircle() {
@@ -79,8 +101,6 @@ class CircleView: UIView {
         for i in 0 ..< count {
             let start = CGFloat(i) * (segmentAngleSize + gapSize) - CGFloat(Double.pi / 2.0)
             let end = start + segmentAngleSize
-            
-            
             let arc = UIBezierPath()
             arc.move(to: center)
             let x = center.x +  radius * CGFloat(cos(start));
@@ -92,30 +112,13 @@ class CircleView: UIView {
                        startAngle: start,
                        endAngle: end,
                        clockwise: true) //add the arc
-            arc.addLine(to: center)//back to center
+            arc.addLine(to: center) //back to center
             
             let shapeLayer = CAShapeLayer()
             shapeLayer.fillColor = rainbowColors[i].cgColor
             shapeLayer.path = arc.cgPath
-//            shapeLayer.strokeColor = UIColor.white.cgColor
-//            shapeLayer.lineWidth = 3.0
             
             layer.addSublayer(shapeLayer)
         }
-    }
-    
-    func addWhiteCircleBackground() {
-        let circlePath = UIBezierPath(arcCenter: CGPoint(x: width / 2,y: height / 2),
-                                      radius: CGFloat(width / 2),
-                                      startAngle: CGFloat(0),
-                                      endAngle:CGFloat(Double.pi * 2),
-                                      clockwise: true)
-        
-        shapeLayer.path = circlePath.cgPath
-        shapeLayer.fillColor = UIColor.white.cgColor
-        shapeLayer.strokeColor = UIColor.white.cgColor
-        shapeLayer.lineWidth = 3.0
-        
-        layer.addSublayer(shapeLayer)
     }
 }
