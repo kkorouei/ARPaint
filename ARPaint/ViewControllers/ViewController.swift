@@ -12,7 +12,7 @@ import ARKit
 
 class ViewController: UIViewController {
 
-    // MARK: - IBOutlets
+    // MARK:  IBOutlets
     
     @IBOutlet var sceneView: ARSCNView!
     @IBOutlet weak var saveButton: UIButton!
@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var saveErrorLabel: UILabel!
     @IBOutlet weak var trackingStateView: TrackingStateView!
 
-    // MARK: - Properties
+    // MARK:  Properties
     
     var previousPoint: SCNVector3?
     var currentFingerPosition: CGPoint?
@@ -44,7 +44,8 @@ class ViewController: UIViewController {
     let sphereNodesManager = SphereNodesManager()
     
     
-    // MARK:- View Lifecycle
+    // MARK: View Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -83,6 +84,8 @@ class ViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
+
+    // MARK: Methods
     
     func hideAllUI(includingResetButton: Bool) {
         DispatchQueue.main.async {
@@ -130,7 +133,7 @@ class ViewController: UIViewController {
         currentStrokeAnchorNode = nil
     }
     
-    // MARK:- Drawing
+    // MARK: Drawing
 
     private func createSphereAndInsert(atPositions positions: [SCNVector3], andAddToStrokeAnchor strokeAnchor: StrokeAnchor) {
         for position in positions {
@@ -208,7 +211,20 @@ class ViewController: UIViewController {
         }
     }
 
-    // MARK:- Touches
+    // MARK: Alerts
+
+    func showSimpleAlert(withTitle title: String, andMessage message: String?, completionHandler: (() -> ())? = nil) {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "OK", style: .cancel) { (_) in
+                completionHandler?()
+            }
+            alertController.addAction(alertAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+
+    // MARK: Touches
 
      override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
          // Do not let the user draw if the world map is relocalizing
@@ -250,7 +266,7 @@ class ViewController: UIViewController {
          currentFingerPosition = nil
      }
     
-    // MARK:- IBActions
+    // MARK: IBActions
     
     @objc func longPressUndoButton(gesture: UILongPressGestureRecognizer) {
         print("long pressed")
@@ -410,19 +426,6 @@ class ViewController: UIViewController {
     @IBAction func whiteColorButtonPressed(_ sender: Any) {
         currentStrokeColor = .white
         additionalButtonsView.isHidden = true
-    }
-
-    // MARK:- Alerts
-    
-    func showSimpleAlert(withTitle title: String, andMessage message: String?, completionHandler: (() -> ())? = nil) {
-        DispatchQueue.main.async {
-            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            let alertAction = UIAlertAction(title: "OK", style: .cancel) { (_) in
-                completionHandler?()
-            }
-            alertController.addAction(alertAction)
-            self.present(alertController, animated: true, completion: nil)
-        }
     }
 }
 

@@ -70,7 +70,7 @@ class TrackingStateView: UIView {
         }
     }
 
-    // MARK:- Phone icon moving animation
+    // MARK:- Phone icon animation
 
     private func addPhoneMovingAnimation() {
         self.trackingStateImageView.frame.origin.x -= 50
