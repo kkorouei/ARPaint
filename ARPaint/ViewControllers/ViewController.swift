@@ -11,6 +11,8 @@ import SceneKit
 import ARKit
 
 class ViewController: UIViewController {
+
+    // MARK: - IBOutlets
     
     @IBOutlet var sceneView: ARSCNView!
     @IBOutlet weak var saveButton: UIButton!
@@ -25,15 +27,14 @@ class ViewController: UIViewController {
     @IBOutlet weak var resetView: UIView!
     @IBOutlet weak var saveErrorLabel: UILabel!
     @IBOutlet weak var trackingStateView: TrackingStateView!
+
+    // MARK: - Properties
     
     var previousPoint: SCNVector3?
     var currentFingerPosition: CGPoint?
     
     var screenShotOverlayImageView: UIImageView?
-    
-    var whiteBallCount = 0
-    var sphereCountLabel: UILabel!
-    
+
     var strokeAnchorIDs: [UUID] = []
     var currentStrokeAnchorNode: SCNNode?
     var currentStrokeColor: StrokeColor = .white
@@ -54,15 +55,8 @@ class ViewController: UIViewController {
         
         sceneView.delegate = self
         sceneView.session.delegate = self
-        sceneView.showsStatistics = false
         let scene = SCNScene()
         sceneView.scene = scene
-
-        // Add sphere count label
-        sphereCountLabel = UILabel(frame: CGRect(x: 20, y: 20, width: 100, height: 40))
-        sphereCountLabel.textColor = UIColor.orange
-        sphereCountLabel.isHidden = true
-        sceneView.addSubview(sphereCountLabel)
         
         let configuration = ARWorldTrackingConfiguration()
         sceneView.session.run(configuration)
@@ -78,10 +72,6 @@ class ViewController: UIViewController {
         let menuButtonsViewHeight: CGFloat = 70
         let bottomPadding = view.safeAreaInsets.bottom
         menuButtonsViewHeightConstraint.constant = menuButtonsViewHeight + bottomPadding
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -105,7 +95,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func showAllUI() {
+    private func showAllUI() {
         DispatchQueue.main.async {
             self.menuButtonsView.isHidden = false
             self.resetView.isHidden = false
@@ -141,14 +131,17 @@ class ViewController: UIViewController {
     }
     
     // MARK:- Drawing
-    func createSphereAndInsert(atPositions positions: [SCNVector3], andAddToStrokeAnchor strokeAnchor: StrokeAnchor) {
+
+    private func createSphereAndInsert(atPositions positions: [SCNVector3], andAddToStrokeAnchor strokeAnchor: StrokeAnchor) {
         for position in positions {
             createSphereAndInsert(atPosition: position, andAddToStrokeAnchor: strokeAnchor)
         }
     }
     
-    func createSphereAndInsert(atPosition position: SCNVector3, andAddToStrokeAnchor strokeAnchor: StrokeAnchor) {
-        guard let currentStrokeNode = currentStrokeAnchorNode else { return }
+    private func createSphereAndInsert(atPosition position: SCNVector3, andAddToStrokeAnchor strokeAnchor: StrokeAnchor) {
+        guard let currentStrokeNode = currentStrokeAnchorNode else {
+            return
+        }
         // Get the reference sphere node and clone it
         let referenceSphereNode = sphereNodesManager.getReferenceSphereNode(forStrokeColor: strokeAnchor.color)
         let newSphereNode = referenceSphereNode.clone()
@@ -159,56 +152,13 @@ class ViewController: UIViewController {
         currentStrokeNode.addChildNode(newSphereNode)
         // Add the position of the node to the stroke anchors sphereLocations array (Used for saving/loading the world map)
         strokeAnchor.sphereLocations.append([newSphereNode.position.x, newSphereNode.position.y, newSphereNode.position.z])
-        whiteBallCount += 1
     }
     
-    // MARK: Touches
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // Do not let the user draw if the world map is relocalizing
-        if isLoadingSavedWorldMap {
-            return
-        }
-        // Hide the additional buttons view if it's showing
-        additionalButtonsView.isHidden = true
-        // Create a StrokeAnchor and add it to the Scene (One Anchor will be added to the exaction position of the first sphere for every new stroke)
-        guard let touch = touches.first else { return }
-        guard let touchPositionInFrontOfCamera = getPosition(ofPoint: touch.location(in: sceneView), atDistanceFromCamera: 0.2, inView: sceneView) else { return }
-        // Convert the position from SCNVector3 to float4x4
-        let strokeAnchor = StrokeAnchor(name: "strokeAnchor", transform: float4x4(float4(1, 0, 0, 0),
-                                                                                  float4(0, 1, 0, 0),
-                                                                                  float4(0, 0, 1, 0),
-                                                                                  float4(touchPositionInFrontOfCamera.x,
-                                                                                         touchPositionInFrontOfCamera.y,
-                                                                                         touchPositionInFrontOfCamera.z,
-                                                                                         1)))
-        strokeAnchor.color = currentStrokeColor
-        sceneView.session.add(anchor: strokeAnchor)
-        currentFingerPosition = touch.location(in: sceneView)
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        currentFingerPosition = touch.location(in: sceneView)
-    }
-
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        previousPoint = nil
-        currentStrokeAnchorNode = nil
-        currentFingerPosition = nil
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        previousPoint = nil
-        currentStrokeAnchorNode = nil
-        currentFingerPosition = nil
-    }
-    
-    func anchorForID(_ anchorID: UUID) -> StrokeAnchor? {
+    private func anchorForID(_ anchorID: UUID) -> StrokeAnchor? {
         return sceneView.session.currentFrame?.anchors.first(where: { $0.identifier == anchorID }) as? StrokeAnchor
     }
     
-    func sortStrokeAnchorIDsInOrderOfDateCreated() {
+    private func sortStrokeAnchorIDsInOrderOfDateCreated() {
         var strokeAnchorsArray: [StrokeAnchor] = []
         for anchorID in strokeAnchorIDs {
             if let strokeAnchor = anchorForID(anchorID) {
@@ -222,6 +172,83 @@ class ViewController: UIViewController {
             strokeAnchorIDs.append(anchor.identifier)
         }
     }
+
+    func changeSaveButtonStyle(withStatus status: ARFrame.WorldMappingStatus) {
+        switch status {
+        case .notAvailable, .limited:
+            saveButton.backgroundColor = UIColor.gray
+        case .extending, .mapped:
+            saveButton.backgroundColor = UIColor.white
+        }
+    }
+
+    func updateRelocalizingLabel(forCamera camera: ARCamera) {
+        switch camera.trackingState {
+        case .notAvailable:
+            // "Tracking unavailable."
+            relocalizingLabelView.isHidden = true
+        case .limited(.initializing):
+            // "Initializing AR session."
+            relocalizingLabelView.isHidden = true
+        case .limited(.relocalizing):
+            relocalizingLabelView.isHidden = false
+        case .limited(.excessiveMotion):
+            // "Tracking limited - Move the device more slowly."
+            relocalizingLabelView.isHidden = true
+        case .limited(.insufficientFeatures):
+            // Tracking limited - Point the device at an area with visible surface detail, or improve lighting conditions.
+            relocalizingLabelView.isHidden = true
+        case .normal:
+            if isLoadingSavedWorldMap {
+                isLoadingSavedWorldMap = false
+                showAllUI()
+                removeScreenShotFromView()
+            }
+            relocalizingLabelView.isHidden = true
+        }
+    }
+
+    // MARK:- Touches
+
+     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+         // Do not let the user draw if the world map is relocalizing
+         if isLoadingSavedWorldMap {
+             return
+         }
+         // Hide the additional buttons view if it's showing
+         additionalButtonsView.isHidden = true
+         // Create a StrokeAnchor and add it to the Scene (One Anchor will be added to the exaction position of the first sphere for every new stroke)
+         guard let touch = touches.first else { return }
+         guard let touchPositionInFrontOfCamera = getPosition(ofPoint: touch.location(in: sceneView), atDistanceFromCamera: 0.2, inView: sceneView) else { return }
+         // Convert the position from SCNVector3 to float4x4
+         let strokeAnchor = StrokeAnchor(name: "strokeAnchor", transform: float4x4(float4(1, 0, 0, 0),
+                                                                                   float4(0, 1, 0, 0),
+                                                                                   float4(0, 0, 1, 0),
+                                                                                   float4(touchPositionInFrontOfCamera.x,
+                                                                                          touchPositionInFrontOfCamera.y,
+                                                                                          touchPositionInFrontOfCamera.z,
+                                                                                          1)))
+         strokeAnchor.color = currentStrokeColor
+         sceneView.session.add(anchor: strokeAnchor)
+         currentFingerPosition = touch.location(in: sceneView)
+     }
+
+     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+         guard let touch = touches.first else { return }
+         currentFingerPosition = touch.location(in: sceneView)
+     }
+
+     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+         previousPoint = nil
+         currentStrokeAnchorNode = nil
+         currentFingerPosition = nil
+     }
+
+     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+         previousPoint = nil
+         currentStrokeAnchorNode = nil
+         currentFingerPosition = nil
+     }
     
     // MARK:- IBActions
     
@@ -258,8 +285,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
-        // TODO:- Clean up and refactor
-        guard let currentFrame = sceneView.session.currentFrame else { return }
+        guard let currentFrame = sceneView.session.currentFrame else {
+            return
+        }
         switch currentFrame.worldMappingStatus {
         case .notAvailable, .limited:
             saveErrorLabel.isHidden = false
@@ -383,46 +411,7 @@ class ViewController: UIViewController {
         currentStrokeColor = .white
         additionalButtonsView.isHidden = true
     }
-    
-    func changeSaveButtonStyle(withStatus status: ARFrame.WorldMappingStatus) {
-        switch status {
-        case .notAvailable, .limited:
-            saveButton.backgroundColor = UIColor.gray
-        case .extending, .mapped:
-            saveButton.backgroundColor = UIColor.white
-        }
-    }
-    
-    func updateDebugWorldMappingStatusInfoLabel(forframe frame: ARFrame) {
-        changeSaveButtonStyle(withStatus: frame.worldMappingStatus)
-    }
-    
-    func updateDebugTrackingStatusLabel(forCamera camera: ARCamera) {
-        switch camera.trackingState {
-        case .notAvailable:
-            // "Tracking unavailable."
-            relocalizingLabelView.isHidden = true
-        case .limited(.initializing):
-            // "Initializing AR session."
-            relocalizingLabelView.isHidden = true
-        case .limited(.relocalizing):
-            relocalizingLabelView.isHidden = false
-        case .limited(.excessiveMotion):
-            // "Tracking limited - Move the device more slowly."
-            relocalizingLabelView.isHidden = true
-        case .limited(.insufficientFeatures):
-            // Tracking limited - Point the device at an area with visible surface detail, or improve lighting conditions.
-            relocalizingLabelView.isHidden = true
-        case .normal:
-            if isLoadingSavedWorldMap {
-                isLoadingSavedWorldMap = false
-                showAllUI()
-                removeScreenShotFromView()
-            }
-            relocalizingLabelView.isHidden = true
-        }
-    }
-    
+
     // MARK:- Alerts
     
     func showSimpleAlert(withTitle title: String, andMessage message: String?, completionHandler: (() -> ())? = nil) {
@@ -442,7 +431,7 @@ class ViewController: UIViewController {
 extension ViewController: ARSessionDelegate {
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
         
-        updateDebugWorldMappingStatusInfoLabel(forframe: frame)
+        changeSaveButtonStyle(withStatus: frame.worldMappingStatus)
         
         // Draw the spheres
         guard let currentStrokeAnchorID = strokeAnchorIDs.last else { return }
@@ -464,10 +453,6 @@ extension ViewController: ARSessionDelegate {
             } else {
                 createSphereAndInsert(atPosition: currentPointPosition, andAddToStrokeAnchor: currentStrokeAnchor!)
                 self.previousPoint = currentPointPosition
-            }
-            
-            DispatchQueue.main.async {
-                self.sphereCountLabel.text = "\(self.whiteBallCount)"
             }
         }
     }

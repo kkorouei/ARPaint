@@ -13,8 +13,8 @@ extension ViewController {
     
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
         guard let currentFrame = session.currentFrame else { return }
-        updateDebugWorldMappingStatusInfoLabel(forframe: currentFrame)
-        updateDebugTrackingStatusLabel(forCamera: camera)
+        changeSaveButtonStyle(withStatus: currentFrame.worldMappingStatus)
+        updateRelocalizingLabel(forCamera: camera)
         trackingStateView.update(forCamera: camera)
     }
     
